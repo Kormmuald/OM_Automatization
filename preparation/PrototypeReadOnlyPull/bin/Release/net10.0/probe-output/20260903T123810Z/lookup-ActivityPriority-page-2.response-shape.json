@@ -1,0 +1,67 @@
+{
+  "rowConfig": {
+    "Id": {
+      "dataValueType": "number"
+    },
+    "CreatedOn": {
+      "dataValueType": "number"
+    },
+    "CreatedBy": {
+      "dataValueType": "number",
+      "isLookup": "boolean",
+      "referenceSchemaName": "string",
+      "primaryImageColumnName": "string"
+    },
+    "ModifiedOn": {
+      "dataValueType": "number"
+    },
+    "ModifiedBy": {
+      "dataValueType": "number",
+      "isLookup": "boolean",
+      "referenceSchemaName": "string",
+      "primaryImageColumnName": "string"
+    },
+    "Name": {
+      "dataValueType": "number"
+    },
+    "Description": {
+      "dataValueType": "number"
+    },
+    "ProcessListeners": {
+      "dataValueType": "number"
+    },
+    "Img": {
+      "dataValueType": "number"
+    }
+  },
+  "rows": {
+    "$kind": "array",
+    "length": 2,
+    "firstItemShape": {
+      "Id": "string",
+      "CreatedOn": "string",
+      "CreatedBy": {
+        "value": "string",
+        "displayValue": "string",
+        "primaryImageValue": "string"
+      },
+      "ModifiedOn": "string",
+      "ModifiedBy": {
+        "value": "string",
+        "displayValue": "string",
+        "primaryImageValue": "string"
+      },
+      "Name": "string",
+      "Description": "string",
+      "ProcessListeners": "number",
+      "Img": "string"
+    }
+  },
+  "notFoundColumns": {
+    "$kind": "array",
+    "length": 0
+  },
+  "rowsAffected": "number",
+  "nextPrcElReady": "boolean",
+  "success": "boolean"
+}

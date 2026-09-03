@@ -1,0 +1,31 @@
+{
+  "Target": "http://localhost:8002",
+  "PulledUtc": "2026-09-03T12:48:29.4329705+00:00",
+  "PackageCount": 97,
+  "WorkspaceItemCount": 9157,
+  "SchemaProbes": [
+    {
+      "SchemaName": "AcademyURL",
+      "Success": true,
+      "OwnColumnCount": 0,
+      "InheritedColumnCount": 8,
+      "IndexCount": 0
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "Success": true,
+      "OwnColumnCount": 1,
+      "InheritedColumnCount": 8,
+      "IndexCount": 0
+    }
+  ],
+  "LookupPaginationProbe": {
+    "SchemaName": "ActivityPriority",
+    "PageSize": 2,
+    "Offset0RowCount": 2,
+    "Offset2RowCount": 1,
+    "SharedRecordIdCount": 0,
+    "StableOrdering": "Not verified: no ordering parameter has been confirmed for this API version."
+  },
+  "Note": "Read-only probe. Login response, cookies, CSRF values, password and lookup-row values are not saved."
+}

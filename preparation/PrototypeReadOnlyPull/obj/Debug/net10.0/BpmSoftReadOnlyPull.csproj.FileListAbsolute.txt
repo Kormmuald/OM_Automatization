@@ -1,0 +1,14 @@
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.GeneratedMSBuildEditorConfig.editorconfig
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.AssemblyInfoInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.AssemblyInfo.cs
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.csproj.CoreCompileInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\bin\Debug\net10.0\BpmSoftReadOnlyPull.exe
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\bin\Debug\net10.0\BpmSoftReadOnlyPull.deps.json
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\bin\Debug\net10.0\BpmSoftReadOnlyPull.runtimeconfig.json
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\bin\Debug\net10.0\BpmSoftReadOnlyPull.dll
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\bin\Debug\net10.0\BpmSoftReadOnlyPull.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.dll
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\refint\BpmSoftReadOnlyPull.dll
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\BpmSoftReadOnlyPull.genruntimeconfig.cache
+C:\CodingAgents\codex\projects\OM_Automatization\PrototypeReadOnlyPull\obj\Debug\net10.0\ref\BpmSoftReadOnlyPull.dll
