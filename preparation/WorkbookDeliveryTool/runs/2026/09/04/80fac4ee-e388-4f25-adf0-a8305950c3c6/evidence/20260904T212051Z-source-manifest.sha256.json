@@ -1,0 +1,15 @@
+{
+  "Algorithm": "SHA-256",
+  "Files": [
+    {
+      "Path": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\WorkbookDeliveryTool\\runs\\2026\\09\\04\\80fac4ee-e388-4f25-adf0-a8305950c3c6\\evidence\\20260904T212051Z-bounded-baseline.json",
+      "Bytes": 67434,
+      "Sha256": "b87e6e6d3e82ead7c9724cb7735a428740200c44fa06dced96b43772fc97a562"
+    },
+    {
+      "Path": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\WorkbookDeliveryTool\\runs\\2026\\09\\04\\80fac4ee-e388-4f25-adf0-a8305950c3c6\\evidence\\20260904T212051Z-actualindexed-indexes-check.json",
+      "Bytes": 22389,
+      "Sha256": "44429f44ccf18d27304e4ef1a1b257a658e03f192972153cd9d44a126853b251"
+    }
+  ]
+}

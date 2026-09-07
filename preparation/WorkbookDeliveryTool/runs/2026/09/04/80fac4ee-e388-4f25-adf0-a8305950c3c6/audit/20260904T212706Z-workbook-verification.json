@@ -1,0 +1,76 @@
+{
+  "Status": "PASS_WITH_LIMITS",
+  "VerifiedUtc": "2026-09-04T21:27:06Z",
+  "PairId": "cb3722e8-ee9e-4f47-a299-723769ce7bbf",
+  "PullRunId": "80fac4ee-e388-4f25-adf0-a8305950c3c6",
+  "ScopeMode": "VerifiedBoundedBaseline",
+  "Source": {
+    "Path": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\WorkbookDeliveryTool\\runs\\2026\\09\\04\\80fac4ee-e388-4f25-adf0-a8305950c3c6\\evidence\\20260904T212051Z-bounded-baseline.json",
+    "Sha256": "b87e6e6d3e82ead7c9724cb7735a428740200c44fa06dced96b43772fc97a562",
+    "ManifestBytesAndHashesMatch": true,
+    "SecretMarkerHits": 0,
+    "WorkspaceItems": 5,
+    "Schemas": 5,
+    "Columns": 124,
+    "LookupRows": 3,
+    "LookupValues": 6,
+    "OrderedProofs": 2
+  },
+  "ModelWorkbook": {
+    "Path": "workbooks/BPMSoft.ModelCatalog.xlsx",
+    "Sha256": "62e5892111e1d31cf0b0472867676eee79bce29181dfe3b2dff3b56b2c3f0b3e",
+    "CanonicalWorksheetHash": "b593f611ae80efc683cbe09329901f13ead3d7cea5f1f95918c0e18686327719",
+    "Sheets": 8,
+    "DataRows": 165
+  },
+  "LookupWorkbook": {
+    "Path": "workbooks/BPMSoft.LookupCatalog.xlsx",
+    "Sha256": "9f2378c637629bc941e9292b93a49523e3584eca450cb4d9ce6dbf4e113addc1",
+    "CanonicalWorksheetHash": "2dbc43f18e64e89b66c8051c56c9b2f680fe557051e54b0462e73d6cba1794fd",
+    "Sheets": 7,
+    "DataRows": 39
+  },
+  "PairBaselineHash": "f2480cdbdaa036856ebedbbbae45fe6dd55b919a4156bb6af78833a602e4f65a",
+  "ActualIndexedVersusIndexes": {
+    "ExportStatus": "PASS",
+    "OverallStatus": "PARTIAL",
+    "ActualIndexedTrueCount": 64,
+    "SourceIndexMemberCount": 2,
+    "ExportedIndexRows": 2,
+    "ExactTupleEquality": true,
+    "FalseWithMembershipFixture": "PASS",
+    "TrueWithoutMembershipFixture": "PASS",
+    "MemberUIdSubstitutionFixture": "PASS",
+    "NotInferred": true,
+    "FutureLoadGate": "INDEX_SYNC_UNRESOLVED"
+  },
+  "Tier1": {
+    "BuildZeroWarningsErrors": true,
+    "SelfTest": "PASS",
+    "OOXMLReadBack": "PASS",
+    "RelationshipContentTypeClosure": "PASS",
+    "ProtectionUnlockMap": "PASS",
+    "ValidationsAndVeryHiddenLists": "PASS",
+    "AutofiltersAndFrozenHeaders": "PASS",
+    "FormulaCount": 0,
+    "ForbiddenExternalMacroConnectionParts": 0,
+    "FormulaCheckBoth": "PASS",
+    "StyleAuditBoth": "PASS_NO_WARNINGS",
+    "XlsxReaderBoth": "PASS",
+    "XlsxReaderQualityBoth": "PASS_WITH_EXPECTED_NULL_WARNINGS",
+    "ReproducibleCanonicalWorksheetXml": "PASS"
+  },
+  "Tier2": {
+    "Status": "SKIPPED",
+    "Reason": "LibreOffice is not available (libreoffice_recalc.py --check exit 2).",
+    "AutomatedRender": "SKIPPED"
+  },
+  "NotRun": [
+    "full catalog",
+    "BPMSoft Write/Manage/compile/save/create/update/delete",
+    "Google input",
+    "SyncOM changes",
+    "index load/apply",
+    "desktop Excel manual acceptance"
+  ]
+}

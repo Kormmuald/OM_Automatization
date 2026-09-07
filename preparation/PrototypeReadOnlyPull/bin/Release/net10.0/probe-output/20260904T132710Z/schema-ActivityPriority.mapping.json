@@ -1,0 +1,110 @@
+{
+  "RequestedName": "ActivityPriority",
+  "RequestedPackageName": "Base",
+  "RequestedWorkspaceItemUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+  "SchemaName": "ActivityPriority",
+  "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+  "SysSchemaIdCandidate": "5d818dd1-58ac-4dca-81eb-98e399486ceb",
+  "ParentSchemaName": "BaseLookup",
+  "ParentSchemaUId": "11ab4bcb-9b23-4b6d-9c86-520fae925d75",
+  "IndexCount": 0,
+  "Columns": [
+    {
+      "ColumnName": "Img",
+      "ColumnUId": "887c15af-c2cc-4b29-8af6-6f3bde17eb3d",
+      "Ownership": "Own",
+      "Type": 14,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "Ownership": "Inherited",
+      "Type": 10,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": "Contact",
+      "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+    },
+    {
+      "ColumnName": "CreatedOn",
+      "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+      "Ownership": "Inherited",
+      "Type": 7,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "Description",
+      "ColumnUId": "9e53fd7c-dde4-4502-a64c-b9e34148108b",
+      "Ownership": "Inherited",
+      "Type": 28,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "Id",
+      "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+      "Ownership": "Inherited",
+      "Type": 0,
+      "RequirementType": 1,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "Ownership": "Inherited",
+      "Type": 10,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": "Contact",
+      "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+    },
+    {
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "Ownership": "Inherited",
+      "Type": 7,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "Name",
+      "ColumnUId": "736c30a7-c0ec-4fa9-b034-2552b319b633",
+      "Ownership": "Inherited",
+      "Type": 28,
+      "RequirementType": 1,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "ProcessListeners",
+      "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+      "Ownership": "Inherited",
+      "Type": 4,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    }
+  ],
+  "SourcePaths": {
+    "SchemaUId": "schema.uId",
+    "SysSchemaIdCandidate": "schema.id",
+    "ParentSchemaUId": "schema.parentSchema.uId",
+    "ColumnUId": "schema.columns[].uId / schema.inheritedColumns[].uId",
+    "ReferenceSchemaUId": "column.referenceSchema.uId"
+  }
+}

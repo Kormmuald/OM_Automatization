@@ -1,7 +1,9 @@
 # Handoff: discovery локального синхронизатора ОМ BPMSoft
 
-Дата актуализации: 2026-09-03  
-Статус: logical Excel contract v1 и перечень оставшихся рисков явно подтверждены владельцем 2026-09-03. Production-код и Spec Kit artifacts не создавались; отдельный strictly read-only `PrototypeReadOnlyPull` успешно подтвердил login, packages/workspace inventory, две schema shapes и paging shape lookup. `.xlsx` и BPMSoft write-вызовы не выполнялись. Владелец остановил дальнейшее техническое развитие prototype: следующий этап — совместно подготовить вход для SDD / GitHub Spec Kit по локальному курсу, а не реализовывать следующие read-only slices.
+> **Актуальная точка возобновления — раздел 16 (2026-09-06).** Разделы 0–15 сохраняют историю решений и evidence. Их старые формулировки «следующий шаг» и прежние stop conditions не применяются, если противоречат разделу 16.
+
+Дата актуализации: 2026-09-04  
+Статус: создан первый owner-reviewed draft package для будущего SDD / GitHub Spec Kit. Это не canonical Spec Kit и не разрешение на реализацию, новый BPMSoft probe, `.xlsx` или write. Отдельный strictly read-only `PrototypeReadOnlyPull` по-прежнему является единственным техническим evidence.
 
 ## 0. Курс и выбранная последовательность SDD / GitHub Spec Kit — 2026-09-03
 
@@ -185,7 +187,7 @@ Excel не является единственным источником ист
 
 - После успешного Apply и read-back verification программа спрашивает, нужно ли выполнить отдельный Excel writeback.
 - Тот же writeback можно запустить вручную позже.
-- В scope writeback: заполнение `!Id` у строк справочников и обновление флагов Required/Index по фактическому состоянию BPMSoft.
+- В scope writeback: заполнение `!Id` у строк справочников и только отдельно доказанное обновление флагов Required/Index по фактическому состоянию BPMSoft. Index membership из `schema.indexes[]` не является автоматическим oracle для исторического column `Index`/`ActualIndexed` flag.
 - Writeback — отдельная workbook-only операция; она не пишет в BPMSoft.
 - Если книга изменилась после apply и её хэш не совпадает, программа ничего не записывает и показывает уведомление. Пользователь сам запускает новый цикл; merge не выполняется.
 - В audit фиксируются хэши до/после и список изменённых ячеек без секретов.
@@ -225,12 +227,12 @@ Excel не является единственным источником ист
 ### 3.11. Принятые уточнения contract и отказанные варианты
 
 - Full inventory содержит только лёгкие поля `WorkspaceItemUId`, `Name`, `ItemType`, `PackageName`, `PackageUId`, `SupportStatus`, `SupportReason`; детально читаются только `EntitySchema`, включая lookup schemas. Клиентские схемы, исходный код и иные items не читаются как структура и не изменяются.
-- В `ModelCatalog` приняты sheets `Readme`, `Manifest`, `WorkspaceInventory`, `Schemas`, `Columns`, `Indexes`, `ValidationLists`, `PullConflicts` и один набор `S_*`. В `LookupCatalog` — те же control sheets и `LookupRegistry`, `LookupRows`, `LookupValues`; `LookupColumns` отвергнут как дублирование `ModelCatalog.Columns`.
+- В `ModelCatalog` приняты sheets `Readme`, `Manifest`, `WorkspaceInventory`, `Schemas`, `Columns`, `Indexes`, `ValidationLists`, `PullConflicts` и один набор `S_*`. В `LookupCatalog` — control sheets, `LookupRegistry` и единый `LookupValues`; отдельные `LookupRows` и `LookupColumns` отвергнуты как дублирование структуры.
 - Snapshots не являются историческим архивом: в каждой книге ровно один полный пред-pull набор; новый заменяет старый только после успешной записи и проверки нового набора.
 - Captions и rename schemas/columns/lookups исключены; попытка даёт `RENAME_NOT_SUPPORTED` с указанием менять вручную в BPMSoft. Изменение `DataType` existing column исключено (`TYPE_CHANGE_NOT_SUPPORTED`).
-- У existing own column разрешены изменения Required в обе стороны и только добавление simple index; снятие индекса — `INDEX_DROP_NOT_SUPPORTED`, вручную через БД. `UsageType`, `IsSimpleLookup`, `IntegrityMode`, `CascadeMode` исключены как неподтверждённые и ненужные v1 properties.
+- У existing own column разрешены изменения Required в обе стороны; simple-index add остаётся лишь будущей возможностью после dedicated field-level write preflight, а сейчас не разрешён. Снятие индекса — `INDEX_DROP_NOT_SUPPORTED`, вручную через БД. `UsageType`, `IsSimpleLookup`, `IntegrityMode`, `CascadeMode` исключены как неподтверждённые и ненужные v1 properties.
 - Lookup registry может быть создан для новой lookup schema либо для existing `EntitySchema`, но второй сценарий не начинается без read-only API evidence. Package — единственный source в `ModelCatalog.Schemas`; base schema fields registry — read-only context.
-- `LookupRows` и `LookupValues` — нормализованная source-of-truth пара для строк/значений. `DraftRowToken` выдаётся только явной workbook-only командой, ручной ввод запрещён; без доказуемого `DraftRowToken -> RecordId` новая строка не создаётся.
+- `LookupValues` — единая нормализованная source-of-truth таблица для metadata записи и значений её колонок. Metadata повторяется только внутри группы значений одной записи и обязана быть согласованной; отдельного `LookupRows` нет. `DraftRowToken` выдаётся только явной workbook-only командой, ручной ввод запрещён; без доказуемого `DraftRowToken -> RecordId` новая строка не создаётся.
 - Excel validation: enumerations states, Boolean Required/Indexed, UUID input syntax, mandatory names, XOR ID/token; formulas в editable tables, external links и неописанные колонки — parser blocker.
 - Журнал запусков и пакет ошибки находятся вне книг, только с добавлением, без секретов и полных lookup values по умолчанию. Путь/формат/срок хранения решаются перед первым write-capable шагом.
 
@@ -458,6 +460,29 @@ Read-only inspection assemblies подтвердил маршруты `/ServiceM
 5. Доказуемый путь `DraftRowToken -> RecordId` без matching по `Code`/`Name`.
 6. Путь, формат и retention журнала запусков/пакета ошибки.
 
+## 10.1. G3: P3-C bounded index-resolution — 2026-09-04
+
+Владелец явно одобрил минимальную contract correction только для P3-C; это **не G4** и не разрешение на `.xlsx`, production tool, full-catalog pull, Manage/Write или BPMSoft write. Однократно разрешённое игнорирование usage-gate `PAUSE` относится к этой документной правке и не расширяет технический scope.
+
+Источник решения и evidence:
+
+- `docs\READ_ONLY_RESEARCH_RESULTS\20260904T151951Z-Account-Test1-index-research.md`;
+- `docs\READ_ONLY_RESEARCH_RESULTS\20260904T151951Z-Account-Test1-index-evidence-review.md`;
+- `PrototypeReadOnlyPull\bin\Release\net10.0\probe-output\20260904T151951Z\schema-Account-Test1.indexes.shape.json`;
+- previous safe mappings `...\20260904T132710Z\schema-Account-Base.mapping.json` and `schema-Account-extension.mapping.json`.
+
+Bounded G2 resolution: `Account/Test1` had two explicit simple one-member index objects. The evidence proves `schema.indexes[].uId`, `.name`, `.isUnique`, and member `.columns[].columnUId`; `columnUId` resolves to `Code`/`Name` `ColumnUId`. The index definition is in the Test1 package layer, while the target columns are inherited there; requiring own targets and `indexed=true` was a false-negative prototype oracle. Therefore `Indexes` is a protected read-only table with one row per member, `IndexUId` is retained, and member `.uId` is explicitly not `ColumnUId`. `Columns.ActualIndexed` remains separate historical-Google compatibility context, not the membership source and not automatically derived from the index array. Historical Google `bpmColumn.indexed` was a coarse/lossy flag and is not a new source of truth; Google data are not imported.
+
+Still open: composite indexes, auto-name, broader `orderDirection` enum/semantics, full-catalog generalisation, target fingerprint across the two bounded reads, current inherited `column.indexed` semantics, and all add/change/drop API semantics.
+
+## 10.2. G4: controlled workbook delivery — 2026-09-04
+
+Владелец принял read-only evidence с перечисленными ограничениями, счёл G2 закрытым для workbook v1, принял исправленный contract и отдельно разрешил G4: контролируемую read-only выгрузку, создание и проверку двух `.xlsx` и минимального локального инструмента наполнения. BPMSoft Write/Manage, Google input и изменение `SyncOM` не разрешены.
+
+Полный каталог не является acceptance condition текущего исследования или первой workbook delivery. Сейчас разрешён verified bounded baseline; попытку полного каталога должен выполнять уже разработанный инструмент с сохранением ordering/pagination и evidence controls.
+
+Обязательный следующий контроль: во время выгрузки и workbook verification отдельно доказать, что `Columns.ActualIndexed`, который не выводится автоматически из `schema.indexes[]`, не скрывает и не искажает фактический состав `Indexes`. Перед любым будущим index load/apply требуется новый самостоятельный gate: доказать, что разделение не создаёт ложные add/drop операции. При неоднозначности или неверном плане применяется `INDEX_SYNC_UNRESOLVED`, работа останавливается для решения владельца; допустимый результат — исключить загрузку индексов из текущей версии и оставить их только как read-only evidence.
+
 ## 11. Оговорки для следующего исполнителя
 
 - Не принимать Google data за desired state локального стенда.
@@ -471,3 +496,222 @@ Read-only inspection assemblies подтвердил маршруты `/ServiceM
 - Не называть staged apply транзакцией: backend atomicity не подтверждена, компенсация ручная через backup/restore.
 - Не фабриковать acceptance evidence предыдущих slices. Для будущего Slice 2+ реальный acceptance report/handoff предыдущего slice будет execution-time входом.
 - Рабочая папка на момент актуализации не является Git repository; `git status` недоступен.
+
+## 12. SDD drafts и следующий review — 2026-09-04
+
+### Пути и статус
+
+- `docs\SDD_DRAFTS\constitution.draft.md` — **DRAFT — NOT YET SPEC KIT CANONICAL**; устойчивые project-wide rules.
+- `docs\SDD_DRAFTS\first-feature-spec.draft.md` — **DRAFT — NOT YET SPEC KIT CANONICAL**; верхнеуровневая `spec of specs` полного MVP synchronizer.
+- `docs\SDD_DRAFTS\clarify-review.draft.md` — **DRAFT — NOT YET SPEC KIT CANONICAL**; evidence, decisions, assumptions, DoD и blockers.
+- Review status: owner review зафиксировал safety, verification, audit и Git decisions; дальнейшая работа передана в отдельный task. Drafts не готовы к canonical Spec Kit и не готовы к `plan`.
+
+### Зафиксированные owner decisions
+
+- MVP описывается как полный synchronizer из пяти будущих child specs: workbook foundation; read-only pull/refresh; compare/immutable plan; gated apply/read-back/writeback; verification/evidence/Codex boundary.
+- Будущими самостоятельными операторами являются BPMSoft developers на Windows с desktop Excel и local BPMSoft. CLI владеет hard gates; skills обязательны, но не получают secrets и не обходят CLI.
+- Только человек вводит credentials, подтверждает backup и approve/reject whole plan. Browser verification обязательна, strictly read-only и использует сохранённую deterministic sample.
+- New lookup rows требуют `DraftRowToken -> RecordId`; matching по `Code`/`Name` запрещён. MVP не удаляет BPMSoft entities.
+- Изменение workbook или affected target state инвалидирует plan. Apply останавливается на первой ошибке без auto-rollback; затем требуются read-back и human decision.
+
+### Незакрытые вопросы и exact stop condition
+
+- Browser sample rule закрыт решением владельца: все structural changes; lookup rows — 10% каждого типа (минимум 3, максимум 10) с new/updated coverage, выбор по plan hash/устойчивому ключу, 100% acceptance.
+- Blocking research question: какой exact `SelectQuery` payload в local BPMSoft 1.8 даёт explicit deterministic order и позволяет дважды подтвердить complete pagination без skips/duplicates?
+- **Exact stop condition:** до подтверждения этого order/pagination contract и exact schema/lookup-registry mapping не начинать full-catalog pull, не создавать `.xlsx`, не открывать write scope, не проверять Manage/Write и не менять production-код.
+
+### Следующий один шаг
+
+Передать работу в отдельный task по разделу 13; в текущем task не запускать техническое исследование.
+
+## 13. Передача в отдельный task: read-only research и conditional workbook workflow — 2026-09-04
+
+### Актуальные SDD drafts
+
+- `docs\SDD_DRAFTS\constitution.draft.md`
+- `docs\SDD_DRAFTS\first-feature-spec.draft.md`
+- `docs\SDD_DRAFTS\clarify-review.draft.md`
+
+Draft package отражает весь MVP synchronizer как `spec of specs`; это по-прежнему не canonical Spec Kit и не plan/tasks/slices.
+
+### Решения, добавленные в review
+
+- Browser verification обязательна после полного CLI read-back: проверяются все structural changes; lookup rows — 10% каждого типа, минимум 3 и максимум 10, с new/updated coverage. Выбор вычисляется из plan hash и устойчивого ключа операции до Apply; acceptance — 100% sample.
+- Audit, evidence и run journal локальны: отдельная versioned folder каждого запуска в date-based catalogue, раздельные audit/evidence folders, timestamped files. Retention/cleanup — ответственность пользователя. Metadata содержит версии приложения, workbook template, Codex skills, BPMSoft и Excel tables с modification time.
+- Compare блокируется при повреждённом workbook; mandatory skills объясняют violation, сравнивают обе Excel-книги с предыдущими Git versions и предлагают correction без automatic edit.
+- Обе Excel-книги ведутся в отдельном remote Git repository ОМ. Пользователь задаёт provider/repository URL/branch в non-secret settings artifact; credentials остаются в user credential manager. Только после successful Apply, read-back, browser verification и explicit human confirmation skill делает один atomic commit обеих книг с run ID/plan hash и pushes его при отсутствии conflict. Conflict решает пользователь; после него требуется новый validation/compare. Failed push сохраняет local commit и ждёт explicit retry. Audit/evidence/journal в Git не попадают.
+- Separate strictly read-only research обязателен до первой implementation-ready child spec. Его результаты могут выявить несостоятельность contract/assumptions; тогда работа останавливается для решения владельца.
+
+### Следующий task и stop condition
+
+- Prompt package для отдельного task: `docs\READ_ONLY_RESEARCH_PROMPTS\00-orchestrator.md` и последующие numbered prompts.
+- Фактическая рабочая директория нового task: `C:\CodingAgents\codex\projects\OM_Automatization\preparation`; все пути `docs/...` и `PrototypeReadOnlyPull/...` в prompt package относительны к ней.
+- **Exact stop condition:** до positive evidence explicit deterministic ordering + complete repeatable pagination + exact schema/lookup-registry mapping запрещены full-catalog pull, `.xlsx`, production tool, Manage/Write check и BPMSoft write.
+- Рекомендуемый порядок двух task: сначала отдельный orchestration task по `00-orchestrator.md` возвращает role split/gates/risks; затем его итоговый output передаётся в task, запущенный по `NEXT_AGENT_PLANNING_PROMPT.md`. Этот следующий task первым делом запрашивает и сверяет orchestration output, а затем задаёт единственный G1-вопрос на запуск strictly read-only researcher.
+
+## 14. Актуальная передача продолжения workbook-orchestrator — 2026-09-05
+
+### 14.1. Где остановилась цепочка
+
+Завершены роли прежнего пакета:
+
+1. `01-read-only-researcher` — собрал строго read-only evidence локального BPMSoft;
+2. `02-evidence-reviewer` — независимо проверил evidence и выявил ложный own-only oracle для индексов;
+3. `03-contract-decision-preparer` — подготовил и после G3 внёс одобренное исправление contract;
+4. `04-workbook-delivery` — выполнил разрешённый G4 bounded capture, создал минимальный локальный инструмент и пару Excel.
+
+Следующий старый номер роли — `05-verification-and-report`, но для отдельного task подготовлен сокращённый новый пакет только по оставшимся шагам: `docs/WORKBOOK_CONTINUATION_PROMPTS/`.
+
+### 14.2. Закрытые gates и решения владельца
+
+- **G1 закрыт:** владелец разрешил strictly read-only исследование локального стенда; credentials вводились человеком и не сохранялись.
+- **G2 закрыт для workbook v1 с ограничениями:** explicit deterministic order и repeatable pagination доказаны на bounded `Lookup`/`ActivityPriority`; exact mapping доказан для выбранных schema layers и lookup registry. Full catalog не является acceptance condition этой delivery.
+- **G3 закрыт:** identity схем/колонок строится по server UId; непроверенный `GetSchema schema.id` хранится только как diagnostic candidate. `Indexes` строится только из `schema.indexes[]`, member relation — `columnUId -> Columns.ColumnUId`, target может быть Own или Inherited. `IndexUId` сохраняется; member `.uId` не является `ColumnUId`. `ActualIndexed` сохранён отдельно и не выводится из membership.
+- **G4 закрыт:** разрешены bounded read-only capture, две `.xlsx` и минимальный локальный инструмент. BPMSoft Write/Manage, Google input и изменение `SyncOM/` не разрешены.
+- **G5 не закрыт:** агент обязан подготовить criterion-to-evidence matrix и рекомендацию, но итог принимает только владелец.
+
+Старое разовое исключение из usage gate уже использовано и не может применяться снова. Перед каждым новым субагентом обязателен `codex-five-hour-usage-gate`, unique 300-minute window, threshold 20% и `gate_result=PASS`.
+
+### 14.3. Главные доказанные результаты
+
+- Deterministic pagination/order evidence: `PrototypeReadOnlyPull/bin/Release/net10.0/probe-output/20260904T132710Z/`.
+- Reviewer report: `docs/READ_ONLY_RESEARCH_RESULTS/20260904T132710Z-02-evidence-review.md`.
+- Индексный P3-C evidence: `PrototypeReadOnlyPull/bin/Release/net10.0/probe-output/20260904T151951Z/` и два отчёта `20260904T151951Z-Account-Test1-index-*.md`.
+- Owner G4 decision: `docs/READ_ONLY_RESEARCH_RESULTS/20260904-G4-owner-decision.md`.
+- Immutable bounded source: `WorkbookDeliveryTool/runs/2026/09/04/80fac4ee-e388-4f25-adf0-a8305950c3c6/evidence/20260904T212051Z-bounded-baseline.json`.
+- PullRunId: `80fac4ee-e388-4f25-adf0-a8305950c3c6`; PairId: `cb3722e8-ee9e-4f47-a299-723769ce7bbf`; PairBaselineHash: `f2480cdbdaa036856ebedbbbae45fe6dd55b919a4156bb6af78833a602e4f65a`.
+- Bounded source содержит 5 schema layers, 124 columns, 3 lookup records/6 lookup values и 2 index members.
+- Экспорт `Indexes` сохраняет ровно два Test1 members (`Code` unique и `Name` non-unique), несмотря на 64 значения `ActualIndexed=true`. Отрицательные fixtures доказывают, что одно поле не выводится из другого.
+- Это не доказывает безопасную загрузку индексов. До отдельного future load/apply research действует blocker `INDEX_SYNC_UNRESOLVED`; допустимо исключить index loading из первой версии и оставить read-only display.
+
+### 14.4. Workbook incident и исправления
+
+Первая пара workbook была отозвана: Excel предложил recovery и после восстановления показывал пустые листы. Recovery log доказал неверный порядок OOXML worksheet children. Повреждённые версии и recovery evidence сохранены append-only в `.../audit/rejected/`.
+
+После исправления `sheetProtection -> autoFilter -> dataValidations` desktop Excel открыл обе книги без recovery. Владелец подтвердил, что содержимое выглядит нормально, но выявил два usability/contract замечания:
+
+1. нельзя было менять ширину колонок и критерии фильтров;
+2. `LookupRows` и `LookupValues` дублировали record metadata и должны быть одним листом.
+
+По явному решению владельца подготовлен template v2:
+
+- protection сохраняет блокировку protected/derived cells, но разрешает `formatColumns`, existing `autoFilter`, selection и presentation sorting;
+- отдельный `LookupRows` удалён;
+- `LookupValues` содержит ровно 15 колонок: `SchemaName`, `SysEntitySchemaUId`, `RecordId`, `DraftRowToken`, `DesiredState`, `ServerPresence`, `SourceFingerprint`, `Comment`, `ColumnName`, `ValueState`, `Value`, `ValueKind`, `ReferenceRecordId`, `ReferenceDraftRowToken`, `CanonicalValue`;
+- metadata одной записи повторяется только внутри её нескольких value rows и должна быть согласованной;
+- `TemplateVersion=2-bounded-research`; исходный bounded source и `PairBaselineHash` не менялись.
+
+Проверенные template-v2 outputs установлены в canonical paths:
+
+- `workbooks/BPMSoft.ModelCatalog.xlsx` — SHA-256 `e42ccd1187c744c846805ad6c4ee59d1b75a50c1bb19a252f45f0bd534129ca0`;
+- `workbooks/BPMSoft.LookupCatalog.xlsx` — SHA-256 `9ebe5369cef454a6e0cdfb135da9c5ac862af0950c2cf7dbc976c9ccebc1b2e1`.
+
+После закрытия книг обе canonical версии заменены вместе сохранённой проверенной парой. Tool verify, SHA-256, formula/style checks и desktop Excel COM checks повторены уже по canonical paths. Final append-only audit: `WorkbookDeliveryTool/runs/2026/09/04/80fac4ee-e388-4f25-adf0-a8305950c3c6/audit/20260905T114516Z-workbook-template-v2-canonical-verification.json`.
+
+Предыдущая структурно исправная, но неудобная template-v1 пара сохранена как superseded evidence в `.../audit/rejected/20260905T113437Z-*.superseded-template-v1.xlsx`.
+
+### 14.5. Что проверено для template v2
+
+- Release build: PASS, 0 warnings/errors.
+- `self-test`: PASS, включая merged LookupValues guard и прежние negative fixtures.
+- tool `verify`: PASS; Model — 8 sheets/165 data rows, Lookup — 6 sheets/36 data rows; `LookupRows` отсутствует, `LookupValues` содержит 6 value rows.
+- Формулы: 0; external/VBA/connections: 0; OOXML closure, exact sheets/headers/rows, pair metadata, hidden validation list, validations и protection permission attributes: PASS.
+- `formula_check.py`, `style_audit.py`, `xlsx_reader.py --quality`: PASS с ожидаемыми предупреждениями о пустых draft/reference/description fields.
+- Desktop Excel COM подтверждает `Protection.AllowFiltering=True`, `AllowFormattingColumns=True`, `AllowSorting=True`; изменение ширины колонки в памяти проходит. Программное применение критерия через COM-метод `Range.AutoFilter` на защищённом листе не является валидной имитацией dropdown UI и возвращает запрет даже для созданного самим Excel reference file; поэтому реальная смена filter criteria остаётся обязательной ручной проверкой владельца.
+- Повторная ручная visual/usability проверка именно template v2 пока не является human acceptance и должна быть отражена как `not run`, пока владелец её явно не подтвердит. Автоматически подтверждено: обе книги открываются без recovery, expected sheets на месте, column resize проходит, protected cell write блокируется, editable cell write разрешён, Excel сообщает `AllowFiltering=True`.
+
+### 14.6. Что остаётся сделать
+
+1. Независимому reviewer повторить offline build/self-test/verify и Excel checks по prompt `01-workbook-evidence-reviewer.md` нового пакета.
+2. Владельцу открыть canonical template-v2 книги и подтвердить: no recovery; данные/листы на месте; ширина колонок меняется; dropdown-фильтр применяется/снимается; protected cells нельзя изменить, editable cells доступны.
+3. Роли `02-g5-decision-preparer` собрать criterion-to-evidence matrix, not-run checks, gaps и одну рекомендацию.
+4. Остановиться на G5 и получить явное решение владельца. Не принимать результат вместо него.
+5. Только после решения владельца роль `03-owner-decision-recorder` может обновить согласованные handoff/contract/SDD строки.
+
+Остаются вне этой цепочки и не могут быть объявлены доказанными: full-catalog scale/generalisation; composite/auto-name/index order semantics; inherited `column.indexed` semantics; любая BPMSoft mutation/write/Manage; DraftRowToken-to-RecordId через create/read-back; safe index add/drop planning/loading; LibreOffice Tier 2/render.
+
+### 14.7. Новый prompt package и рекомендуемые настройки
+
+Путь: `docs/WORKBOOK_CONTINUATION_PROMPTS/`.
+
+- `00-orchestrator-continuation.md` — `gpt-5.6-sol`, reasoning `high`;
+- `01-workbook-evidence-reviewer.md` — `gpt-5.6-sol`, reasoning `high`;
+- `02-g5-decision-preparer.md` — `gpt-5.6-sol`, reasoning `high`;
+- `03-owner-decision-recorder.md` — `gpt-5.6-terra`, reasoning `high`.
+
+Ни одна роль пакета не использует Astra или reasoning выше `high`.
+
+## 15. Owner correction и canonical template v3 — 2026-09-05
+
+### 15.1. Решение владельца
+
+После independent reviewer FAIL владелец явно отменил workbook-level XOR для `ReferenceRecordId` / `ReferenceDraftRowToken` и cell-level protection mixed-листов. Новый contract:
+
+- оба reference fields могут быть заполнены одновременно;
+- будущая загрузка использует валидный непустой `ReferenceRecordId`; иначе однозначно разрешённый `ReferenceDraftRowToken`; иначе пустую ссылку;
+- некорректный непустой `ReferenceRecordId` блокирует загрузку;
+- protection применяется только к полностью read-only листам;
+- `Schemas`, `Columns`, `LookupRegistry`, `LookupValues` доступны для редактирования целиком, а parser/compare обязан блокировать недопустимые изменения.
+
+Decision record: `docs/READ_ONLY_RESEARCH_RESULTS/20260905-owner-workbook-editability-reference-precedence.md`. Это не G5 acceptance и не разрешение BPMSoft Write/Manage.
+
+### 15.2. Canonical template v3
+
+`WorkbookDeliveryTool` и contract/SDD drafts обновлены. Из того же immutable bounded source создана и вместе установлена canonical пара `TemplateVersion=3-bounded-research`:
+
+- `workbooks/BPMSoft.ModelCatalog.xlsx` — SHA-256 `7fb01fd5f4af039beb45e7e77819385d9c25beac6762616cf6212e6ac32a849f`;
+- `workbooks/BPMSoft.LookupCatalog.xlsx` — SHA-256 `48719140d6ecf4a7b21c61fc381eccb8aa95f2b8e32f437c360ed14e96f07b2d`.
+
+Template-v2 canonical pair сохранена в `.../audit/rejected/20260905T122311Z-*.superseded-template-v2.xlsx`. Template-v3 audit: `.../audit/20260905T122353Z-workbook-template-v3-canonical-verification.json`.
+
+Local verification: Release build PASS (0 warnings/errors), self-test PASS, tool verify PASS, Tier 1 PASS (0 formulas/errors), style audit PASS, Excel 16.0 opened both canonical files without recovery, mixed sheets are unprotected/editable, read-only sheets are protected and allow resize/filter/sort. Tier 2/render SKIPPED: LibreOffice unavailable. `INDEX_SYNC_UNRESOLVED` unchanged.
+
+### 15.3. Следующий шаг
+
+По разовому owner exception допускается один запуск independent workbook reviewer при usage ниже 20%; исключение расходуется только на этот запуск. Reviewer должен проверить template v3 и новый contract. При PASS затем нужен новый обычный usage gate перед `02-g5-decision-preparer`; при отсутствии PASS цепочка снова останавливается. G5 принимает только владелец.
+
+### 15.4. Independent template-v3 review — FAIL на protected-sheet sort
+
+Reviewer report: `docs/READ_ONLY_RESEARCH_RESULTS/20260905T183700Z-01-workbook-evidence-review-v3.md`.
+
+Все проверки template v3, кроме реальной сортировки защищённых read-only листов, получили PASS/PASS WITH EXPECTED WARNINGS. Excel 16 сообщает `AllowSorting=True`, но `Range.Sort` блокируется, а встроенная UI-команда sort не меняет порядок, потому что сортируемые cells locked. Контроль тем же harness на unprotected mixed-листах проходит. Resize и real context-menu filter на protected sheets проходят.
+
+Текущие требования конфликтуют в статической `.xlsx`: нельзя одновременно запретить редактирование locked cells и разрешить Excel переставлять их при сортировке. До owner decision `02-g5-decision-preparer` не запускается. Владелец должен выбрать: сохранить protection read-only листов и снять обязательность manual sort для них либо снять protection и полагаться на parser/compare. Разовое usage exception не израсходовано: фактический gate перед reviewer был `PASS`, remaining 98%.
+
+### 15.5. Owner resolution protected-sheet sort — 2026-09-05
+
+Владелец явно выбрал сохранение Excel protection полностью read-only листов и подтвердил, что фактическая сортировка их locked ranges не является обязательной. Обязательными остаются: отсутствие recovery, блокировка записи на read-only листах, полная редактируемость mixed-листов, изменение ширины колонок и применение существующих фильтров. Сортировка unprotected mixed sheets работает штатно; `AllowSorting=True` на protected sheets, если присутствует, является только best-effort permission metadata и не доказывает реальную сортировку.
+
+Это решение снимает единственный blocker отчёта `20260905T183700Z-01-workbook-evidence-review-v3.md`. Canonical `.xlsx` не пересоздаются: их данные, protection map и hashes не меняются. Contract/SDD/prompt criteria и verifier приведены к owner decision; после локальных build/self-test/verify требуется независимый evidence rerun, затем при PASS разрешён переход к `02-g5-decision-preparer`. `INDEX_SYNC_UNRESOLVED`, Tier 2 skip и все write/full-catalog gaps сохраняются.
+
+### 15.6. Independent rerun после owner resolution — PASS
+
+Новый report: `docs/READ_ONLY_RESEARCH_RESULTS/20260905T191555Z-01-workbook-evidence-review-v3-rerun.md`, SHA-256 `b45f598dd7aeb1fdbbd7a3da13f33a1956f822a5a0c8ab883e0f3478040bc6ca`.
+
+Reviewer независимо повторил clean Release build, self-test, tool verify, Tier 1, style/read-back, OOXML/source/audit/hash/secret/index checks и Excel 16 operations. Обе canonical книги открылись без recovery; все 10 fully read-only sheets блокируют запись; все 4 mixed sheets приняли запись во всех used cells; resize и existing-filter operations прошли; simultaneous `LookupValues!M2`/`N2` input прошёл; mixed-sheet sorting прошла. Canonical `.xlsx` не сохранялись и их hashes не изменились. Verdict: `PASS` по обновлённому bounded contract.
+
+Tier 2/render остаётся `SKIPPED` из-за отсутствия LibreOffice. G5 не закрыт, runtime loader/reference precedence не реализован, `INDEX_SYNC_UNRESOLVED` остаётся future gate. Следующий разрешённый шаг — после нового usage `PASS` запустить `02-g5-decision-preparer`; его рекомендация не является решением владельца.
+
+## 16. G5 human acceptance — 2026-09-06
+
+### 16.1. Exact owner decision and status
+
+Владелец дал дословный ответ G5: **«принимаю»** — в ответ на точный вопрос из `docs/READ_ONLY_RESEARCH_RESULTS/20260906T064102Z-02-g5-decision-package.md`:
+
+> «Подтверждаете ли вы после личного открытия обеих canonical template-v3 книг в desktop Excel отсутствие recovery, видимость ожидаемых данных и листов, работу resize и existing filters, блокировку protected cells и редактируемость mixed sheets, а также решение G5 `accept with limits` строго для `VerifiedBoundedBaseline` без разрешения full-catalog/write/load и со сохранением `INDEX_SYNC_UNRESOLVED`?»
+
+Это **human G5 acceptance: `accept with limits`**. Владелец подтвердил перечисленные manual desktop-Excel checks и принимает canonical template-v3 pair исключительно как `VerifiedBoundedBaseline` bounded read/export workbook delivery. Это закрывает G5 только в явно названных границах, а не принимает весь MVP synchronizer или какие-либо future operations.
+
+### 16.2. Preserved limits and blockers
+
+- Не приняты и не закрыты: full-catalog completeness/scale/generalisation; LibreOffice Tier 2/render; composite/auto-name/broader index-order semantics; inherited `column.indexed` semantics; production parser/compare/immutable plan; runtime reference precedence/token resolution/invalid-GUID loader fixture; Git success workflow.
+- Не разрешены: BPMSoft Write/Manage, create/update/delete/compile/save, loader, load/apply/writeback, safe index add/drop planning/loading, Google input и изменения `SyncOM/`.
+- `INDEX_SYNC_UNRESOLVED` сохраняется. `Indexes` остаётся только read-only evidence; любой index load/apply требует отдельного future safety proof и нового явного owner decision.
+
+### 16.3. Next safe step and changed files
+
+Следующий безопасный шаг — сохранить принятую pair как bounded reference без её изменения и остановиться на этой delivery. Любая дальнейшая работа требует отдельного нового owner authorization; она не может выводить разрешение на full catalog, BPMSoft write/load/apply или index load из G5 acceptance.
+
+Decision record: `docs/READ_ONLY_RESEARCH_RESULTS/20260906T064737Z-03-owner-g5-decision-record.md`.
+
+Изменены только `docs/PROJECT_HANDOFF.md` и этот новый decision record. `docs/WORKBOOK_CONTRACT_VISION.md` и все `docs/SDD_DRAFTS/*.draft.md` не менялись: их существующие safety limits уже согласованы с данным ограниченным G5 решением.

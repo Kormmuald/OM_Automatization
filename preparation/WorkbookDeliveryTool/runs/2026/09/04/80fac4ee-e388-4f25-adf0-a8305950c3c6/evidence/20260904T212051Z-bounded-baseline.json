@@ -1,0 +1,1758 @@
+{
+  "ContractVersion": "1",
+  "PairId": "cb3722e8-ee9e-4f47-a299-723769ce7bbf",
+  "PullRunId": "80fac4ee-e388-4f25-adf0-a8305950c3c6",
+  "TargetAlias": "http://localhost:8002",
+  "ScopeMode": "VerifiedBoundedBaseline",
+  "PullStartedUtc": "2026-09-04T21:20:30.8290469+00:00",
+  "PullCompletedUtc": "2026-09-04T21:20:51.8196582+00:00",
+  "Assemblies": {
+    "Common": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Common.dll",
+      "Version": "1.8.0.14107",
+      "Sha256": "42bed5e551e01e63c35d5439ed71b6335b34feec740185f6a09af8a11228ae20"
+    },
+    "Nui": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Nui.ServiceModel.dll",
+      "Version": "1.8.0.14107",
+      "Sha256": "3c147aaa90d16a6b4d3fbb3b7773876a741ca2e73f41bb690997c241e057d948"
+    },
+    "OrderDirectionValues": {
+      "None": 0,
+      "Ascending": 1,
+      "Descending": 2
+    }
+  },
+  "WorkspaceItems": [
+    {
+      "WorkspaceItemUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "Name": "Account",
+      "ItemType": 3,
+      "PackageName": "Test1",
+      "PackageUId": "41cc8f6a-547d-c772-8959-3c616834fc96",
+      "SupportStatus": "Structured",
+      "SupportReason": "Verified bounded baseline"
+    },
+    {
+      "WorkspaceItemUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "Name": "Account",
+      "ItemType": 3,
+      "PackageName": "Base",
+      "PackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "SupportStatus": "Structured",
+      "SupportReason": "Verified bounded baseline"
+    },
+    {
+      "WorkspaceItemUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "Name": "Lookup",
+      "ItemType": 3,
+      "PackageName": "Base",
+      "PackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "SupportStatus": "Structured",
+      "SupportReason": "Verified bounded baseline"
+    },
+    {
+      "WorkspaceItemUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "Name": "ActivityPriority",
+      "ItemType": 3,
+      "PackageName": "Base",
+      "PackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "SupportStatus": "Structured",
+      "SupportReason": "Verified bounded baseline"
+    },
+    {
+      "WorkspaceItemUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "Name": "Account",
+      "ItemType": 3,
+      "PackageName": "Completeness",
+      "PackageUId": "76c2f1ba-2917-4eea-8bd0-e2cfd8cc3dde",
+      "SupportStatus": "Structured",
+      "SupportReason": "Verified bounded baseline"
+    }
+  ],
+  "Schemas": [
+    {
+      "SchemaName": "Account",
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "GetSchemaSchemaIdCandidate": "f7fa99e5-79fa-4972-8ca1-d5b238733dad",
+      "ParentSchemaName": "Account",
+      "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "ActualPackageName": "Test1",
+      "ActualPackageUId": "41cc8f6a-547d-c772-8959-3c616834fc96",
+      "Columns": [
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AccountCategory",
+          "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountCategory",
+          "ReferenceSchemaUId": "a6ff9860-2b37-4da2-9537-5cd6cedf9665"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AccountLogo",
+          "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+          "Ownership": "Inherited",
+          "TypeCode": 16,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "SysImage",
+          "ReferenceSchemaUId": "93986bfe-2dbd-46bc-9bf9-d03dfefbf3b8"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AdditionalPhone",
+          "ColumnUId": "9411651f-b785-4920-a542-e8ac11d2cf8d",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Address",
+          "ColumnUId": "8cfabb54-64ca-413d-a4e0-81ce9d2f0c8f",
+          "Ownership": "Inherited",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AddressType",
+          "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AddressType",
+          "ReferenceSchemaUId": "50837bfc-43ff-466b-94bb-de0847eecd1b"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AlternativeName",
+          "ColumnUId": "e36ae687-347d-4bf7-b260-90129862e357",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "AnnualRevenue",
+          "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountAnnualRevenue",
+          "ReferenceSchemaUId": "24d201f8-5f03-47f3-9e7b-1c967c11d7b9"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "City",
+          "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "City",
+          "ReferenceSchemaUId": "5ca90b6a-93e7-4448-befe-ab5166ec2cfe"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Code",
+          "ColumnUId": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Country",
+          "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Country",
+          "ReferenceSchemaUId": "09fce1f8-515c-4296-95cd-8cd93f79a6cf"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "CreatedBy",
+          "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "CreatedOn",
+          "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Email",
+          "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "EmployeesNumber",
+          "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountEmployeesNumber",
+          "ReferenceSchemaUId": "ccf7d7bf-b4b7-4eb3-a191-3f47d6c4ee8d"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Fax",
+          "ColumnUId": "40bf89ca-5927-47a6-b3fe-8955deb5f3ce",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "GPSE",
+          "ColumnUId": "2ce4d59d-2ae4-4840-b4a7-33eee33fdb60",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "GPSN",
+          "ColumnUId": "f1f01f71-ddef-48bb-bc88-0fd2f3526ad9",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Id",
+          "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Ownership": "Inherited",
+          "TypeCode": 0,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Industry",
+          "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountIndustry",
+          "ReferenceSchemaUId": "95de3d3b-b909-40d9-a3fa-e80d38ec208e"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Logo",
+          "ColumnUId": "c8abae85-5c2e-45bc-826b-fd53a88660c8",
+          "Ownership": "Inherited",
+          "TypeCode": 14,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "ModifiedBy",
+          "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "ModifiedOn",
+          "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Name",
+          "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Notes",
+          "ColumnUId": "0136fb47-c018-4b7f-8ed3-0eb6bd686b20",
+          "Ownership": "Inherited",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Owner",
+          "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Ownership",
+          "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountOwnership",
+          "ReferenceSchemaUId": "ce243c2c-b7d3-4dc4-b474-ab24c677801b"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Parent",
+          "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Account",
+          "ReferenceSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Phone",
+          "ColumnUId": "9dbe8164-58b4-42c9-a75e-7c568d430d50",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "PrimaryContact",
+          "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "ProcessListeners",
+          "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+          "Ownership": "Inherited",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Region",
+          "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Region",
+          "ReferenceSchemaUId": "fa4eb497-e6a3-4f8c-8568-5df4bd2a8b91"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Type",
+          "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountType",
+          "ReferenceSchemaUId": "3ae4a2bb-d3dc-48bf-8271-9ca91dcdeba1"
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Web",
+          "ColumnUId": "a1d2ad98-d068-4fc2-8454-8a7c944cd0a1",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "ColumnName": "Zip",
+          "ColumnUId": "3fe38c61-ff55-4012-b28d-67e59d5b1986",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        }
+      ],
+      "Indexes": [
+        {
+          "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "IndexUId": "03d8954e-6967-41b5-88c7-0a08a802880e",
+          "IndexName": "Index1",
+          "IsUnique": true,
+          "IsAutoName": false,
+          "Members": [
+            {
+              "MemberUId": "979a0bb4-edaa-7f8a-a98c-3d25b6173e22",
+              "MemberName": "IndexColumn_Code",
+              "ColumnUId": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+              "OrderDirection": 0,
+              "Ordinal": 0
+            }
+          ]
+        },
+        {
+          "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+          "IndexUId": "bace03c9-8747-4f26-970c-96cc3940543e",
+          "IndexName": "Index2",
+          "IsUnique": false,
+          "IsAutoName": false,
+          "Members": [
+            {
+              "MemberUId": "d30c533f-7d5a-66e6-aa70-38bc46747428",
+              "MemberName": "IndexColumn_Name",
+              "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+              "OrderDirection": 0,
+              "Ordinal": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "SchemaName": "Account",
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "GetSchemaSchemaIdCandidate": "1ff45ab7-3db7-402a-a7c0-00f811d2d28e",
+      "ParentSchemaName": "BaseEntity",
+      "ParentSchemaUId": "1bab9dcf-17d5-49f8-9536-8e0064f1dce0",
+      "ActualPackageName": "Base",
+      "ActualPackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "Columns": [
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AccountCategory",
+          "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountCategory",
+          "ReferenceSchemaUId": "a6ff9860-2b37-4da2-9537-5cd6cedf9665"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AccountLogo",
+          "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+          "Ownership": "Own",
+          "TypeCode": 16,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "SysImage",
+          "ReferenceSchemaUId": "93986bfe-2dbd-46bc-9bf9-d03dfefbf3b8"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AdditionalPhone",
+          "ColumnUId": "9411651f-b785-4920-a542-e8ac11d2cf8d",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Address",
+          "ColumnUId": "8cfabb54-64ca-413d-a4e0-81ce9d2f0c8f",
+          "Ownership": "Own",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AddressType",
+          "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AddressType",
+          "ReferenceSchemaUId": "50837bfc-43ff-466b-94bb-de0847eecd1b"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AlternativeName",
+          "ColumnUId": "e36ae687-347d-4bf7-b260-90129862e357",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "AnnualRevenue",
+          "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountAnnualRevenue",
+          "ReferenceSchemaUId": "24d201f8-5f03-47f3-9e7b-1c967c11d7b9"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "City",
+          "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "City",
+          "ReferenceSchemaUId": "5ca90b6a-93e7-4448-befe-ab5166ec2cfe"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Code",
+          "ColumnUId": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Country",
+          "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Country",
+          "ReferenceSchemaUId": "09fce1f8-515c-4296-95cd-8cd93f79a6cf"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Email",
+          "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "EmployeesNumber",
+          "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountEmployeesNumber",
+          "ReferenceSchemaUId": "ccf7d7bf-b4b7-4eb3-a191-3f47d6c4ee8d"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Fax",
+          "ColumnUId": "40bf89ca-5927-47a6-b3fe-8955deb5f3ce",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "GPSE",
+          "ColumnUId": "2ce4d59d-2ae4-4840-b4a7-33eee33fdb60",
+          "Ownership": "Own",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "GPSN",
+          "ColumnUId": "f1f01f71-ddef-48bb-bc88-0fd2f3526ad9",
+          "Ownership": "Own",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Industry",
+          "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountIndustry",
+          "ReferenceSchemaUId": "95de3d3b-b909-40d9-a3fa-e80d38ec208e"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Logo",
+          "ColumnUId": "c8abae85-5c2e-45bc-826b-fd53a88660c8",
+          "Ownership": "Own",
+          "TypeCode": 14,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Name",
+          "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Notes",
+          "ColumnUId": "0136fb47-c018-4b7f-8ed3-0eb6bd686b20",
+          "Ownership": "Own",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Owner",
+          "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Ownership",
+          "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountOwnership",
+          "ReferenceSchemaUId": "ce243c2c-b7d3-4dc4-b474-ab24c677801b"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Parent",
+          "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Account",
+          "ReferenceSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Phone",
+          "ColumnUId": "9dbe8164-58b4-42c9-a75e-7c568d430d50",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "PrimaryContact",
+          "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Region",
+          "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Region",
+          "ReferenceSchemaUId": "fa4eb497-e6a3-4f8c-8568-5df4bd2a8b91"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Type",
+          "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountType",
+          "ReferenceSchemaUId": "3ae4a2bb-d3dc-48bf-8271-9ca91dcdeba1"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Web",
+          "ColumnUId": "a1d2ad98-d068-4fc2-8454-8a7c944cd0a1",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Zip",
+          "ColumnUId": "3fe38c61-ff55-4012-b28d-67e59d5b1986",
+          "Ownership": "Own",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "CreatedBy",
+          "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "CreatedOn",
+          "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "Id",
+          "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Ownership": "Inherited",
+          "TypeCode": 0,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "ModifiedBy",
+          "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "ModifiedOn",
+          "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+          "ColumnName": "ProcessListeners",
+          "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+          "Ownership": "Inherited",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        }
+      ],
+      "Indexes": []
+    },
+    {
+      "SchemaName": "Lookup",
+      "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "GetSchemaSchemaIdCandidate": "d6728e0e-3e87-46d0-90d0-fb1a732565f1",
+      "ParentSchemaName": "BaseEntity",
+      "ParentSchemaUId": "1bab9dcf-17d5-49f8-9536-8e0064f1dce0",
+      "ActualPackageName": "Base",
+      "ActualPackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "Columns": [
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "Description",
+          "ColumnUId": "009571ab-9c5d-4a20-bf83-dd499ed5a833",
+          "Ownership": "Own",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "IsNotAvailableInStudio",
+          "ColumnUId": "9f530727-41f3-e880-b5a7-e3a03e39838b",
+          "Ownership": "Own",
+          "TypeCode": 12,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "Name",
+          "ColumnUId": "547bff8d-f717-4316-846c-3ff1f0e36e6e",
+          "Ownership": "Own",
+          "TypeCode": 28,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "SysEntitySchemaUId",
+          "ColumnUId": "91bcbbaa-7f66-4cbf-9de4-9170da8b8d4b",
+          "Ownership": "Own",
+          "TypeCode": 0,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "SysLookup",
+          "ColumnUId": "8b099885-e3bc-4585-920d-a497f2611e2c",
+          "Ownership": "Own",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "SysLookup",
+          "ReferenceSchemaUId": "aa3cc352-3095-43c9-ace8-6301f50a0a80"
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "SysPageSchemaUId",
+          "ColumnUId": "91f76f42-e24d-4ebd-95b3-5b5517e917c3",
+          "Ownership": "Own",
+          "TypeCode": 0,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "CreatedBy",
+          "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "CreatedOn",
+          "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "Id",
+          "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Ownership": "Inherited",
+          "TypeCode": 0,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "ModifiedBy",
+          "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "ModifiedOn",
+          "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+          "ColumnName": "ProcessListeners",
+          "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+          "Ownership": "Inherited",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        }
+      ],
+      "Indexes": []
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "GetSchemaSchemaIdCandidate": "0f44dba5-3379-4c8b-b095-6f34ea95ff79",
+      "ParentSchemaName": "BaseLookup",
+      "ParentSchemaUId": "11ab4bcb-9b23-4b6d-9c86-520fae925d75",
+      "ActualPackageName": "Base",
+      "ActualPackageUId": "5be3998b-c5c3-42bb-a01c-2e4149059a97",
+      "Columns": [
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "Img",
+          "ColumnUId": "887c15af-c2cc-4b29-8af6-6f3bde17eb3d",
+          "Ownership": "Own",
+          "TypeCode": 14,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "CreatedBy",
+          "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "CreatedOn",
+          "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "Description",
+          "ColumnUId": "9e53fd7c-dde4-4502-a64c-b9e34148108b",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "Id",
+          "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Ownership": "Inherited",
+          "TypeCode": 0,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "ModifiedBy",
+          "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "ModifiedOn",
+          "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "Name",
+          "ColumnUId": "736c30a7-c0ec-4fa9-b034-2552b319b633",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+          "ColumnName": "ProcessListeners",
+          "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+          "Ownership": "Inherited",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        }
+      ],
+      "Indexes": []
+    },
+    {
+      "SchemaName": "Account",
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "GetSchemaSchemaIdCandidate": "aea44713-61a9-4f92-96e3-da648b0118fa",
+      "ParentSchemaName": "Account",
+      "ParentSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "ActualPackageName": "Completeness",
+      "ActualPackageUId": "76c2f1ba-2917-4eea-8bd0-e2cfd8cc3dde",
+      "Columns": [
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Completeness",
+          "ColumnUId": "58210e36-46cd-4a12-934c-c97e96ed4160",
+          "Ownership": "Own",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AccountCategory",
+          "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountCategory",
+          "ReferenceSchemaUId": "a6ff9860-2b37-4da2-9537-5cd6cedf9665"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AccountLogo",
+          "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+          "Ownership": "Inherited",
+          "TypeCode": 16,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "SysImage",
+          "ReferenceSchemaUId": "93986bfe-2dbd-46bc-9bf9-d03dfefbf3b8"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AdditionalPhone",
+          "ColumnUId": "9411651f-b785-4920-a542-e8ac11d2cf8d",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Address",
+          "ColumnUId": "8cfabb54-64ca-413d-a4e0-81ce9d2f0c8f",
+          "Ownership": "Inherited",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AddressType",
+          "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AddressType",
+          "ReferenceSchemaUId": "50837bfc-43ff-466b-94bb-de0847eecd1b"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AlternativeName",
+          "ColumnUId": "e36ae687-347d-4bf7-b260-90129862e357",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "AnnualRevenue",
+          "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountAnnualRevenue",
+          "ReferenceSchemaUId": "24d201f8-5f03-47f3-9e7b-1c967c11d7b9"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "City",
+          "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "City",
+          "ReferenceSchemaUId": "5ca90b6a-93e7-4448-befe-ab5166ec2cfe"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Code",
+          "ColumnUId": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Country",
+          "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Country",
+          "ReferenceSchemaUId": "09fce1f8-515c-4296-95cd-8cd93f79a6cf"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "CreatedBy",
+          "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "CreatedOn",
+          "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Email",
+          "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "EmployeesNumber",
+          "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountEmployeesNumber",
+          "ReferenceSchemaUId": "ccf7d7bf-b4b7-4eb3-a191-3f47d6c4ee8d"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Fax",
+          "ColumnUId": "40bf89ca-5927-47a6-b3fe-8955deb5f3ce",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "GPSE",
+          "ColumnUId": "2ce4d59d-2ae4-4840-b4a7-33eee33fdb60",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "GPSN",
+          "ColumnUId": "f1f01f71-ddef-48bb-bc88-0fd2f3526ad9",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Id",
+          "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Ownership": "Inherited",
+          "TypeCode": 0,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Industry",
+          "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountIndustry",
+          "ReferenceSchemaUId": "95de3d3b-b909-40d9-a3fa-e80d38ec208e"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Logo",
+          "ColumnUId": "c8abae85-5c2e-45bc-826b-fd53a88660c8",
+          "Ownership": "Inherited",
+          "TypeCode": 14,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "ModifiedBy",
+          "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "ModifiedOn",
+          "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+          "Ownership": "Inherited",
+          "TypeCode": 7,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Name",
+          "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": true,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Notes",
+          "ColumnUId": "0136fb47-c018-4b7f-8ed3-0eb6bd686b20",
+          "Ownership": "Inherited",
+          "TypeCode": 29,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Owner",
+          "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Ownership",
+          "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountOwnership",
+          "ReferenceSchemaUId": "ce243c2c-b7d3-4dc4-b474-ab24c677801b"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Parent",
+          "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Account",
+          "ReferenceSchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Phone",
+          "ColumnUId": "9dbe8164-58b4-42c9-a75e-7c568d430d50",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "PrimaryContact",
+          "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Contact",
+          "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "ProcessListeners",
+          "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+          "Ownership": "Inherited",
+          "TypeCode": 4,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Region",
+          "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "Region",
+          "ReferenceSchemaUId": "fa4eb497-e6a3-4f8c-8568-5df4bd2a8b91"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Type",
+          "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+          "Ownership": "Inherited",
+          "TypeCode": 10,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": true,
+          "ReferenceSchemaName": "AccountType",
+          "ReferenceSchemaUId": "3ae4a2bb-d3dc-48bf-8271-9ca91dcdeba1"
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Web",
+          "ColumnUId": "a1d2ad98-d068-4fc2-8454-8a7c944cd0a1",
+          "Ownership": "Inherited",
+          "TypeCode": 28,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        },
+        {
+          "ParentSchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+          "ColumnName": "Zip",
+          "ColumnUId": "3fe38c61-ff55-4012-b28d-67e59d5b1986",
+          "Ownership": "Inherited",
+          "TypeCode": 27,
+          "RequirementTypeMapped": false,
+          "ActualIndexed": false,
+          "ReferenceSchemaName": null,
+          "ReferenceSchemaUId": null
+        }
+      ],
+      "Indexes": []
+    }
+  ],
+  "LookupRegistry": {
+    "SchemaName": "ActivityPriority",
+    "SysEntitySchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+    "LookupRecordId": "318a52d8-bd7c-4ddf-afa7-2fcaeb2d757a",
+    "BaseSchemaName": "BaseLookup",
+    "BaseSchemaUId": "11ab4bcb-9b23-4b6d-9c86-520fae925d75"
+  },
+  "LookupRows": [
+    {
+      "SchemaName": "ActivityPriority",
+      "SysEntitySchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "RecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+      "SourceFingerprint": "fe2431e56b6ea965f096470ceee102fdd5485e2faa81f8d96a950df56f53b381"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "SysEntitySchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "RecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6",
+      "SourceFingerprint": "102531a4354f685f898df4dd0df75156f96cddd83d20a0802e45929419dfec19"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "SysEntitySchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "RecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+      "SourceFingerprint": "b62965c67812c8d6bd36357c4eb11181b4d9cbf007e5b5d0f6099060e151f3b1"
+    }
+  ],
+  "LookupValues": [
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+      "ColumnName": "Name",
+      "ValueState": "Value",
+      "Value": "\u0421\u0440\u0435\u0434\u043D\u0438\u0439",
+      "ValueKind": "Text",
+      "CanonicalValue": "\u0421\u0440\u0435\u0434\u043D\u0438\u0439",
+      "SourceFingerprint": "fe2431e56b6ea965f096470ceee102fdd5485e2faa81f8d96a950df56f53b381"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+      "ColumnName": "Description",
+      "ValueState": "EmptyString",
+      "Value": "",
+      "ValueKind": "Text",
+      "CanonicalValue": "",
+      "SourceFingerprint": "fe2431e56b6ea965f096470ceee102fdd5485e2faa81f8d96a950df56f53b381"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6",
+      "ColumnName": "Name",
+      "ValueState": "Value",
+      "Value": "\u041D\u0438\u0437\u043A\u0438\u0439",
+      "ValueKind": "Text",
+      "CanonicalValue": "\u041D\u0438\u0437\u043A\u0438\u0439",
+      "SourceFingerprint": "102531a4354f685f898df4dd0df75156f96cddd83d20a0802e45929419dfec19"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6",
+      "ColumnName": "Description",
+      "ValueState": "EmptyString",
+      "Value": "",
+      "ValueKind": "Text",
+      "CanonicalValue": "",
+      "SourceFingerprint": "102531a4354f685f898df4dd0df75156f96cddd83d20a0802e45929419dfec19"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+      "ColumnName": "Name",
+      "ValueState": "Value",
+      "Value": "\u0412\u044B\u0441\u043E\u043A\u0438\u0439",
+      "ValueKind": "Text",
+      "CanonicalValue": "\u0412\u044B\u0441\u043E\u043A\u0438\u0439",
+      "SourceFingerprint": "b62965c67812c8d6bd36357c4eb11181b4d9cbf007e5b5d0f6099060e151f3b1"
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+      "ColumnName": "Description",
+      "ValueState": "EmptyString",
+      "Value": "",
+      "ValueKind": "Text",
+      "CanonicalValue": "",
+      "SourceFingerprint": "b62965c67812c8d6bd36357c4eb11181b4d9cbf007e5b5d0f6099060e151f3b1"
+    }
+  ],
+  "OrderedProofs": [
+    {
+      "SchemaName": "Lookup",
+      "PageSize": 50,
+      "RowCount": 109,
+      "AscendingDigest": "50097f69a2df99b3d275b205e4e6b7ac6194ba56fff298895c457dfa131339cb",
+      "RepeatedAscendingDigest": "50097f69a2df99b3d275b205e4e6b7ac6194ba56fff298895c457dfa131339cb",
+      "DescendingDigest": "6e6c302095b7da5546453b51e3a881e9a2e77cee425bbcbe0e9d42ec94e6fd09",
+      "TerminalEmptyPage": true,
+      "AscendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 50,
+          "FirstRecordId": "02860cbd-1210-4153-bcc7-54688a8d880f",
+          "LastRecordId": "742f6d11-b95c-44b8-b102-2fb739273bff"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 50,
+          "RowCount": 50,
+          "FirstRecordId": "7b9d3263-af22-4310-b5a9-e5d5eb84b81e",
+          "LastRecordId": "ee5887e6-156a-4fb6-aff5-4953fdce5c48"
+        },
+        {
+          "PageNumber": 2,
+          "Offset": 100,
+          "RowCount": 9,
+          "FirstRecordId": "eea5b179-1a48-4770-8cd8-dd7a8f7f1eb3",
+          "LastRecordId": "ff6e3cfc-9549-4e1f-b74b-4b370ad4a547"
+        }
+      ],
+      "RepeatedAscendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 50,
+          "FirstRecordId": "02860cbd-1210-4153-bcc7-54688a8d880f",
+          "LastRecordId": "742f6d11-b95c-44b8-b102-2fb739273bff"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 50,
+          "RowCount": 50,
+          "FirstRecordId": "7b9d3263-af22-4310-b5a9-e5d5eb84b81e",
+          "LastRecordId": "ee5887e6-156a-4fb6-aff5-4953fdce5c48"
+        },
+        {
+          "PageNumber": 2,
+          "Offset": 100,
+          "RowCount": 9,
+          "FirstRecordId": "eea5b179-1a48-4770-8cd8-dd7a8f7f1eb3",
+          "LastRecordId": "ff6e3cfc-9549-4e1f-b74b-4b370ad4a547"
+        }
+      ],
+      "DescendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 50,
+          "FirstRecordId": "ff6e3cfc-9549-4e1f-b74b-4b370ad4a547",
+          "LastRecordId": "9c683204-81f7-4a81-a1b3-0c63cb11bd28"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 50,
+          "RowCount": 50,
+          "FirstRecordId": "98cdc8e7-3c8a-4c6f-bb42-826479069fab",
+          "LastRecordId": "10eb45bc-2900-47fa-b59e-6a56a4f57731"
+        },
+        {
+          "PageNumber": 2,
+          "Offset": 100,
+          "RowCount": 9,
+          "FirstRecordId": "10e8851e-797d-4dc1-b9f6-158eb80ed1c2",
+          "LastRecordId": "02860cbd-1210-4153-bcc7-54688a8d880f"
+        }
+      ]
+    },
+    {
+      "SchemaName": "ActivityPriority",
+      "PageSize": 2,
+      "RowCount": 3,
+      "AscendingDigest": "89197667d1f0145270d3a9c4544b638171f8d9119ff239e46a4e274ec75f2d8e",
+      "RepeatedAscendingDigest": "89197667d1f0145270d3a9c4544b638171f8d9119ff239e46a4e274ec75f2d8e",
+      "DescendingDigest": "055c9af9bd7a104799fbb67d6da0397bd37e4f539a60faecfd83debd887de75a",
+      "TerminalEmptyPage": true,
+      "AscendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 2,
+          "FirstRecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+          "LastRecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 2,
+          "RowCount": 1,
+          "FirstRecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+          "LastRecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6"
+        }
+      ],
+      "RepeatedAscendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 2,
+          "FirstRecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+          "LastRecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 2,
+          "RowCount": 1,
+          "FirstRecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+          "LastRecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6"
+        }
+      ],
+      "DescendingPages": [
+        {
+          "PageNumber": 0,
+          "Offset": 0,
+          "RowCount": 2,
+          "FirstRecordId": "d625a9fc-7ee6-df11-971b-001d60e938c6",
+          "LastRecordId": "ac96fa02-7fe6-df11-971b-001d60e938c6"
+        },
+        {
+          "PageNumber": 1,
+          "Offset": 2,
+          "RowCount": 1,
+          "FirstRecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6",
+          "LastRecordId": "ab96fa02-7fe6-df11-971b-001d60e938c6"
+        }
+      ]
+    }
+  ]
+}

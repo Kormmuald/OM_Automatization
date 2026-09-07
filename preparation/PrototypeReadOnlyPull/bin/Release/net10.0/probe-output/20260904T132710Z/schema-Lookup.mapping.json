@@ -1,0 +1,140 @@
+{
+  "RequestedName": "Lookup",
+  "RequestedPackageName": "Base",
+  "RequestedWorkspaceItemUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+  "SchemaName": "Lookup",
+  "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+  "SysSchemaIdCandidate": "d03777b8-c06b-4aa9-8ff0-a9653099d2dc",
+  "ParentSchemaName": "BaseEntity",
+  "ParentSchemaUId": "1bab9dcf-17d5-49f8-9536-8e0064f1dce0",
+  "IndexCount": 0,
+  "Columns": [
+    {
+      "ColumnName": "Description",
+      "ColumnUId": "009571ab-9c5d-4a20-bf83-dd499ed5a833",
+      "Ownership": "Own",
+      "Type": 29,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "IsNotAvailableInStudio",
+      "ColumnUId": "9f530727-41f3-e880-b5a7-e3a03e39838b",
+      "Ownership": "Own",
+      "Type": 12,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "Name",
+      "ColumnUId": "547bff8d-f717-4316-846c-3ff1f0e36e6e",
+      "Ownership": "Own",
+      "Type": 28,
+      "RequirementType": 1,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "SysEntitySchemaUId",
+      "ColumnUId": "91bcbbaa-7f66-4cbf-9de4-9170da8b8d4b",
+      "Ownership": "Own",
+      "Type": 0,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "SysLookup",
+      "ColumnUId": "8b099885-e3bc-4585-920d-a497f2611e2c",
+      "Ownership": "Own",
+      "Type": 10,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": "SysLookup",
+      "ReferenceSchemaUId": "aa3cc352-3095-43c9-ace8-6301f50a0a80"
+    },
+    {
+      "ColumnName": "SysPageSchemaUId",
+      "ColumnUId": "91f76f42-e24d-4ebd-95b3-5b5517e917c3",
+      "Ownership": "Own",
+      "Type": 0,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "Ownership": "Inherited",
+      "Type": 10,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": "Contact",
+      "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+    },
+    {
+      "ColumnName": "CreatedOn",
+      "ColumnUId": "e80190a5-03b2-4095-90f7-a193a960adee",
+      "Ownership": "Inherited",
+      "Type": 7,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "Id",
+      "ColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+      "Ownership": "Inherited",
+      "Type": 0,
+      "RequirementType": 1,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "Ownership": "Inherited",
+      "Type": 10,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": "Contact",
+      "ReferenceSchemaUId": "16be3651-8fe2-4159-8dd0-a803d4683dd3"
+    },
+    {
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "Ownership": "Inherited",
+      "Type": 7,
+      "RequirementType": 0,
+      "Indexed": true,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    },
+    {
+      "ColumnName": "ProcessListeners",
+      "ColumnUId": "3fabd836-6a53-4d8d-9069-6df88d9dae1e",
+      "Ownership": "Inherited",
+      "Type": 4,
+      "RequirementType": 0,
+      "Indexed": false,
+      "ReferenceSchemaName": null,
+      "ReferenceSchemaUId": null
+    }
+  ],
+  "SourcePaths": {
+    "SchemaUId": "schema.uId",
+    "SysSchemaIdCandidate": "schema.id",
+    "ParentSchemaUId": "schema.parentSchema.uId",
+    "ColumnUId": "schema.columns[].uId / schema.inheritedColumns[].uId",
+    "ReferenceSchemaUId": "column.referenceSchema.uId"
+  }
+}

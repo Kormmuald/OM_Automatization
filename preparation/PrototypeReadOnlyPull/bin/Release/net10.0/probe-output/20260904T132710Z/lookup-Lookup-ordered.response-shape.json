@@ -1,0 +1,25 @@
+{
+  "rowConfig": {
+    "Id": {
+      "dataValueType": "number"
+    },
+    "SysEntitySchemaUId": {
+      "dataValueType": "number"
+    }
+  },
+  "rows": {
+    "$kind": "array",
+    "length": 50,
+    "firstItemShape": {
+      "Id": "string",
+      "SysEntitySchemaUId": "string"
+    }
+  },
+  "notFoundColumns": {
+    "$kind": "array",
+    "length": 0
+  },
+  "rowsAffected": "number",
+  "nextPrcElReady": "boolean",
+  "success": "boolean"
+}

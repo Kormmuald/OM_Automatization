@@ -1,0 +1,21 @@
+{
+  "rowConfig": {
+    "Id": {
+      "dataValueType": "number"
+    }
+  },
+  "rows": {
+    "$kind": "array",
+    "length": 2,
+    "firstItemShape": {
+      "Id": "string"
+    }
+  },
+  "notFoundColumns": {
+    "$kind": "array",
+    "length": 0
+  },
+  "rowsAffected": "number",
+  "nextPrcElReady": "boolean",
+  "success": "boolean"
+}

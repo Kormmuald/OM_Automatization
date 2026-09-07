@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj": {}
+    "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj": {}
   },
   "projects": {
-    "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj": {
+    "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj",
+        "projectUniqueName": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj",
         "projectName": "BpmSoftReadOnlyPull",
-        "projectPath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj",
+        "projectPath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\PrototypeReadOnlyPull\\BpmSoftReadOnlyPull.csproj",
         "packagesPath": "C:\\Users\\Evgenii_2\\.nuget\\packages\\",
-        "outputPath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\PrototypeReadOnlyPull\\obj\\",
+        "outputPath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\PrototypeReadOnlyPull\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,0 +1,57 @@
+{
+  "SelectEndpoint": "/DataService/json/SyncReply/SelectQuery",
+  "OrderingHypothesis": {
+    "ColumnPath": "Id",
+    "AscendingOrderDirection": 1,
+    "DescendingOrderDirection": 2,
+    "ProofRule": "Two identical ascending passes and one exact reverse descending pass."
+  },
+  "ActivityPriorityOffsetZeroPayload": {
+    "rootSchemaName": "ActivityPriority",
+    "rowCount": 2,
+    "rowsOffset": 0,
+    "isPageable": true,
+    "allColumns": true,
+    "useLocalization": true,
+    "columns": {
+      "items": {
+        "Id": {
+          "caption": "Id",
+          "orderDirection": 1,
+          "orderPosition": 0,
+          "isVisible": true,
+          "expression": {
+            "expressionType": 0,
+            "columnPath": "Id"
+          }
+        }
+      }
+    }
+  },
+  "LookupOffsetZeroPayload": {
+    "rootSchemaName": "Lookup",
+    "rowCount": 50,
+    "rowsOffset": 0,
+    "isPageable": true,
+    "allColumns": true,
+    "useLocalization": true,
+    "columns": {
+      "items": {
+        "Id": {
+          "caption": "Id",
+          "orderDirection": 1,
+          "orderPosition": 0,
+          "isVisible": true,
+          "expression": {
+            "expressionType": 0,
+            "columnPath": "Id"
+          }
+        }
+      }
+    }
+  },
+  "SchemaEndpoint": "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema",
+  "SchemaPayloadShape": {
+    "schemaUId": "\u003Cworkspace-item-uId\u003E"
+  }
+}

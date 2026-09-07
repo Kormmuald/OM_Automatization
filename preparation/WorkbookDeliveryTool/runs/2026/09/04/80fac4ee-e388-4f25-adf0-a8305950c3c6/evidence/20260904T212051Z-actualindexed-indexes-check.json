@@ -1,0 +1,659 @@
+{
+  "Status": "SOURCE_READY",
+  "SourceActualIndexedTrueCount": 64,
+  "SourceMemberCount": 2,
+  "Matrix": [
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "AccountCategory",
+      "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "City",
+      "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "PrimaryContact",
+      "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "AccountLogo",
+      "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Country",
+      "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Email",
+      "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Code",
+      "ColumnUId": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+      "ActualIndexed": false,
+      "IndexMembershipCount": 1,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Name",
+      "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 1,
+      "Assessment": "AgreementIsInformativeOnly"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Owner",
+      "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "EmployeesNumber",
+      "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Region",
+      "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "AddressType",
+      "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "AnnualRevenue",
+      "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Type",
+      "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Industry",
+      "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Ownership",
+      "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+      "SchemaName": "Account",
+      "PackageName": "Test1",
+      "ColumnName": "Parent",
+      "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "AccountCategory",
+      "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "City",
+      "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "PrimaryContact",
+      "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "AccountLogo",
+      "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Country",
+      "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Email",
+      "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Name",
+      "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Owner",
+      "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "EmployeesNumber",
+      "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Region",
+      "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "AddressType",
+      "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "AnnualRevenue",
+      "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Type",
+      "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Industry",
+      "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Ownership",
+      "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e",
+      "SchemaName": "Account",
+      "PackageName": "Base",
+      "ColumnName": "Parent",
+      "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "SchemaName": "Lookup",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "SchemaName": "Lookup",
+      "PackageName": "Base",
+      "ColumnName": "SysLookup",
+      "ColumnUId": "8b099885-e3bc-4585-920d-a497f2611e2c",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "SchemaName": "Lookup",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "2aecdb97-990e-4c17-96f4-240ca6531c84",
+      "SchemaName": "Lookup",
+      "PackageName": "Base",
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "SchemaName": "ActivityPriority",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "SchemaName": "ActivityPriority",
+      "PackageName": "Base",
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+      "SchemaName": "ActivityPriority",
+      "PackageName": "Base",
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "AccountCategory",
+      "ColumnUId": "0039b8f7-f5cf-44c9-8828-4b9cb2fd6634",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "City",
+      "ColumnUId": "13bbd624-a13b-4bc2-b05c-fff21e9f7b92",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "PrimaryContact",
+      "ColumnUId": "165072a8-b718-4490-ab89-223f30390d81",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "AccountLogo",
+      "ColumnUId": "27a77271-50e0-436f-a559-38ce3f8f7f37",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Country",
+      "ColumnUId": "2a7c00bd-0519-4742-b905-d8ce5f1b70ca",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "ModifiedBy",
+      "ColumnUId": "3015559e-cbc6-406a-88af-07f7930be832",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Email",
+      "ColumnUId": "603284fc-f07b-e913-d22f-db9ecac772e8",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Name",
+      "ColumnUId": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Owner",
+      "ColumnUId": "7c85a229-8cfa-4c29-8ab9-9463560a92ec",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "EmployeesNumber",
+      "ColumnUId": "8696b76a-1f0b-42a4-8279-934399c0207f",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Region",
+      "ColumnUId": "8f532bba-53fb-4f56-babd-38402cb57b2a",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "ModifiedOn",
+      "ColumnUId": "9928edec-4272-425a-93bb-48743fee4b04",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "AddressType",
+      "ColumnUId": "9f5af167-9ab8-4c83-99db-7503df0eb650",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "AnnualRevenue",
+      "ColumnUId": "a006d013-4ef6-47a1-a000-d25346fcb392",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Type",
+      "ColumnUId": "d60a9c06-1170-4cd6-9dc1-c972bc451533",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Industry",
+      "ColumnUId": "d7da954f-d0d8-4eca-a2b4-7d4f7121f6b4",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Ownership",
+      "ColumnUId": "dedb8f3b-4cb0-46ec-99e8-483ab92e10bb",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "CreatedBy",
+      "ColumnUId": "ebf6bb93-8aa6-4a01-900d-c6ea67affe21",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    },
+    {
+      "SchemaUId": "cc642965-191f-4b55-b1ea-fb8336e623b9",
+      "SchemaName": "Account",
+      "PackageName": "Completeness",
+      "ColumnName": "Parent",
+      "ColumnUId": "f25a5087-fab6-4c7a-9cd0-177325f6e715",
+      "ActualIndexed": true,
+      "IndexMembershipCount": 0,
+      "Assessment": "SeparationRequired"
+    }
+  ],
+  "Rule": "ActualIndexed and schema.indexes[] membership are independent source fields; neither is inferred from the other.",
+  "FutureIndexLoadGate": "INDEX_SYNC_UNRESOLVED"
+}

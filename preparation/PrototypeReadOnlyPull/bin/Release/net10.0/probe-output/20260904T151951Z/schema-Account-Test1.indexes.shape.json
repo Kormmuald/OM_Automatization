@@ -1,0 +1,213 @@
+{
+  "RootPath": "/schema/indexes",
+  "Nodes": [
+    {
+      "Path": "/schema/indexes",
+      "PropertyName": null,
+      "Kind": "array",
+      "ArrayLength": 2,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0",
+      "PropertyName": null,
+      "Kind": "object",
+      "ArrayLength": null,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/isUnique",
+      "PropertyName": "isUnique",
+      "Kind": "boolean",
+      "ArrayLength": null,
+      "SafeValue": "true",
+      "SafeValueClass": "Boolean",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/isAutoName",
+      "PropertyName": "isAutoName",
+      "Kind": "boolean",
+      "ArrayLength": null,
+      "SafeValue": "false",
+      "SafeValueClass": "Boolean",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns",
+      "PropertyName": "columns",
+      "Kind": "array",
+      "ArrayLength": 1,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns/0",
+      "PropertyName": null,
+      "Kind": "object",
+      "ArrayLength": null,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns/0/uId",
+      "PropertyName": "uId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "979a0bb4-edaa-7f8a-a98c-3d25b6173e22",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns/0/name",
+      "PropertyName": "name",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "IndexColumn_Code",
+      "SafeValueClass": "AsciiTechnicalIdentifier",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns/0/orderDirection",
+      "PropertyName": "orderDirection",
+      "Kind": "number",
+      "ArrayLength": null,
+      "SafeValue": "0",
+      "SafeValueClass": "Number",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/columns/0/columnUId",
+      "PropertyName": "columnUId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "60cc5643-4ee2-4adf-b76b-06000ad0b067",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/uId",
+      "PropertyName": "uId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "03d8954e-6967-41b5-88c7-0a08a802880e",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/0/name",
+      "PropertyName": "name",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "Index1",
+      "SafeValueClass": "AsciiTechnicalIdentifier",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1",
+      "PropertyName": null,
+      "Kind": "object",
+      "ArrayLength": null,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/isUnique",
+      "PropertyName": "isUnique",
+      "Kind": "boolean",
+      "ArrayLength": null,
+      "SafeValue": "false",
+      "SafeValueClass": "Boolean",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/isAutoName",
+      "PropertyName": "isAutoName",
+      "Kind": "boolean",
+      "ArrayLength": null,
+      "SafeValue": "false",
+      "SafeValueClass": "Boolean",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns",
+      "PropertyName": "columns",
+      "Kind": "array",
+      "ArrayLength": 1,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns/0",
+      "PropertyName": null,
+      "Kind": "object",
+      "ArrayLength": null,
+      "SafeValue": null,
+      "SafeValueClass": null,
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns/0/uId",
+      "PropertyName": "uId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "d30c533f-7d5a-66e6-aa70-38bc46747428",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns/0/name",
+      "PropertyName": "name",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "IndexColumn_Name",
+      "SafeValueClass": "AsciiTechnicalIdentifier",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns/0/orderDirection",
+      "PropertyName": "orderDirection",
+      "Kind": "number",
+      "ArrayLength": null,
+      "SafeValue": "0",
+      "SafeValueClass": "Number",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/columns/0/columnUId",
+      "PropertyName": "columnUId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "7c81a01e-f59b-47df-830c-8e830f1bf889",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/uId",
+      "PropertyName": "uId",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "bace03c9-8747-4f26-970c-96cc3940543e",
+      "SafeValueClass": "Guid",
+      "ValueOmitted": false
+    },
+    {
+      "Path": "/schema/indexes/1/name",
+      "PropertyName": "name",
+      "Kind": "string",
+      "ArrayLength": null,
+      "SafeValue": "Index2",
+      "SafeValueClass": "AsciiTechnicalIdentifier",
+      "ValueOmitted": false
+    }
+  ],
+  "UnsafeScalarPaths": []
+}

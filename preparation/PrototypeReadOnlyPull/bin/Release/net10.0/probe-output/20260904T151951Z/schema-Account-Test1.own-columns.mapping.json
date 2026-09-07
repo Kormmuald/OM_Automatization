@@ -1,0 +1,34 @@
+{
+  "SchemaName": "Account",
+  "SchemaUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+  "GetSchemaSchemaIdCandidate": "f7fa99e5-79fa-4972-8ca1-d5b238733dad",
+  "Columns": [
+    {
+      "ColumnName": "Code",
+      "ColumnUId": null,
+      "OwnershipCandidate": "Own",
+      "Indexed": null,
+      "OwnMatchCount": 0,
+      "InheritedMatchCount": 1,
+      "ColumnPath": null,
+      "ColumnUIdPath": null,
+      "IndexedPath": null
+    },
+    {
+      "ColumnName": "Name",
+      "ColumnUId": null,
+      "OwnershipCandidate": "Own",
+      "Indexed": null,
+      "OwnMatchCount": 0,
+      "InheritedMatchCount": 1,
+      "ColumnPath": null,
+      "ColumnUIdPath": null,
+      "IndexedPath": null
+    }
+  ],
+  "SourcePaths": {
+    "OwnColumns": "schema.columns[]",
+    "InheritedColumns": "schema.inheritedColumns[]",
+    "GetSchemaSchemaIdCandidate": "schema.id"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "Status": "PASS_WITH_LIMITS",
+  "TimestampUtc": "2026-09-05T11:45:16Z",
+  "PairId": "cb3722e8-ee9e-4f47-a299-723769ce7bbf",
+  "PullRunId": "80fac4ee-e388-4f25-adf0-a8305950c3c6",
+  "PairBaselineHash": "f2480cdbdaa036856ebedbbbae45fe6dd55b919a4156bb6af78833a602e4f65a",
+  "TemplateVersion": "2-bounded-research",
+  "CanonicalReplacement": "COMPLETE",
+  "SourceChanged": false,
+  "Outputs": [
+    {
+      "Path": "workbooks/BPMSoft.ModelCatalog.xlsx",
+      "Bytes": 29584,
+      "Sha256": "e42ccd1187c744c846805ad6c4ee59d1b75a50c1bb19a252f45f0bd534129ca0",
+      "SheetCount": 8,
+      "DataRowCount": 165,
+      "CanonicalWorksheetHash": "db78487f736a4814a6358e0452ffec9f259a4b8436b4ed7de5330831f986fd25"
+    },
+    {
+      "Path": "workbooks/BPMSoft.LookupCatalog.xlsx",
+      "Bytes": 9326,
+      "Sha256": "9ebe5369cef454a6e0cdfb135da9c5ac862af0950c2cf7dbc976c9ccebc1b2e1",
+      "SheetCount": 6,
+      "DataRowCount": 36,
+      "CanonicalWorksheetHash": "20c3fe0bc43b164e4ee5a609e7bb434512b61e5cbfb8c67144d765bb078e0c7e"
+    }
+  ],
+  "Checks": {
+    "ToolVerify": "PASS",
+    "FormulaCheckTier1": "PASS_0_FORMULAS_0_ERRORS",
+    "StyleAudit": "PASS_0_VIOLATIONS_0_WARNINGS",
+    "LibreOfficeTier2": "SKIPPED_NOT_AVAILABLE",
+    "DesktopExcelOpenWithoutRecovery": "PASS",
+    "ExpectedModelSheets": "PASS",
+    "ExpectedLookupSheetsWithoutLookupRows": "PASS",
+    "LookupValuesMergedLayout": "PASS_15_COLUMNS_6_VALUE_ROWS",
+    "ExcelProtectionAllowFiltering": true,
+    "ExcelProtectionAllowFormattingColumns": true,
+    "ExcelProtectionAllowSorting": true,
+    "ExcelColumnWidthChangeInMemory": "PASS",
+    "ExcelLockedCellWrite": "BLOCKED_AS_EXPECTED",
+    "ExcelEditableCellWrite": "ALLOWED_AS_EXPECTED",
+    "OwnerFilterDropdownManualCheck": "NOT_RUN_AFTER_TEMPLATE_V2"
+  },
+  "PreservedPreviousPair": "audit/rejected/20260905T113437Z-*.superseded-template-v1.xlsx",
+  "ActualIndexedVersusIndexes": {
+    "Status": "PASS",
+    "ActualIndexedTrueCount": 64,
+    "ExportedIndexMemberCount": 2,
+    "NotInferredFromActualIndexed": true
+  },
+  "FutureIndexLoadGate": "INDEX_SYNC_UNRESOLVED"
+}

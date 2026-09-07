@@ -1,0 +1,50 @@
+{
+  "Status": "CONFIRMED",
+  "Reason": null,
+  "Target": "http://localhost:8002",
+  "CompletedUtc": "2026-09-04T13:27:10.2977895+00:00",
+  "ActivityPriority": {
+    "AscendingPass1": {
+      "Count": 3,
+      "FileSha256": "6f7f454fffab74103fb90f408dcf425440773c3a7b506717f4fc601ccf799c7f"
+    },
+    "AscendingPass2": {
+      "Count": 3,
+      "FileSha256": "6f7f454fffab74103fb90f408dcf425440773c3a7b506717f4fc601ccf799c7f"
+    },
+    "DescendingControl": {
+      "Count": 3,
+      "FileSha256": "aff1f7df5f6ce29154e7a4e471524881492bc951f2219b50fceb6e7f9d523b36"
+    },
+    "AscendingPassesLineByLineEqual": true,
+    "ReversedAscendingPass1LineByLineEqualsDescending": true
+  },
+  "Lookup": {
+    "AscendingPass1": {
+      "Count": 109,
+      "FileSha256": "6bde9135a2e13db9b25c0bd909e684df68c14a918347b159c88fd4528ab440fe"
+    },
+    "AscendingPass2": {
+      "Count": 109,
+      "FileSha256": "6bde9135a2e13db9b25c0bd909e684df68c14a918347b159c88fd4528ab440fe"
+    },
+    "DescendingControl": {
+      "Count": 109,
+      "FileSha256": "e7cb12aad41916c1f7e21e8a2900ed1edc39ae7e01b2ade44a94da73a06bb33a"
+    },
+    "AscendingPassesLineByLineEqual": true,
+    "ReversedAscendingPass1LineByLineEqualsDescending": true
+  },
+  "Completed": [
+    "ActivityPriority two ascending passes",
+    "ActivityPriority descending reverse control",
+    "Lookup two ascending passes",
+    "Lookup descending reverse control",
+    "bounded schema and lookup-registry mapping"
+  ],
+  "NotRun": [
+    "full-catalog pull",
+    "write/manage operations",
+    "Excel generation"
+  ]
+}

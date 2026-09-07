@@ -1,0 +1,71 @@
+{
+  "Status": "PASS_WITH_LIMITS",
+  "TimestampUtc": "2026-09-05T12:23:53Z",
+  "PairId": "cb3722e8-ee9e-4f47-a299-723769ce7bbf",
+  "PullRunId": "80fac4ee-e388-4f25-adf0-a8305950c3c6",
+  "PairBaselineHash": "f2480cdbdaa036856ebedbbbae45fe6dd55b919a4156bb6af78833a602e4f65a",
+  "TemplateVersion": "3-bounded-research",
+  "CanonicalReplacement": "COMPLETE",
+  "SourceChanged": false,
+  "OwnerDecision": "ReferenceRecordId > resolved ReferenceDraftRowToken > empty reference; both fields may be populated; invalid non-empty ReferenceRecordId blocks load. Sheet protection only on fully read-only sheets.",
+  "Outputs": [
+    {
+      "Path": "workbooks/BPMSoft.ModelCatalog.xlsx",
+      "Bytes": 29437,
+      "Sha256": "7fb01fd5f4af039beb45e7e77819385d9c25beac6762616cf6212e6ac32a849f",
+      "SheetCount": 8,
+      "DataRowCount": 165,
+      "CanonicalWorksheetHash": "80449ff6fb4fed845e7860b5ad4ef8ff6c35f2d9ac0d79e570e687a67869f25d"
+    },
+    {
+      "Path": "workbooks/BPMSoft.LookupCatalog.xlsx",
+      "Bytes": 9203,
+      "Sha256": "48719140d6ecf4a7b21c61fc381eccb8aa95f2b8e32f437c360ed14e96f07b2d",
+      "SheetCount": 6,
+      "DataRowCount": 36,
+      "CanonicalWorksheetHash": "2d2a75f943fc5ef4a115793e9f23e7e0e39748408158c1cbaded7be0bb0e7358"
+    }
+  ],
+  "ProtectionMap": {
+    "ModelProtected": ["Readme", "Manifest", "WorkspaceInventory", "Indexes", "ValidationLists", "PullConflicts"],
+    "ModelUnprotected": ["Schemas", "Columns"],
+    "LookupProtected": ["Readme", "Manifest", "ValidationLists", "PullConflicts"],
+    "LookupUnprotected": ["LookupRegistry", "LookupValues"]
+  },
+  "Checks": {
+    "ReleaseReleaseBuild": "PASS_0_WARNINGS_0_ERRORS",
+    "SelfTest": "PASS",
+    "ToolVerify": "PASS",
+    "FormulaCheckTier1": "PASS_0_FORMULAS_0_ERRORS",
+    "StyleAudit": "PASS_0_VIOLATIONS_0_WARNINGS",
+    "LibreOfficeTier2": "SKIPPED_NOT_AVAILABLE",
+    "DesktopExcelOpenWithoutRecovery": "PASS",
+    "DesktopExcelExpectedSheets": "PASS_8_AND_6",
+    "MixedSheetsUnprotected": "PASS",
+    "MixedDerivedCellEdit": "ALLOWED_AS_APPROVED",
+    "BothReferenceFieldsEdit": "ALLOWED_AS_APPROVED",
+    "ReadOnlySheetsProtected": "PASS",
+    "ReadOnlyCellWrite": "BLOCKED_AS_EXPECTED",
+    "ReadOnlySheetAllowFiltering": true,
+    "ReadOnlySheetAllowFormattingColumns": true,
+    "ReadOnlySheetAllowSorting": true,
+    "ReadOnlySheetColumnWidthChangeInMemory": "PASS",
+    "LookupRowsAbsent": "PASS",
+    "LookupValuesMergedLayout": "PASS_15_COLUMNS_6_VALUE_ROWS"
+  },
+  "PreservedPreviousPair": "audit/rejected/20260905T122311Z-*.superseded-template-v2.xlsx",
+  "ActualIndexedVersusIndexes": {
+    "Status": "PASS",
+    "ActualIndexedTrueCount": 64,
+    "ExportedIndexMemberCount": 2,
+    "NotInferredFromActualIndexed": true
+  },
+  "FutureIndexLoadGate": "INDEX_SYNC_UNRESOLVED",
+  "NotRun": [
+    "full catalog",
+    "BPMSoft Write/Manage/compile/save/create/update/delete",
+    "future loader/parser implementation",
+    "LibreOffice Tier 2/render",
+    "G5 owner acceptance"
+  ]
+}

@@ -52,6 +52,8 @@ BPMSoft.LookupCatalog.xlsx     — registry справочников и lookup d
 
 `CurrentContentHash`, `TemplateFingerprint` и fingerprint затронутого live state вычисляются при compare и повторно перед apply. Они входят в immutable plan/audit, но не записываются как полный file hash внутрь самой книги.
 
+Защита листов применяется только к полностью read-only листам. Листы со смешанными derived и пользовательскими полями (`Schemas`, `Columns`, `LookupRegistry`, `LookupValues`) не защищаются на уровне Excel и доступны для редактирования целиком; безопасность обеспечивается обязательной parser/compare validation, которая блокирует недопустимые изменения до формирования plan. На защищённых read-only листах пользователь может менять ширину колонок и применять существующие фильтры. Фактическая ручная сортировка locked ranges не является требованием: Excel 16 блокирует перестановку защищённых ячеек даже при `AllowSorting=True`. Наличие этого permission flag допустимо как best-effort metadata, но не считается evidence сортируемости.
+
 ## 3. Принятый состав листов: Model Catalog
 
 Файл: `BPMSoft.ModelCatalog.xlsx`.
@@ -63,7 +65,7 @@ BPMSoft.LookupCatalog.xlsx     — registry справочников и lookup d
 | `WorkspaceInventory` | Все доступные workspace items, включая unsupported | derived, filterable; принято |
 | `Schemas` | Реестр поддерживаемых EntitySchema и lookup schemas | mixed: desired + derived; принято |
 | `Columns` | Own и inherited колонки схем | mixed: desired + derived; принято |
-| `Indexes` | Индексы и порядок их колонок | mixed: desired + derived; принято |
+| `Indexes` | Read-only evidence текущих index definitions и их members | derived, protected; принято с bounded P3-C evidence |
 | `ValidationLists` | Списки Excel validation | derived, hidden/protected; принято |
 | `PullConflicts` | Результат последнего pull-conflict analysis | derived, filterable; принято |
 | `S_*` | Единственный полный набор snapshot-копий затронутых рабочих листов непосредственно перед последней попыткой pull | read-only archive; принято |
@@ -114,21 +116,23 @@ Rename existing `SchemaName`, изменение captions схем, package tran
 | `DataType` | derived/read-only у existing колонки; required editable только у `Proposed` колонки в поддерживаемом наборе типов |
 | `ReferenceSchemaName`, `ReferenceSchemaUId` | для Lookup; name — desired dependency до создания, UId — derived actual relation |
 | `DesiredRequired`, `ActualRequired` | `DesiredRequired` editable у existing собственной колонки и у `Proposed`, в обе стороны; `ActualRequired` derived/writeback. Изменение входит в plan только после field-level API verification |
-| `DesiredIndexed`, `ActualIndexed` | `DesiredIndexed` editable у existing собственной колонки и у `Proposed`; `ActualIndexed` derived/writeback. У existing допускается только `false → true`; `true → false` — blocker `INDEX_DROP_NOT_SUPPORTED` и выполняется вручную через БД. Изменение входит в plan только после field-level API verification; сложные индексы описываются ещё и в `Indexes` |
+| `DesiredIndexed`, `ActualIndexed` | `ActualIndexed` сохраняется отдельным derived/writeback flag для совместимости с историческим Google `bpmColumn.indexed`. Тот механизм был coarse/lossy column flag, не новым source of truth: Google data не импортируются. `ActualIndexed` не является membership в `Indexes` и не выводится автоматически из `schema.indexes[]`. Семантика `column.indexed` у inherited column в текущем package layer не доказана. Во время workbook delivery/pull обязательно проверяется, что раздельное хранение `ActualIndexed` и `Indexes` не теряет и не искажает фактические индексы. Перед любым будущим index load/apply требуется отдельная проверка, что это разделение не создаёт ложный add/drop plan. Любая неоднозначность — blocker `INDEX_SYNC_UNRESOLVED`; владелец может исключить загрузку индексов из текущей версии, оставив только read-only `Indexes`. `DesiredIndexed` остаётся потенциальным editable intent у existing own column и у `Proposed`, но add/drop/write API сейчас не разрешён: `false → true` может стать планируемым только после отдельного field-level write preflight; `true → false` остаётся blocker `INDEX_DROP_NOT_SUPPORTED` и ручной DB-операцией. |
 | `DesiredState`, `ServerPresence`, `ActualFingerprint` | как у схем |
 
 Inherited и system columns — обязательный read-only контекст. Они не могут быть случайно изменены только потому, что видны в Excel.
 
 ### 3.4. `Indexes`
 
-Одна строка на колонку индекса; составной индекс представлен несколькими строками с общими `SchemaName` и `IndexName`. Лист read-only и служит evidence текущего состава индексов; собственных index-операций он не создаёт.
+Одна строка на member индекса; составной индекс представлен несколькими строками с общими `SchemaName`, `SchemaUId`, `IndexUId` и `IndexName`. Лист строго read-only и служит evidence текущего состава индексов; собственных index-операций он не создаёт. `SchemaUId` идентифицирует package layer; package provenance получается через соответствующую строку `Schemas` (`ActualPackageName`/`ActualPackageUId`) и здесь не дублируется.
 
 ```text
-SchemaName | SchemaUId | IndexName | IsUnique |
+SchemaName | SchemaUId | IndexUId | IndexName | IsUnique |
 ColumnName | ColumnUId | Ordinal | ActualFingerprint
 ```
 
-`IndexUId` исключён: exact API schema для индексов ещё не verified. Добавление простого индекса допускается только как следствие `Columns.DesiredIndexed = true` после field-level API verification; изменение/удаление существующих и составных индексов вне v1.
+`IndexUId` добавлен как protected derived observed identity: bounded P3-C evidence подтвердил `schema.indexes[].uId`. Read mapping строится из `schema.indexes[]`: `IndexName <- .name`, `IsUnique <- .isUnique`, member relation `ColumnUId <- .columns[].columnUId`, а `Ordinal` — zero-based позиция member в `.columns[]`. Member `.columns[].uId` — identity объекта-члена индекса, **не** `ColumnUId` и не substitute для связи с `Columns`.
+
+`ColumnUId` обязан разрешиться в `Columns.ColumnUId` текущего schema/package layer; target column может иметь `Ownership = Own` или `Inherited`. Bounded sample доказал два simple, one-member, non-auto-named indexes и `orderDirection=0` только как observed numeric value. Composite indexes, auto-name, более широкая семантика `orderDirection` и full-catalog generalisation не доказаны; до их evidence pull/tool не должен упрощать или фабриковать index rows. Add/change/drop index API по-прежнему не разрешён: даже simple add может рассматриваться только после отдельного field-level write preflight; изменение/удаление existing и composite indexes вне v1.
 
 ## 4. Принятый состав листов: Lookup Catalog
 
@@ -139,8 +143,7 @@ ColumnName | ColumnUId | Ordinal | ActualFingerprint
 | `Readme` | Правила данных справочников, `RecordId` и draft rows | derived, protected; принято |
 | `Manifest` | Та же logical-pair metadata | derived, protected; принято |
 | `LookupRegistry` | Реестр lookup schemas и соответствующих записей системного `Lookup` | mixed: desired + derived; принято |
-| `LookupRows` | Одна строка metadata на запись данных | mixed; принято |
-| `LookupValues` | Нормализованные значения колонок | mixed; принято |
+| `LookupValues` | Metadata записи и нормализованные значения её колонок в одной таблице | mixed; принято |
 | `ValidationLists` | Списки и допустимые state/type values | derived, hidden/protected; принято |
 | `PullConflicts` | Конфликты последнего pull | derived, filterable; принято |
 | `S_*` | Единственный полный набор snapshot-копий непосредственно перед последней попыткой pull | read-only archive; принято |
@@ -159,42 +162,35 @@ DesiredState | ServerPresence | ActualFingerprint
 
 `BaseSchemaName` и `BaseSchemaUId` — read-only context до отдельной проверки API: они не редактируются и не являются fallback identity или самостоятельной командой изменения base schema.
 
-### 4.2. `LookupRows` и `LookupValues`
+### 4.2. `LookupValues`
 
-Разделение устраняет необходимость создавать один worksheet на справочник и поддерживает нестандартные сигнатуры его строк. `ModelCatalog.Columns` — единственный source of truth для data shape, типов и допустимых колонок; parser валидирует `LookupValues` напрямую против него после проверки общей pair identity. Отдельный `LookupColumns` не создаётся.
+Одна нормализованная таблица устраняет дублирование структуры между прежними листами `LookupRows` и `LookupValues`, не требует отдельного worksheet на каждый справочник и поддерживает нестандартные сигнатуры строк. `ModelCatalog.Columns` — единственный source of truth для data shape, типов и допустимых колонок; parser валидирует `LookupValues` напрямую против него после проверки общей pair identity. Отдельные `LookupRows` и `LookupColumns` не создаются.
 
-Точный набор `LookupRows`: `SchemaName`, `SysEntitySchemaUId`, `RecordId`, `DraftRowToken`, `DesiredState`, `ServerPresence`, `SourceFingerprint`, `Comment`.
-
-`LookupRows`:
+Точный набор `LookupValues`: `SchemaName`, `SysEntitySchemaUId`, `RecordId`, `DraftRowToken`, `DesiredState`, `ServerPresence`, `SourceFingerprint`, `Comment`, `ColumnName`, `ValueState`, `Value`, `ValueKind`, `ReferenceRecordId`, `ReferenceDraftRowToken`, `CanonicalValue`.
 
 ```text
 SchemaName | SysEntitySchemaUId | RecordId | DraftRowToken |
-DesiredState | ServerPresence | SourceFingerprint | Comment
+DesiredState | ServerPresence | SourceFingerprint | Comment |
+ColumnName | ValueState | Value | ValueKind |
+ReferenceRecordId | ReferenceDraftRowToken | CanonicalValue
 ```
 
-`LookupValues`:
+Одна запись справочника представлена несколькими строками — по одной на фактическую колонку. Поэтому metadata записи повторяется внутри её группы значений, но существует только в одном worksheet и только в одном наборе колонок. Parser обязан проверить одинаковость `SysEntitySchemaUId`, `DesiredState`, `ServerPresence`, `SourceFingerprint` и `Comment` внутри группы `(SchemaName, RecordId|DraftRowToken)`; противоречивые значения блокируют compare.
 
-Точный набор `LookupValues`: `SchemaName`, `RecordId`, `DraftRowToken`, `ColumnName`, `ValueState`, `Value`, `ValueKind`, `ReferenceRecordId`, `ReferenceDraftRowToken`, `CanonicalValue`, `SourceFingerprint`.
-
-```text
-SchemaName | RecordId | DraftRowToken | ColumnName |
-ValueState | Value | ValueKind | ReferenceRecordId | ReferenceDraftRowToken |
-CanonicalValue | SourceFingerprint
-```
-
-Правило связи: у строки или её значения заполнен **ровно один** из `RecordId` и `DraftRowToken`. Для значения lookup-колонки цель указывается в `ReferenceRecordId`, а если цель также новая — в `ReferenceDraftRowToken`. `DraftRowToken` неизменяем, не является BPMSoft GUID и не входит в server payload; без доказуемого mapping `DraftRowToken -> RecordId` через create response/read-back создание такой строки = `DO NOT START`.
+Правило identity самой строки не меняется: заполнен **ровно один** из `RecordId` и `DraftRowToken`. Для значения lookup-колонки разрешено одновременно хранить `ReferenceRecordId` и `ReferenceDraftRowToken`. При будущей загрузке применяется детерминированный приоритет: валидный непустой `ReferenceRecordId`; иначе разрешённый через подтверждённый mapping `ReferenceDraftRowToken -> RecordId`; иначе пустая ссылка. Некорректный непустой `ReferenceRecordId` блокирует загрузку и не трактуется как отсутствие GUID. `DraftRowToken` не является BPMSoft GUID и не входит в server payload; без доказуемого mapping создание ссылки на новую строку = `DO NOT START`.
 
 `ValueState`: `Null`, `EmptyString`, `Value`; это отличает SQL `NULL` от пустой строки. `ValueKind` повторяет typed contract (`Text`, `Integer`, `Decimal`, `Boolean`, `Date`, `DateTime`, `Guid`, `LookupReference`). `CanonicalValue` derived и используется для сравнения, а не для пользовательского ввода.
 
 ## 5. Editable, derived и validation
 
-- Только разрешённые `Desired*` и значения в разрешённых `Value`-ячейках могут быть пользовательским вводом. IDs, fingerprints, actual fields, `ServerPresence`, canonical values и control metadata защищены.
+- Полностью read-only листы защищены от редактирования. Листы со смешанными полями не защищены на уровне Excel; поэтому любые изменения IDs, fingerprints, actual fields, `ServerPresence`, canonical values и control metadata должны быть обнаружены parser/compare validation и блокировать plan, если contract не разрешает их изменение.
 - Новая lookup row создаётся только явной workbook-only командой «добавить draft lookup row»: она выдаёт неизменяемый локальный `DraftRowToken` и создаёт связанные пустые `LookupValues` для допустимых колонок. Compare не изменяет workbook, ручной ввод `DraftRowToken` не допускается.
-- Workbook validation ловит простые ошибки: enum `DesiredState`/`ValueState`, Boolean Required/Indexed, допустимый `ValueKind`, mandatory `SchemaName`/`ColumnName`, UUID syntax вводимых server ID, взаимное исключение `RecordId`/`DraftRowToken` и `ReferenceRecordId`/`ReferenceDraftRowToken`.
+- Workbook validation помогает с простыми enum/Boolean/value-kind ошибками, но не является security boundary. Parser обязательно проверяет mandatory names, UUID syntax непустых server IDs и взаимное исключение identity-пары `RecordId`/`DraftRowToken`. Для `ReferenceRecordId`/`ReferenceDraftRowToken` взаимное исключение не требуется; применяется зафиксированный приоритет GUID → resolved draft token → пустая ссылка.
 - Parser — источник истины. Он проверяет межстрочные и межкнижные связи, uniqueness, inheritance, типы, unsupported mutations, package boundaries и stable dependency graph.
 - Для existing schema/column изменение связанной с её server ID пары `SchemaName`/`ColumnName` — blocker `RENAME_NOT_SUPPORTED`: план не создаётся, пользователь переименовывает элемент вручную в BPMSoft. Редактируемые caption/rename-поля не допускаются; их зарезервированные или иные неописанные колонки также дают этот blocker, а не молчаливый mapping.
 - Изменение `DataType` existing колонки — blocker `TYPE_CHANGE_NOT_SUPPORTED`: plan не создаётся; пользователь меняет тип вручную в BPMSoft, затем выполняет pull. `DataType` обязателен и редактируем только у `Proposed` колонки.
 - Для existing собственной колонки снятие индекса (`ActualIndexed = true`, `DesiredIndexed = false`) — blocker `INDEX_DROP_NOT_SUPPORTED`: plan не создаётся; пользователь снимает индекс вручную через БД. Добавление индекса (`false → true`) допустимо только после field-level API verification.
+- Parser получает membership только из `Indexes`, построенного из `schema.indexes[].columns[].columnUId`; он не заменяет эту связь значением `Columns.ActualIndexed`, member `.uId`, `IndexColumn_*` name или позицией в Excel. Для каждого member проверяются `SchemaUId` package layer, `IndexUId`, `ColumnUId`, разрешение Own/Inherited target и zero-based `Ordinal`.
 - Внешние Excel links, unspecified columns, формулы в editable tables и сопоставление по позиции запрещены и являются parser blocker; молчаливый mapping невозможен.
 - Фильтры и сортировка допустимы как presentation, но canonical parser order задаётся явно и не зависит от текущего Excel sort state.
 
@@ -204,7 +200,7 @@ CanonicalValue | SourceFingerprint
 
 1. Валидировать пару и её current state; непосредственно перед записью pull создать единственный полный набор `S_*` copy-snapshots всех затронутых рабочих листов, включая values, formulas, formatting, validations, hidden state, filters и sorting. Это не история попыток: следующий набор заменяет предыдущий только после успешной записи и проверки нового набора; при сбое подготовки предыдущий набор сохраняется.
 2. Получить полный scope со stable ordering и verified pagination.
-3. Записать server-wins state в working sheets. Локально существующий, но отсутствующий на сервере элемент сохраняется с `ServerPresence = PotentiallyDeleted`; `DesiredState = Removed` автоматически не меняется.
+3. Записать server-wins state в working sheets, включая read-only `Indexes` только из `schema.indexes[]` и доказанных member `columnUId` relations. Локально существующий, но отсутствующий на сервере элемент сохраняется с `ServerPresence = PotentiallyDeleted`; `DesiredState = Removed` автоматически не меняется.
 4. Показать конфликтующие ячейки в snapshot и `PullConflicts`. Набор `S_*` хранит только состояние непосредственно перед текущей или последней попыткой pull; история snapshots не накапливается. Конкретные цвет и точные имена `S_*` пока открыты.
 
 ### Compare и apply
@@ -219,7 +215,7 @@ Apply остаётся двухэтапным: сначала ОМ и definition
 
 Только после успешного apply и read-back, а также только если повторный content hash совпадает с планом:
 
-- заполняет `SchemaUId`, `ColumnUId`, `LookupRecordId`, `RecordId` и actual Required/Index values;
+- заполняет `SchemaUId`, `ColumnUId`, `LookupRecordId`, `RecordId` и только отдельно доказанные actual Required/Index values; `ActualIndexed` не выводится автоматически из index membership;
 - заменяет ссылки на `DraftRowToken` соответствующими server IDs;
 - не пишет в BPMSoft;
 - сохраняет хэши до/после и cell-level mapping без секретов в audit.
@@ -237,7 +233,8 @@ Apply остаётся двухэтапным: сначала ОМ и definition
 | Тема | Текущее видение | Почему это ещё открыто | Проверка / stop condition |
 |---|---|---|---|
 | Exact API properties | Проект использует `SchemaUId`, `ColumnUId`, `ReferenceSchemaUId`, `LookupRecordId`, `RecordId` как semantics | Public docs не публикуют точный JSON contract локального 1.8 | Read-only samples репрезентативных схем/lookup; несовпадение = пересобрать mapping, не писать |
-| Индексы и advanced column flags | `DesiredRequired` разрешён у own columns; `DesiredIndexed` может только добавить индекс | Schema response и allowed mutation semantics не проверены | Нет documented/verified field = exclude from plan; снятие existing index = `INDEX_DROP_NOT_SUPPORTED`, вручную через БД. `UsageType`, `IsSimpleLookup`, `IntegrityMode` и `CascadeMode` исключены из v1 |
+| Индексы и advanced column flags | Bounded P3-C доказал read-only `schema.indexes[].uId/name/isUnique/columns[].columnUId` для двух simple members; `Indexes` хранит lossless member rows и `IndexUId`. `ActualIndexed` остаётся отдельным compatibility flag, не membership source. | Не доказаны current inherited `column.indexed`, composite/auto-name/orderDirection semantics, full-catalog generalisation и любая mutation API. | До representative read evidence нельзя упрощать/фабриковать сложные index rows; add/change/drop исключены из plan до dedicated field-level write preflight. `UsageType`, `IsSimpleLookup`, `IntegrityMode` и `CascadeMode` исключены из v1. |
+| Разделение `ActualIndexed` / `Indexes` | Read-only membership хранится в `Indexes`; исторический column flag остаётся отдельно. | Нужно доказать, что при pull это не скрывает index membership, а при будущем load/apply не порождает ложные add/drop действия. | Workbook delivery обязана выдать отдельный результат проверки. Перед index load/apply — новый stop gate; при проблеме `INDEX_SYNC_UNRESOLVED` и решение владельца об исключении загрузки индексов из текущей версии. |
 | New-row correlation | `DraftRowToken -> RecordId` обязателен | `Code`/`Name` не гарантируют uniqueness | Create response или read-back должны дать однозначный mapping; иначе `DO NOT START` |
 | Full-catalog scale | Нормализованные tables вместо листа на lookup | Неизвестны итоговые row count, Excel limits и скорость snapshots | Измерить после approved read-only pull; при лимите — split/export design before implementation |
 | Snapshot UX | Full in-workbook snapshots обязательны; хранится ровно один набор состояния непосредственно перед pull | Цвета и точные имена `S_*` не выбраны | Новый набор должен быть полностью записан и проверен до замены прежнего; при ошибке подготовки не начинать pull и сохранить прежний набор |

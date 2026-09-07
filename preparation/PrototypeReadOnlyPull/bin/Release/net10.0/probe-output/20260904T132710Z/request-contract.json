@@ -1,0 +1,101 @@
+{
+  "AssemblyContract": {
+    "BpmSoftCommon": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Common.dll",
+      "FileVersion": "1.8.0.14107",
+      "Sha256": "42bed5e551e01e63c35d5439ed71b6335b34feec740185f6a09af8a11228ae20"
+    },
+    "BpmSoftNuiServiceModel": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Nui.ServiceModel.dll",
+      "FileVersion": "1.8.0.14107",
+      "Sha256": "3c147aaa90d16a6b4d3fbb3b7773876a741ca2e73f41bb690997c241e057d948"
+    },
+    "VerifiedBeforeLogin": true
+  },
+  "AssemblyBackedOrdering": {
+    "Property": "BPMSoft.Nui.ServiceModel.DataContract.SelectQueryColumn.OrderDirection",
+    "PropertyType": "BPMSoft.Common.OrderDirection",
+    "EnumWireValues": {
+      "None": 0,
+      "Ascending": 1,
+      "Descending": 2
+    },
+    "JsonConverter": {
+      "Type": "BPMSoft.Nui.ServiceModel.DataContract.JsonConverters.SelectQueryColumnsJsonConverter",
+      "ReadJsonMethodToken": "0x06000809",
+      "ItemsProperty": "items"
+    },
+    "Builder": {
+      "Type": "BPMSoft.Nui.ServiceModel.Extensions.QueryExtension\u002BEsqBuilder",
+      "BuildMethodToken": "0x06000903",
+      "AddQueryColumnMethodToken": "0x060008d4",
+      "SelectAllColumnsMethodToken": "0x060008d8",
+      "Rationale": "Build uses SelectAllColumns when allColumns=true and only uses explicit Columns when allColumns=false; AddQueryColumn applies OrderDirection and OrderPosition."
+    }
+  },
+  "SelectEndpoint": "/DataService/json/SyncReply/SelectQuery",
+  "OrderingHypothesis": {
+    "ColumnPath": "Id",
+    "AscendingOrderDirection": 1,
+    "DescendingOrderDirection": 2,
+    "ProofRule": "Two identical ascending passes and one exact reverse descending pass."
+  },
+  "ActivityPriorityOffsetZeroPayload": {
+    "rootSchemaName": "ActivityPriority",
+    "rowCount": 2,
+    "rowsOffset": 0,
+    "isPageable": true,
+    "allColumns": false,
+    "useLocalization": true,
+    "columns": {
+      "items": {
+        "Id": {
+          "caption": "Id",
+          "orderDirection": 1,
+          "orderPosition": 0,
+          "isVisible": true,
+          "expression": {
+            "expressionType": 0,
+            "columnPath": "Id"
+          }
+        }
+      }
+    }
+  },
+  "LookupOffsetZeroPayload": {
+    "rootSchemaName": "Lookup",
+    "rowCount": 50,
+    "rowsOffset": 0,
+    "isPageable": true,
+    "allColumns": false,
+    "useLocalization": true,
+    "columns": {
+      "items": {
+        "Id": {
+          "caption": "Id",
+          "orderDirection": 1,
+          "orderPosition": 0,
+          "isVisible": true,
+          "expression": {
+            "expressionType": 0,
+            "columnPath": "Id"
+          }
+        },
+        "SysEntitySchemaUId": {
+          "caption": "SysEntitySchemaUId",
+          "orderDirection": 0,
+          "orderPosition": -1,
+          "isVisible": true,
+          "expression": {
+            "expressionType": 0,
+            "columnPath": "SysEntitySchemaUId"
+          }
+        }
+      }
+    }
+  },
+  "SchemaEndpoint": "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema",
+  "SchemaPayloadShape": {
+    "schemaUId": "\u003Cworkspace-item-uId\u003E"
+  }
+}

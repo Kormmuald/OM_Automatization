@@ -1,0 +1,39 @@
+{
+  "Status": "NOT_CONFIRMED",
+  "Reason": "ActivityPriority descending control is not the exact reverse of ascending pass 1.",
+  "Target": "http://localhost:8002",
+  "CompletedUtc": "2026-09-04T12:27:35.5936165+00:00",
+  "ActivityPriority": {
+    "AscendingPass1": {
+      "Count": 3,
+      "FileSha256": "6f7f454fffab74103fb90f408dcf425440773c3a7b506717f4fc601ccf799c7f"
+    },
+    "AscendingPass2": {
+      "Count": 3,
+      "FileSha256": "6f7f454fffab74103fb90f408dcf425440773c3a7b506717f4fc601ccf799c7f"
+    },
+    "DescendingControl": {
+      "Count": 3,
+      "FileSha256": "6f7f454fffab74103fb90f408dcf425440773c3a7b506717f4fc601ccf799c7f"
+    },
+    "AscendingPassesLineByLineEqual": true,
+    "ReversedAscendingPass1LineByLineEqualsDescending": false
+  },
+  "Completed": [
+    "bounded schema reads and in-memory mapping (not persisted as proof)",
+    "ActivityPriority ascending pass 1",
+    "ActivityPriority ascending pass 2",
+    "ActivityPriority descending control",
+    "line-by-line ascending pass comparison",
+    "line-by-line reversed-ascending versus descending comparison"
+  ],
+  "NotRun": [
+    "Lookup traversal",
+    "lookup-registry mapping",
+    "success proof and mapping artefacts",
+    "alternative ordering payload",
+    "full-catalog pull",
+    "write/manage operations",
+    "Excel generation"
+  ]
+}

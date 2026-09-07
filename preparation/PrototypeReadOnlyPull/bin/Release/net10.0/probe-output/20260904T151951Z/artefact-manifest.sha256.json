@@ -1,0 +1,47 @@
+{
+  "Algorithm": "SHA-256",
+  "Encoding": "UTF-8 without BOM",
+  "SelfExcluded": true,
+  "Files": [
+    {
+      "FileName": "index-probe-request-contract.json",
+      "ByteLength": 2597,
+      "Sha256": "9d5f598f91187d4ab7d5c20218b64b894ee6ba8fc61f48b367227beed35eec8e"
+    },
+    {
+      "FileName": "redaction-check.json",
+      "ByteLength": 389,
+      "Sha256": "3b7eef5af22de254a26e3d14d04143cead9e47bb685b4df9adfd6a8e0ea5db93"
+    },
+    {
+      "FileName": "run-result.json",
+      "ByteLength": 984,
+      "Sha256": "a3d706b0d04069431d5da3c3f5e99882bf14465ed3823ec231cf7856e73885a6"
+    },
+    {
+      "FileName": "schema-Account-Test1.index-candidates.mapping.json",
+      "ByteLength": 2058,
+      "Sha256": "8f8c91355705d6de5babfb82d9502178087cf79e62fdc7909ec667e6f9018d5e"
+    },
+    {
+      "FileName": "schema-Account-Test1.indexes.shape.json",
+      "ByteLength": 5818,
+      "Sha256": "621c172d8705bb9e9e4a6b4be05f66ca76804893548e92c142d5c3d7bdfab99f"
+    },
+    {
+      "FileName": "schema-Account-Test1.own-columns.mapping.json",
+      "ByteLength": 895,
+      "Sha256": "5bea564a6b90a071cc07f49109fa4e73c8e5110c1950c10e6088bae402f6f990"
+    },
+    {
+      "FileName": "schema-Account-Test1.response-shape.json",
+      "ByteLength": 1084619,
+      "Sha256": "4aafd3f76f250cb7d5524953ce90c4c89ccdc3519f4094bf6c99fa5706675d39"
+    },
+    {
+      "FileName": "workspace-selection-Account-Test1.mapping.json",
+      "ByteLength": 315,
+      "Sha256": "308b1d439f7aa6de70925ca05bc10acd109f1e277feaa336a6e65c5521bb900d"
+    }
+  ]
+}

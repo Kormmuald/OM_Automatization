@@ -1,0 +1,21 @@
+{
+  "Status": "NOT_CONFIRMED",
+  "Reason": "OWN_COLUMN_CODE_MATCH_COUNT_NOT_ONE;OWN_COLUMN_CODE_ALSO_INHERITED;OWN_COLUMN_CODE_UID_MISSING_OR_INVALID;OWN_COLUMN_CODE_INDEXED_NOT_TRUE;OWN_COLUMN_NAME_MATCH_COUNT_NOT_ONE;OWN_COLUMN_NAME_ALSO_INHERITED;OWN_COLUMN_NAME_UID_MISSING_OR_INVALID;OWN_COLUMN_NAME_INDEXED_NOT_TRUE;CODE_INDEX_CANDIDATE_COUNT_NOT_ONE;NAME_INDEX_CANDIDATE_COUNT_NOT_ONE",
+  "Target": "http://localhost:8002",
+  "CompletedUtc": "2026-09-04T15:19:51.4322254+00:00",
+  "Completed": [
+    "assembly preflight before login",
+    "one GetWorkspaceItems read",
+    "exact Account/Test1/type=3 selection",
+    "one GetSchema read",
+    "redacted full response shape",
+    "bounded own-column and index candidate analysis"
+  ],
+  "NotRun": [
+    "SelectQuery and ordering flow",
+    "full-catalog schema reads",
+    "write/manage/compile/save/create/update/delete operations",
+    "Excel generation",
+    "alternative payload or automatic retry"
+  ]
+}

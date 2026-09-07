@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://community.terrasoft.ru/questions/ruchnaya-registraciya-razdela -->
+<html lang="ru" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# " class=" js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/watch.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/matomo.js.download"></script><script type="text/javascript" async="" id="topmailru-code" src="./ручная регистрация раздела _ Community Creatio_files/code.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/insight.min.js.download"></script><script src="./ручная регистрация раздела _ Community Creatio_files/296803320514429" async=""></script><script async="" src="./ручная регистрация раздела _ Community Creatio_files/fbevents.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/watch.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/insight.min.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/hotjar-1205553.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/analytics.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/f.txt"></script><script async="" src="./ручная регистрация раздела _ Community Creatio_files/gtm.js.download"></script><script>function euCookieComplianceLoadScripts() {}</script>
+<style>div#sliding-popup, div#sliding-popup .eu-cookie-withdraw-banner, .eu-cookie-withdraw-tab {background: #0779bf} div#sliding-popup.eu-cookie-withdraw-wrapper { background: transparent; } #sliding-popup h1, #sliding-popup h2, #sliding-popup h3, #sliding-popup p, .eu-cookie-compliance-more-button, .eu-cookie-compliance-secondary-button, .eu-cookie-withdraw-tab { color: #ffffff;} .eu-cookie-withdraw-tab { border-color: #ffffff;}</style>
+<link rel="shortcut icon" href="https://community.terrasoft.ru/themes/custom/creatio/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="canonical" href="https://community.terrasoft.ru/questions/ruchnaya-registraciya-razdela">
+<link rel="shortlink" href="https://community.terrasoft.ru/node/25523">
+<link rel="revision" href="https://community.terrasoft.ru/questions/ruchnaya-registraciya-razdela">
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+
+    <title>ручная регистрация раздела | Community Creatio</title>
+    <link href="./ручная регистрация раздела _ Community Creatio_files/css" rel="stylesheet">
+    <link href="./ручная регистрация раздела _ Community Creatio_files/css(1)" rel="stylesheet">
+    <link rel="stylesheet" media="all" href="./ручная регистрация раздела _ Community Creatio_files/css_C549eHfM1fKPUNCOzb58oau8pc0Yk-bPtanlwYNKK10.css">
+<link rel="stylesheet" media="all" href="./ручная регистрация раздела _ Community Creatio_files/css_HFTN8-29LOzHa-QFXVWU3MSH5OGf0m9CgCe1EcQPnvo.css">
+<link rel="stylesheet" media="print" href="./ручная регистрация раздела _ Community Creatio_files/css_AbpHGcgLb-kRsJGnwFEktk7uzpZOCcBY74-YBdrKVGs.css">
+<link rel="stylesheet" media="all" href="./ручная регистрация раздела _ Community Creatio_files/css_temporary-b23dc9762f716051bc75e8ba1248aefa.css">
+
+    
+<!--[if lte IE 8]>
+<script src="/sites/default/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+<![endif]-->
+
+
+  <script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/txsp.js.download"></script><script src="./ручная регистрация раздела _ Community Creatio_files/f(1).txt"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/TrackTp"></script><script src="./ручная регистрация раздела _ Community Creatio_files/configs.php" async="" defer=""></script><script async="" src="./ручная регистрация раздела _ Community Creatio_files/modules.ee666a11ced01dddd003.js.download" charset="utf-8"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script async="" src="./ручная регистрация раздела _ Community Creatio_files/creatio-tracking-engine.min.js.download"></script><script type="text/javascript" async="" src="./ручная регистрация раздела _ Community Creatio_files/plgt.js.download"></script><script src="./ручная регистрация раздела _ Community Creatio_files/bobid.js.download" async=""></script></head>
+  <body class="path-node page-node-type-question page-alias-questions-ruchnaya-registraciya-razdela zone-ru">
+                  <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L3LB3"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+					new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+				})(window,document,'script','dataLayer','GTM-5L3LB3');</script>
+      <!-- End Google Tag Manager -->
+            
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas="">
+    <div class="creatio-page d-flex flex-column justify-content-between">
+  <div class="creatio-page-content">
+          <header role="banner">
+        <div class="header-desktop d-none d-lg-block">
+                      <div class="creatio-region creatio-top">
+              <div class="container">  <div class="region region-top">
+    <div class="search-block-form block block-search container-inline" data-drupal-selector="search-block-form" id="block-formapoiska" role="search">
+  
+    
+      <form action="https://community.terrasoft.ru/search" method="get" id="search-block-form" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-type-search js-form-item-search-api-fulltext form-item-search-api-fulltext form-no-label">
+      <label for="edit-keys" class="visually-hidden">Поиск</label>
+        <input title="Введите ключевые слова для поиска." placeholder="Поиск" data-drupal-selector="edit-keys" type="search" id="edit-keys" name="search_api_fulltext" value="" size="15" maxlength="128" class="form-search">
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><input data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Поиск" class="button js-form-submit form-submit">
+</div>
+
+</form>
+
+    <div class="search-toggle"></div>
+  </div>
+<nav id="block-vneshnieresursyru" class="block block-menu navigation menu--external-sites-ru" role="navigation" aria-labelledby="block-vneshnieresursyru-menu">
+            
+    
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://www.terrasoft.ru/" id="community-go-creatio">Террасофт</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://academy.terrasoft.ru/" id="community-go-academy">Академия</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://marketplace.terrasoft.ru/" id="community-go-marketplace">Маркетплейс</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav id="block-useraccountmenu" class="block block-menu navigation menu--account" role="navigation" aria-labelledby="block-useraccountmenu-menu">
+            
+    
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://community.terrasoft.ru/user/login?destination=/questions/ruchnaya-registraciya-razdela" data-drupal-link-system-path="user/login">Войти</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+</div>
+            </div>
+                                <div id="sticky-wrapper" class="sticky-wrapper" style="height: 65px;"><div class="creatio-region creatio-header" style="width: 1519.2px;">
+              <div class="container">  <div class="region region-header">
+    <div id="block-logoru-2" class="block-basic block block-block-content block-block-contenta2d5ba98-10b9-4710-a3a3-c90c42d1cbda">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div><a class="logo navbar-btn pull-left" href="https://community.terrasoft.ru/" id="ts-logo-ru-container" rel="home" title="Лента"><img style="width:300px;" src="./ручная регистрация раздела _ Community Creatio_files/logo_ru.svg"></a></div>
+</div>
+      
+  </div>
+<nav id="block-mainnavigation" class="block block-menu navigation menu--main" role="navigation" aria-labelledby="block-mainnavigation-menu">
+            
+    
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--collapsed">
+        <a href="https://community.terrasoft.ru/" data-drupal-link-system-path="&lt;front&gt;" id="community-selection-feed">Лента</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://community.terrasoft.ru/members" id="community-selection-members" data-drupal-link-system-path="members">Участники</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<div id="block-addpostbuttonfornotloggedusers-2" class="block-basic block block-block-content block-block-content9f0cb33b-c906-4f9d-8132-72fc733d0013">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p><a class="bpmonline-add-post-button-not-login" href="https://community.terrasoft.ru/user/login">+<span>&nbsp;Добавить пост</span></a></p>
+</div>
+      
+  </div>
+
+  </div>
+</div>
+            </div></div>
+                  </div>
+        <div class="header-mobile d-block d-lg-none">
+                      <div class="creatio-region creatio-mobile-top">
+              <div class="container">
+                <div class="creatio-mobile-menu-toggle"><span></span></div>
+                  <div class="region region-mobile-top">
+    <div id="block-mobileheaderlogo" class="block-basic block block-block-content block-block-contentc1050dc6-0bd1-4c51-8bd9-f8a9441a25bc">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p><a class="logo" href="https://community.terrasoft.ru/"><img src="./ручная регистрация раздела _ Community Creatio_files/logo-white.svg"></a></p>
+</div>
+      
+  </div>
+<nav id="block-useraccountmenu-2" class="block block-menu navigation menu--account" role="navigation" aria-labelledby="block-useraccountmenu-2-menu">
+            
+    
+
+        
+              <ul class="menu-account"><li class="menu-account-item"><ul class="menu">
+                    <li class="menu-item">
+        <a href="https://community.terrasoft.ru/user/login?destination=/questions/ruchnaya-registraciya-razdela" data-drupal-link-system-path="user/login">Войти</a>
+              </li>
+        </ul></li></ul>
+  
+
+
+  </nav>
+<div class="search-block-form block block-search container-inline" data-drupal-selector="search-block-form-2" id="block-formapoiska-2" role="search">
+  
+    
+      <form action="https://community.terrasoft.ru/search" method="get" id="search-block-form--2" accept-charset="UTF-8">
+  <div class="js-form-item form-item js-form-type-search form-type-search js-form-item-search-api-fulltext form-item-search-api-fulltext form-no-label">
+      <label for="edit-keys--2" class="visually-hidden">Поиск</label>
+        <input title="Введите ключевые слова для поиска." placeholder="Поиск" data-drupal-selector="edit-keys" type="search" id="edit-keys--2" name="search_api_fulltext" value="" size="15" maxlength="128" class="form-search">
+
+        </div>
+<div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions--2"><input data-drupal-selector="edit-submit" type="submit" id="edit-submit--2" value="Поиск" class="button js-form-submit form-submit">
+</div>
+
+</form>
+
+    <div class="search-toggle"></div>
+  </div>
+
+  </div>
+
+              </div>
+            </div>
+                                <div class="creatio-region creatio-mobile-header">
+              <div class="container">  <div class="region region-mobile-header">
+    <nav id="block-mainnavigation-2" class="block block-menu navigation menu--main" role="navigation" aria-labelledby="block-mainnavigation-2-menu">
+            
+    
+
+        
+              <ul class="menu">
+                    <li class="menu-item menu-item--expanded">
+        <a href="https://community.terrasoft.ru/" data-drupal-link-system-path="&lt;front&gt;" id="community-selection-feed">Лента</a>
+                                <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://community.terrasoft.ru/?type=question" id="community-section-questions" data-drupal-link-query="{&quot;type&quot;:&quot;question&quot;}" data-drupal-link-system-path="&lt;front&gt;">Вопросы</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://community.terrasoft.ru/?type=idea" id="community-section-ideas" data-drupal-link-query="{&quot;type&quot;:&quot;idea&quot;}" data-drupal-link-system-path="&lt;front&gt;">Идеи</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://community.terrasoft.ru/?type=article" id="community-section-articles" data-drupal-link-query="{&quot;type&quot;:&quot;article&quot;}" data-drupal-link-system-path="&lt;front&gt;">Публикации</a>
+              </li>
+        </ul>
+  
+              </li>
+                <li class="menu-item">
+        <a href="https://community.terrasoft.ru/members" id="community-selection-members" data-drupal-link-system-path="members">Участники</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+<nav id="block-vneshnieresursyru-2" class="block block-menu navigation menu--external-sites-ru" role="navigation" aria-labelledby="block-vneshnieresursyru-2-menu">
+            
+    
+
+        
+              <ul class="menu">
+                    <li class="menu-item">
+        <a href="https://www.terrasoft.ru/" id="community-go-creatio">Террасофт</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://academy.terrasoft.ru/" id="community-go-academy">Академия</a>
+              </li>
+                <li class="menu-item">
+        <a href="https://marketplace.terrasoft.ru/" id="community-go-marketplace">Маркетплейс</a>
+              </li>
+        </ul>
+  
+
+
+  </nav>
+
+  </div>
+</div>
+            </div>
+                  </div>
+      </header>
+    
+    <main class="creatio-region creatio-content" role="main" style="position: relative;">
+      <div class="container">
+        <div class="row">
+                                          
+          <div class="col-12 col-lg-8 creatio-cont">
+              <div class="region region-messages">
+    <div data-drupal-messages-fallback="" class="hidden"></div>
+
+  </div>
+
+              <div class="region region-content">
+    <div id="block-creatio-content" class="block block-system block-system-main-block">
+  
+    
+      <div data-history-node-id="25523" class="row bs-2col-bricked node node--type-question node--view-mode-full">
+  
+
+    <div class="col-sm-12 bs-region bs-region--top">
+    
+<div class="group-top">
+      
+            <div class="field field--name-bundle-fieldnode field--type-ds field--label-hidden field__item">Вопрос</div>
+      
+      <div class="field field--name-field-tags field--type-entity-reference field--label-hidden field__items">
+              <div class="field__item"><a href="https://community.terrasoft.ru/tags/razdel" hreflang="ru">раздел</a></div>
+              <div class="field__item"><a href="https://community.terrasoft.ru/tags/tehniceskie-voprosy" hreflang="ru">Технические вопросы</a></div>
+              <div class="field__item"><a href="https://community.terrasoft.ru/tags/7x" hreflang="ru">7.x</a></div>
+          </div>
+  
+  </div>
+            <div class="field field--name-node-title field--type-ds field--label-hidden field__item"><h1>
+  ручная регистрация раздела
+</h1>
+</div>
+      
+<div class="group-info">
+      
+            <div class="field field--name-user field--type-ds field--label-hidden field__item"><div class="row bs-1col user user--type-user user--view-mode-avatar-with-name">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+            <div class="field field--name-user-picture field--type-image field--label-hidden field__item">  <a href="https://community.terrasoft.ru/user/167625" hreflang="ru"><img src="./ручная регистрация раздела _ Community Creatio_files/man_130.png" width="40" height="40" alt="Profile picture for user Головачев Дмитрий Александрович" typeof="foaf:Image" class="image-style-avatar-small">
+
+</a>
+</div>
+      
+            <div class="field field--name-username field--type-ds field--label-hidden field__item"><user_name-wrtapper class="user_name-wrtapper">
+  <a href="https://community.terrasoft.ru/user/167625" hreflang="ru">Головачев Дмитрий Александрович</a>
+</user_name-wrtapper>
+</div>
+      
+  </div>
+</div>
+
+</div>
+      
+            <div class="field field--name-node-post-date field--type-ds field--label-hidden field__item">30 мая 2017  12:20</div>
+      
+  </div>
+  </div>
+  
+  
+  
+    <div class="col-sm-12 bs-region bs-region--middle">
+    
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"> <p>Добрый день, столкнулся с такой проблемой после переноса изменение из svn разделы не добавились в  список разделов, после изучения бд выяснил что о разделах  не было записи в таблицах SysModuleEntity, SysModuleEdit, SysModule после добавления в эти таблицы разделы начали отображаться в списке разделом но при добавлении и их в рабочее место рабочее место не загружается и в консоли появлятся ошибка </p><div class="geshifilter"><div class="text geshifilter-text" style="font-family:monospace;">user: dgolovachev/e7f5fff2-2fea-4aa6-b704-b306cf31b654<br>&nbsp;file: undefined<br>
+&nbsp;line: undefined<br>
+&nbsp;column: undefined<br>
+&nbsp;message: Cannot read property 'imageId' of undefined <br>
+&nbsp;date: Tue May 30 2017 14:42:26 GMT+0600 (Central Asia Standard Time)<br>
+&nbsp;moduleId: ext-window<br>
+&nbsp;moduleName: undefined</div></div><br>
+подскажите в каком направлении необходимо копать заранее благодарен.
+ </div>
+      
+<div class="container-statistics">
+      
+<div class="group-like">
+      <div class="vote-widget-wrapper">
+  <div class="vote-widget">
+          <div class="vote-like type-node" id="like-container-node-25523">
+        <a title="Нравится" data-entity-id="25523" data-entity-type="node">Нравится</a>
+        <span class="count">3</span>
+      </div>
+      </div>
+</div>
+
+            <div class="field field--name-dynamic-token-fieldnode-question-likes-label field--type-ds field--label-hidden field__item"><p>Нравится</p>
+</div>
+      
+  </div><div class="flag flag-bookmark js-flag-bookmark-25523 action-flag"><a title="Добавить в закладки, подписаться на обновления" href="https://community.terrasoft.ru/flag/flag/bookmark/25523?destination&amp;token=6dS8ecvZmnzFcLtDcgdSYZEtqmRkTCuTHOWTJ7urbtU" class="use-ajax" rel="nofollow">Избранное</a></div>
+            <div class="field field--name-dynamic-token-fieldnode-comment-count field--type-ds field--label-hidden field__item"><div class="comment-count"><span class="count">3</span> <span>комментария</span></div>
+</div>
+      
+  </div>
+  </div>
+  
+  
+  
+    <div class="col-sm-12 bs-region bs-region--bottom">
+    
+
+
+  
+  
+<section class="field field--name-comment field--type-comment field--label-hidden comment-wrapper is-js">
+  
+  <div class="row bs-1col comment comment--type-comment comment--view-mode-default">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+<div class="comment-top">
+      
+            <div class="field field--name-comment-user field--type-ds field--label-hidden field__item"><div class="row bs-1col user user--type-user user--view-mode-avatar-with-name">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+            <div class="field field--name-user-picture field--type-image field--label-hidden field__item">  <a href="https://community.terrasoft.ru/user/175954" hreflang="ru"><img src="./ручная регистрация раздела _ Community Creatio_files/Портрет2.jpg" width="40" height="40" alt="Profile picture for user Алла Савельева" typeof="foaf:Image" class="image-style-avatar-small">
+
+</a>
+</div>
+      
+            <div class="field field--name-username field--type-ds field--label-hidden field__item"><user_name-wrtapper class="user_name-wrtapper">
+  <a href="https://community.terrasoft.ru/user/175954" hreflang="ru">Алла Савельева</a>
+</user_name-wrtapper>
+</div>
+      
+  </div>
+</div>
+
+</div>
+      
+            <div class="field field--name-comment-post-date field--type-ds field--label-hidden field__item">30 мая 2017  16:39</div>
+      <div class="vote-widget-wrapper">
+  <div class="vote-widget vote-widget--like-and-dislike">
+          <div class="vote-like type-comment" id="like-container-comment-68654">
+        <a title="Нравится" data-entity-id="68654" data-entity-type="comment">Нравится</a>
+        <span class="count wd-0">0</span>
+      </div>
+      </div>
+</div>
+
+  </div>
+            <div property="schema:text" class="clearfix text-formatted field field--name-comment-body field--type-text-long field--label-hidden field__item"><p>Дмитрий,</p>
+<p>мой совет может показаться Вам банальным: чтобы понять 'в чём корень зла', необходимо выполнить отладку.</p>
+</div>
+      
+  </div>
+</div>
+
+<div class="row bs-1col comment comment--type-comment comment--view-mode-default">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+<div class="comment-top">
+      
+            <div class="field field--name-comment-user field--type-ds field--label-hidden field__item"><div class="row bs-1col user user--type-user user--view-mode-avatar-with-name">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+            <div class="field field--name-user-picture field--type-image field--label-hidden field__item">  <a href="https://community.terrasoft.ru/user/138411" hreflang="ru"><img src="./ручная регистрация раздела _ Community Creatio_files/man_6.png" width="40" height="40" alt="Profile picture for user Pavel Petrov" typeof="foaf:Image" class="image-style-avatar-small">
+
+</a>
+</div>
+      
+            <div class="field field--name-username field--type-ds field--label-hidden field__item"><user_name-wrtapper class="user_name-wrtapper">
+  <a href="https://community.terrasoft.ru/user/138411" hreflang="ru">Pavel Petrov</a>
+</user_name-wrtapper>
+</div>
+      
+  </div>
+</div>
+
+</div>
+      
+            <div class="field field--name-comment-post-date field--type-ds field--label-hidden field__item">30 мая 2017  19:27</div>
+      <div class="vote-widget-wrapper">
+  <div class="vote-widget vote-widget--like-and-dislike">
+          <div class="vote-like type-comment" id="like-container-comment-68655">
+        <a title="Нравится" data-entity-id="68655" data-entity-type="comment">Нравится</a>
+        <span class="count">1</span>
+      </div>
+      </div>
+</div>
+
+  </div>
+            <div property="schema:text" class="clearfix text-formatted field field--name-comment-body field--type-text-long field--label-hidden field__item"><p>Здравствуйте, Дмитрий!</p>
+<p>В целом, если раздел не был корректно зарегистрирован мастером в БД, лучшее решение - создать заново, ибо мастер гарантированно внесет все необходимые привязки. </p>
+<p>Если всеже хотите пойти сложным путем, вот необходимый минимум таблиц, в которых раздел нужно зарегистрировать(тестировали на 7.9.2):</p>
+<p>I Этап. Создать запись в таблице SysModuleEntity (таблица, где хранится информация объектах разделов):</p>
+<p>SysModuleEntity</p>
+<div class="geshifilter">
+<pre class="cpp geshifilter-cpp" style="font-family:monospace;">insert into SysModuleEntity <span style="color: #008000;">(</span>SysEntitySchemaUId<span style="color: #008000;">)</span> values <span style="color: #008000;">(</span><span style="color: #FF0000;">'AF6DD4AD-1398-4FCE-8837-78DC65AE0F9E'</span><span style="color: #008000;">)</span></pre></div>
+<p>где  [SysEntitySchemaUId] - колонка Uid объекта раздела (например, "UsrRK") в таблице SysSchema;</p>
+<p>II Этап. Создать запись в таблице SysModuleEdit (страница редактирования "Page"):</p>
+<p>SysModuleEdit</p>
+<div class="geshifilter">
+<pre class="cpp geshifilter-cpp" style="font-family:monospace;">insert into SysModuleEdit <span style="color: #008000;">(</span>SysModuleEntityId
+,UseModuleDetails
+,CardSchemaUId
+,ActionKindCaption
+,ActionKindName
+,PageCaption<span style="color: #008000;">)</span>
+values <span style="color: #008000;">(</span><span style="color: #FF0000;">'8ED522AF-00E1-4595-AC13-643944B005B7'</span>
+,<span style="color: #0000dd;">1</span>
+,<span style="color: #FF0000;">'8B22D9BE-4BBC-4B50-80EA-AB6FBB604B7E'</span>
+,<span style="color: #FF0000;">'Добавить'</span>
+,<span style="color: #FF0000;">'UsrRK1Page'</span>
+,<span style="color: #FF0000;">'Card schema: "RK"'</span><span style="color: #008000;">)</span></pre></div>
+<p>где  [SysModuleEntityId] - колонка Id записи таблицы SysModuleEntity из первого этапа (проверка Select Id from SysModuleEntity Where SysEntitySchemaUId='AF6DD4AD-1398-4FCE-8837-78DC65AE0F9E')<br>
+[CardSchemaUId]  - колонка Uid страницы редактирования объекта (например, "UsrRK1Page") в таблице SysSchema (проверка Select Uid,Name from SysSchema where name like '%UsrRK%'). Нам необходима схема, которая называется "Название объекта + 1Page"<br>
+[ActionKindCaption] - Название кнопки в реестре раздела;<br>
+[ActionKindName] - Название схемы страницы редактирования;<br>
+[PageCaption] - Заголовок схемы страницы редактирования в таблице SysSchema (проверка Select Uid,Name,Caption from SysSchema where name like '%UsrRK1Page%')</p>
+<p>III Этап. Создать запись в таблице SysModule (страница раздела "Section"):</p>
+<p>SysModule</p>
+<div class="geshifilter">
+<pre class="cpp geshifilter-cpp" style="font-family:monospace;">insert into SysModule <span style="color: #008000;">(</span>Caption
+,SysModuleEntityId
+,FolderModeId
+,GlobalSearchAvailable
+,Code
+,SectionModuleSchemaUId
+,SectionSchemaUId
+,Image32Id<span style="color: #008000;">)</span> values <span style="color: #008000;">(</span><span style="color: #FF0000;">'RK'</span>
+,<span style="color: #FF0000;">'8ED522AF-00E1-4595-AC13-643944B005B7'</span>
+,<span style="color: #FF0000;">'B659D704-3955-E011-981F-00155D043204'</span>
+,<span style="color: #0000dd;">1</span>
+,<span style="color: #FF0000;">'UsrRK'</span>
+,<span style="color: #FF0000;">'DF58589E-26A6-44D1-B8D4-EDF1734D02B4'</span>
+,<span style="color: #FF0000;">'B3D153C0-92EF-4A53-B868-9395C3E43516'</span>
+,<span style="color: #FF0000;">'026742D9-390C-4778-BC46-9FA85C42677A'</span><span style="color: #008000;">)</span></pre></div>
+<p>где  [Caption] - Название раздела (можно брать caption объекта раздела -<br>
+[SysModuleEntityId]  - колонка Id записи таблицы SysModuleEntity из первого этапа (проверка Select Id from SysModuleEntity Where SysEntitySchemaUId='AF6DD4AD-1398-4FCE-8837-78DC65AE0F9E')<br>
+[Code] - Название объекта раздела;<br>
+[SectionModuleSchemaUId] - UId модуля SectionModuleV2 с помощью которой открывается схему раздела;<br>
+[SectionSchemaUId] - колонка Uid страницы раздела объекта (например, "UsrRK1Section") в таблице SysSchema (проверка Select Uid,Name,Caption from SysSchema where name like '%UsrRK%'). Нам необходима схема, которая называется "Название объекта + 1Section"</p>
+</div>
+      
+  </div>
+</div>
+
+<div class="row bs-1col comment comment--type-comment comment--view-mode-default">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+<div class="comment-top">
+      
+            <div class="field field--name-comment-user field--type-ds field--label-hidden field__item"><div class="row bs-1col user user--type-user user--view-mode-avatar-with-name">
+  
+  <div class="col-sm-12 bs-region bs-region--main">
+    
+            <div class="field field--name-user-picture field--type-image field--label-hidden field__item">  <a href="https://community.terrasoft.ru/user/176210" hreflang="ru"><img src="./ручная регистрация раздела _ Community Creatio_files/man_319.png" width="40" height="40" alt="Profile picture for user Дмитрий Тёскин" typeof="foaf:Image" class="image-style-avatar-small">
+
+</a>
+</div>
+      
+            <div class="field field--name-username field--type-ds field--label-hidden field__item"><user_name-wrtapper class="user_name-wrtapper">
+  <a href="https://community.terrasoft.ru/user/176210" hreflang="ru">Дмитрий Тёскин</a>
+</user_name-wrtapper>
+</div>
+      
+  </div>
+</div>
+
+</div>
+      
+            <div class="field field--name-comment-post-date field--type-ds field--label-hidden field__item">8 ноября 2017  08:52</div>
+      <div class="vote-widget-wrapper">
+  <div class="vote-widget vote-widget--like-and-dislike">
+          <div class="vote-like type-comment" id="like-container-comment-70254">
+        <a title="Нравится" data-entity-id="70254" data-entity-type="comment">Нравится</a>
+        <span class="count wd-0">0</span>
+      </div>
+      </div>
+</div>
+
+  </div>
+            <div property="schema:text" class="clearfix text-formatted field field--name-comment-body field--type-text-long field--label-hidden field__item"><p>Павел, добрый день!</p>
+<p>Регистрировал раздел по вашему алгоритму, т.к. мастер у меня упорно не хочет работать. Вроде бы все заработало, но столкнулся с такой проблемой: если создать делать, которая будет ссылаться на нашу новую сущность, то при формировании ссылки на карточку этого раздела ссылка будет некорректной. "Вскрытие" показало, что причина в отсутствии записи в таблице SysModule в колонке&nbsp;CardModuleUId. Без этой записи ссылка формируется без CardModuleV2 и карточка не открывается.</p>
+</div>
+      
+  </div>
+</div>
+
+
+  <div class="row show-all"><span>Показать все комментарии</span></div>
+
+  
+      <div class="comment-user-login-block">
+      <a href="https://community.terrasoft.ru/user/login?destination=/questions/ruchnaya-registraciya-razdela">Войдите</a> или <a href="https://community.terrasoft.ru/user/register?destination=/questions/ruchnaya-registraciya-razdela">зарегистрируйтесь</a>, что бы комментировать
+    </div>
+  </section>
+
+  </div>
+  
+</div>
+
+
+  </div>
+
+  </div>
+
+          </div>
+
+          
+                                                            <aside class="col-12 col-lg-4 sidebar-second d-none d-lg-block" role="complementary"><div class="inner-wrapper-sticky" style="position: relative;">
+                <div class="region region-sidebar-second">
+    <div id="block-creatio-livefeeds" class="block block-ts-custom block-live-feeds">
+  
+      <div class="block-title">Последние события</div>
+    
+      <div class="feed-items">
+  <div class="feed-scroll">
+    
+                          
+      <div class="feed-item type-question">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/193701">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_118.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/193701">Руслан Хасанов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/vmesto-nasledovannogo-metoda-v-js-vypolnyaetsya-roditelskiy" title="Вместо наследованного метода в JS выполняется родительский ">Вместо наследованного метода в JS выполняется родительский </a>
+        </div>
+        <div class="feed-date">30 минут назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/198656">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_104.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/198656">n.isaev</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/kastomnaya-detal" title="Кастомная деталь">Кастомная деталь</a>
+        </div>
+        <div class="feed-date">42 минуты назад</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/198866">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man3.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/198866">Булат Хабирзянов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/prava-na-spravochnik-0" title="Права на справочник">Права на справочник</a>
+        </div>
+        <div class="feed-date">57 минут назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196758">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_159.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196758">Dima Avdoshin</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/esli-u-polzovatelya-net-prav-na-redaktirovanie-kartochki-obekta-scheta-mozhno-li-cherez" title="Если у пользователя нет прав на редактирование карточки объекта (Счета), можно ли через программный код дать право на редактирование одного поля в данном объекте?">Если у пользователя нет прав на редактирование карточки объекта (Счета), можно ли через программный код дать право на редактирование одного поля в данном объекте?</a>
+        </div>
+        <div class="feed-date">1 час назад</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question last">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/198866">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man3.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/198866">Булат Хабирзянов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/otpravka-otcheta-na-email" title="Отправка отчета на email">Отправка отчета на email</a>
+        </div>
+        <div class="feed-date">2 часа назад</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196354">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_358.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196354">Нефёдов Илья Николаевич</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/otobrazheniya-izobrazheniya-v-mini-kartochke" title="Отображения изображения в мини карточке">Отображения изображения в мини карточке</a>
+        </div>
+        <div class="feed-date">2 часа назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-idea hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/195863">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_26.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/195863">v.kucher@creatio.com</a></div>
+            <div class="feed-desc">прокомментировал(а) идею</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/ideas/user-friendly-interfeys-dlya-quartz" title="User friendly интерфейс для QUARTZ">User friendly интерфейс для QUARTZ</a>
+        </div>
+        <div class="feed-date">3 часа назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/18354">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man4.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/18354">Владимир Соколов</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/vypolnenie-deystviy-posle-uspeshnogo-sozdaniya-obekta-iz-mini-kartochki" title="Выполнение действий после успешного создания объекта из мини-карточки">Выполнение действий после успешного создания объекта из мини-карточки</a>
+        </div>
+        <div class="feed-date">3 часа назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/193925">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/woman1_1.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/193925">Криволапова Александра</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/ne-dobavlyayutsya-znacheniya-na-detal-stadii-lida" title="Не добавляются значения на деталь стадии лида.">Не добавляются значения на деталь стадии лида.</a>
+        </div>
+        <div class="feed-date">12 часов назад</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196588">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_134.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196588">Григорьев Михаил Алексеевич</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/problema-s-cors-pri-zaprose-na-storonnyy-servis-s-klientskogo-koda" title="Проблема с CORS при запросе на сторонный сервис с клиентского кода">Проблема с CORS при запросе на сторонный сервис с клиентского кода</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/199188">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_303.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/199188">Вадим Курунов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/vypolnenie-deystviy-posle-uspeshnogo-sozdaniya-obekta-iz-mini-kartochki" title="Выполнение действий после успешного создания объекта из мини-карточки">Выполнение действий после успешного создания объекта из мини-карточки</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/181017">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_165.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/181017">Шевчук Александр</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/parsing-soderzhimogo-pisma-e-mail" title="Парсинг содержимого письма (e-mail)">Парсинг содержимого письма (e-mail)</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/197378">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_320.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/197378">Владислав Трубачев</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/ne-dobavlyayutsya-znacheniya-na-detal-stadii-lida" title="Не добавляются значения на деталь стадии лида.">Не добавляются значения на деталь стадии лида.</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/197619">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_71.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/197619">Евгений Воробьев</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/kak-privyazat-lentu-otobrazhaemuyu-v-obraschenii-k-zapisya-neskolkikh-razdelov" title="Как привязать ленту, отображаемую в обращении к запися нескольких разделов?">Как привязать ленту, отображаемую в обращении к запися нескольких разделов?</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196758">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_159.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196758">Dima Avdoshin</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/ne-rabotaet-advanced-excel-reports-creatio-0" title="Не работает ADVANCED EXCEL REPORTS FOR CREATIO">Не работает ADVANCED EXCEL REPORTS FOR CREATIO</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/199141">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_248.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/199141">Mykhailo Storozhuk</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/perevesti-stend-v-rezhim-razrabotki-v-faylovoy-sisteme-v-net-core-718" title="Перевести стенд в режим разработки в файловой системе в .Net Core 7.18">Перевести стенд в режим разработки&nbsp;в файловой системе в&nbsp;.Net Core 7.18</a>
+        </div>
+        <div class="feed-date">вчера</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196448">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_477.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196448">Жмурко Сергей</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/kak-ubeditsya-v-rabote-global-search" title="Как убедится в работе Global Search?">Как убедится в работе Global Search?</a>
+        </div>
+        <div class="feed-date">позавчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/200585">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_246.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/200585">Евгений Храмцов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/perenos-dannykh-iz-terrasoft-3x-v-creatio" title="Перенос данных из Terrasoft 3x в Creatio">Перенос данных из Terrasoft 3x в Creatio</a>
+        </div>
+        <div class="feed-date">позавчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/196258">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man_201.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/196258">Алексей Сак</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/ne-rabotaet-advanced-excel-reports-creatio-0" title="Не работает ADVANCED EXCEL REPORTS FOR CREATIO">Не работает ADVANCED EXCEL REPORTS FOR CREATIO</a>
+        </div>
+        <div class="feed-date">позавчера</div>
+      </div>
+    
+                          
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/198866">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man3.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/198866">Булат Хабирзянов</a></div>
+            <div class="feed-desc">задал(а) новый вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/pole-opisanie-v-spravochnike" title="Поле &quot;описание&quot; в справочнике">Поле "описание" в справочнике</a>
+        </div>
+        <div class="feed-date">позавчера</div>
+      </div>
+    
+                                            
+      <div class="feed-item type-question hidden">
+        <div class="feed-top">
+          <div class="feed-user-avatar">
+            <a href="https://community.terrasoft.ru/user/197129">
+              <img src="./ручная регистрация раздела _ Community Creatio_files/man3_0.png">
+            </a>
+          </div>
+          <div class="feed-info">
+            <div class="feed-user"><a href="https://community.terrasoft.ru/user/197129">Олег Нефедьев</a></div>
+            <div class="feed-desc">прокомментировал(а) вопрос</div>
+          </div>
+        </div>
+        <div class="feed-title">
+          <a href="https://community.terrasoft.ru/questions/otchet-po-trudozatratam" title="Отчет по трудозатратам">Отчет по трудозатратам</a>
+        </div>
+        <div class="feed-date">позавчера</div>
+      </div>
+      </div>
+</div>
+  </div>
+
+  </div>
+
+            <object style="display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;overflow: hidden; pointer-events: none; z-index: -1;" type="text/html"></object></div></aside>
+                  </div>
+      </div>
+    <object style="display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%;overflow: hidden; pointer-events: none; z-index: -1;" type="text/html"></object></main>
+  </div>
+
+      <footer role="contentinfo">
+              <div class="creatio-region creatio-footer">
+          <div class="container">
+              <div class="region region-footer">
+    <div id="block-creatio-futerru" class="block-basic block block-block-content block-block-contenta6b49b5a-2b67-4569-901f-acb1f5836ede">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><div class="footer">
+<div class="footer-left">
+<div class="footer-accelerate">&nbsp;</div>
+
+<ul class="footer-socials"><li class="footer-socials__item"><a class="footer-socials__link footer-socials__link_fb" href="https://www.facebook.com/terrasoft.russia" target="_blank">&nbsp;</a></li>
+	<li class="footer-socials__item"><a class="footer-socials__link footer-socials__link_in" href="https://www.linkedin.com/company/terrasoft-ru" target="_blank">&nbsp;</a></li>
+	<li class="footer-socials__item"><a class="footer-socials__link footer-socials__link_yt" href="https://www.youtube.com/user/terrasoftvideo" target="_blank">&nbsp;</a></li>
+	<li class="footer-socials__item"><a class="footer-socials__link footer-socials__link_tw" href="https://twitter.com/Terrasoft_CIS" target="_blank">&nbsp;</a></li>
+</ul></div>
+
+<div class="footer-links">
+<div class="footer-title">Будьте на связи!</div>
+
+<div class="footer-content">
+<div class="footer-items">
+<div class="footer-item"><a class="footer__link footer__link_phone" href="tel:+74952801680">+7 (495) 280-16-80</a></div>
+</div>
+
+<div class="footer-items">
+<div class="footer-item"><a class="footer__link footer__link_email" href="mailto:support@terrasoft.ru">support@terrasoft.ru</a></div>
+</div>
+</div>
+</div>
+</div>
+<style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+
+#modal.edit-field #user-avatar .thumbnail{
+padding-bottom: 0;
+margin-bottom: 10px;
+}
+
+/*--><!]]>*/
+</style></div>
+      
+  </div>
+
+  </div>
+
+          </div>
+        </div>
+                    <div class="creatio-region creatio-copyright">
+          <div class="container">
+              <div class="region region-copyright">
+    <div id="block-copyrightru" class="block-basic block block-block-content block-block-content2eb587de-ab4c-4169-b4db-f788f666872f">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p>© 2002-2021 Террасофт <span>|</span> <a href="https://www.terrasoft.ru/privacy-policy" target="_blank">Конфиденциальность</a></p>
+</div>
+      
+  </div>
+
+  </div>
+
+          </div>
+        </div>
+          </footer>
+  
+      <div class="creatio-buttons d-block d-lg-none">
+        <div class="region region-buttons">
+    <div id="block-addpostbuttonfornotloggedusers-3" class="block-basic block block-block-content block-block-content9f0cb33b-c906-4f9d-8132-72fc733d0013">
+  
+    
+      
+            <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item"><p><a class="bpmonline-add-post-button-not-login" href="https://community.terrasoft.ru/user/login">+<span>&nbsp;Добавить пост</span></a></p>
+</div>
+      
+  </div>
+
+  </div>
+
+    </div>
+  </div>
+
+
+  </div>
+
+    
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/25523","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"ru"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"addtoany\/addtoany,asset_injector\/css\/css_temporary,classy\/base,classy\/messages,codesnippet\/codesnippet.highlightjs,codesnippet\/codesnippet.style.default,codesnippet\/codesnippet.style.github,colorbox\/default,colorbox_inline\/colorbox_inline,comment\/drupal.comment-by-viewer,core\/html5shiv,core\/normalize,creatio\/global,eu_cookie_compliance\/eu_cookie_compliance,flag\/flag.link,flag\/flag.link_ajax,geshifilter\/geshifilter,like_and_dislike\/behavior,like_and_dislike\/icons,system\/base,ts_bestreply\/default,ts_like\/default","theme":"creatio","theme_token":null},"ajaxTrustedUrl":{"\/search":true},"colorbox":{"opacity":"0.85","current":"{current} \u0438\u0437 {total}","previous":"\u00ab \u041f\u0440\u0435\u0434\u044b\u0434\u0443\u0449\u0438\u0439","next":"\u0421\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439 \u00bb","close":"Close","maxWidth":"98%","maxHeight":"98%","fixed":true,"mobiledetect":true,"mobiledevicewidth":"480px"},"eu_cookie_compliance":{"popup_enabled":true,"popup_agreed_enabled":false,"popup_hide_agreed":false,"popup_clicking_confirmation":false,"popup_scrolling_confirmation":false,"popup_html_info":"\u003Cdiv class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \u003Cp\u003E\u041c\u044b \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u043c \u0444\u0430\u0439\u043b\u044b cookie \u0434\u043b\u044f \u0443\u043b\u0443\u0447\u0448\u0435\u043d\u0438\u044f \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c\u0441\u043a\u043e\u0433\u043e \u043e\u043f\u044b\u0442\u0430. \u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u044f \u043f\u0440\u043e\u0441\u043c\u0430\u0442\u0440\u0438\u0432\u0430\u0442\u044c \u044d\u0442\u043e\u0442 \u0441\u0430\u0439\u0442, \u0432\u044b \u0441\u043e\u0433\u043b\u0430\u0448\u0430\u0435\u0442\u0435\u0441\u044c \u0441 \u003Ca href=\u0022https:\/\/www.terrasoft.ru\/privacy-policy\u0022 target=\u0022_blank\u0022\u003E\u0443\u0441\u043b\u043e\u0432\u0438\u044f\u043c\u0438 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f cookie-\u0444\u0430\u0439\u043b\u043e\u0432\u003C\/a\u003E\u003C\/p\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003E\u0443\u0441\u043b\u043e\u0432\u0438\u044f\u043c\u0438 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f cookie-\u0444\u0430\u0439\u043b\u043e\u0432\u003C\/button\u003E\n          \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-secondary-button\u0022\u003E\u041f\u0440\u0438\u043d\u044f\u0442\u044c\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022decline-button eu-cookie-compliance-default-button\u0022 \u003ENo, thanks\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","use_mobile_message":false,"mobile_popup_html_info":"\u003Cdiv class=\u0022eu-cookie-compliance-banner eu-cookie-compliance-banner-info\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \n              \u003Cbutton type=\u0022button\u0022 class=\u0022find-more-button eu-cookie-compliance-more-button\u0022\u003E\u0443\u0441\u043b\u043e\u0432\u0438\u044f\u043c\u0438 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f cookie-\u0444\u0430\u0439\u043b\u043e\u0432\u003C\/button\u003E\n          \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022agree-button eu-cookie-compliance-secondary-button\u0022\u003E\u041f\u0440\u0438\u043d\u044f\u0442\u044c\u003C\/button\u003E\n              \u003Cbutton type=\u0022button\u0022 class=\u0022decline-button eu-cookie-compliance-default-button\u0022 \u003ENo, thanks\u003C\/button\u003E\n          \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","mobile_breakpoint":768,"popup_html_agreed":false,"popup_use_bare_css":false,"popup_height":"auto","popup_width":"100%","popup_delay":1000,"popup_link":"https:\/\/www.terrasoft.ru\/privacy-policy#addition-cookies","popup_link_new_window":true,"popup_position":false,"popup_language":"ru","store_consent":false,"better_support_for_screen_readers":false,"cookie_name":"","reload_page":false,"domain":"","popup_eu_only_js":false,"cookie_lifetime":100,"cookie_session":0,"disagree_do_not_show_popup":false,"method":"opt_in","whitelisted_cookies":"","withdraw_markup":"\u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-tab\u0022\u003EPrivacy settings\u003C\/button\u003E\n\u003Cdiv class=\u0022eu-cookie-withdraw-banner\u0022\u003E\n  \u003Cdiv class=\u0022popup-content info eu-cookie-compliance-content\u0022\u003E\n    \u003Cdiv id=\u0022popup-text\u0022 class=\u0022eu-cookie-compliance-message\u0022\u003E\n      \u003Ch2\u003EWe use cookies on this site to enhance your user experience\u003C\/h2\u003E\n\u003Cp\u003EYou have given your consent for us to set cookies.\u003C\/p\u003E\n\n    \u003C\/div\u003E\n    \u003Cdiv id=\u0022popup-buttons\u0022 class=\u0022eu-cookie-compliance-buttons\u0022\u003E\n      \u003Cbutton type=\u0022button\u0022 class=\u0022eu-cookie-withdraw-button\u0022\u003EWithdraw consent\u003C\/button\u003E\n    \u003C\/div\u003E\n  \u003C\/div\u003E\n\u003C\/div\u003E","withdraw_enabled":false},"field_group":{"html_element":{"mode":"full","context":"view","settings":{"label":"Top","element":"div","show_label":false,"label_element":"h3","attributes":"","effect":"none","speed":"fast","id":"","classes":"group-top"}}},"user":{"uid":0,"permissionsHash":"9d1823f7ec8be7a8e47939486dd009b97b84c75f98dde0a799042f532b6ff6ca"}}</script>
+<script src="./ручная регистрация раздела _ Community Creatio_files/js_g0VQEOLhXADgjBMkw0dR-hM-dABUtVmH_K6Kh6EU77M.js.download"></script>
+<script src="./ручная регистрация раздела _ Community Creatio_files/page.js.download" async=""></script>
+<script src="./ручная регистрация раздела _ Community Creatio_files/js_KBIJhWTx5SIIIpyogSBzgoGwJdbEfCxaBpojMzxdb2M.js.download"></script>
+
+      <div class="modal edit-field" id="modal">
+        <div class="inner-flex">
+          <h2></h2>
+          <div class="elements">
+          </div>
+          <div class="bottom">
+            <button class="close" id="close">Отмена</button>
+            <button class="modal-submit">Сохранить</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay"></div>
+  
+
+<div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious"></button><button type="button" id="cboxNext"></button><button type="button" id="cboxSlideshow"></button><div id="cboxLoadingOverlay" style="float: left;"></div><div id="cboxLoadingGraphic" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div></div><script type="text/javascript" id="">(function(b,c,a){(c[a]=c[a]||[]).push(function(){try{c.yaCounter11774857=new Ya.Metrika({id:11774857,webvisor:!0,clickmap:!0,trackLinks:!0,accurateTrackBounce:!0})}catch(f){}});var e=b.getElementsByTagName("script")[0],d=b.createElement("script");a=function(){e.parentNode.insertBefore(d,e)};d.type="text/javascript";d.async=!0;d.src=("https:"==b.location.protocol?"https:":"http:")+"//mc.yandex.ru/metrika/watch.js";"[object Opera]"==c.opera?b.addEventListener("DOMContentLoaded",a,!1):a()})(document,
+window,"yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/11774857" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","296803320514429");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=296803320514429&amp;ev=PageView&amp;noscript=1"></noscript>
+
+
+<script type="text/javascript" id="" src="./ручная регистрация раздела _ Community Creatio_files/oct.js.download"></script><script type="text/javascript" id="">_linkedin_partner_id="23181";window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);</script><script type="text/javascript" id="">(function(){var b=document.getElementsByTagName("script")[0],a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="https://snap.licdn.com/li.lms-analytics/insight.min.js";b.parentNode.insertBefore(a,b)})();</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=23181&amp;fmt=gif">
+</noscript><script type="text/javascript" id="">window._txq=window._txq||[];var s=document.createElement("script");s.type="text/javascript";s.async=!0;s.src="//st.hybrid.ai/txsp.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(s);_txq.push(["createPixel","5bfe95454d506e86545ba6fc"]);_txq.push(["track","PageView"]);</script>
+<script type="text/javascript" id="">var _tmr=window._tmr||(window._tmr=[]);_tmr.push({id:"3090659",type:"pageView",start:(new Date).getTime(),pid:"USER_ID"});(function(c,e,a){if(!c.getElementById(a)){var b=c.createElement("script");b.type="text/javascript";b.async=!0;b.id=a;b.src="https://top-fwz1.mail.ru/js/code.js";a=function(){var d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)};"[object Opera]"==e.opera?c.addEventListener("DOMContentLoaded",a,!1):a()}})(document,window,"topmailru-code");</script><noscript><div>
+<img src="https://top-fwz1.mail.ru/counter?id=3090659;js=na" style="border:0;position:absolute;left:-9999px;" alt="Top.Mail.Ru">
+</div></noscript>
+<script type="text/javascript" id="" src="./ручная регистрация раздела _ Community Creatio_files/track-cookies.js.download"></script><script type="text/javascript" id="" src="./ручная регистрация раздела _ Community Creatio_files/create-object.js.download"></script>
+<script type="text/javascript" id="">var _paq=window._paq=window._paq||[];_paq.push(["setDomains","*.terrasoft.ru *.academy.terrasoft.ru *.community.terrasoft.ru *.marketplace.terrasoft.ru *.profile.terrasoft.ru *.www.terrasoft.ru/page".split(" ")]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
+(function(){var a="https://creatiocompany.matomo.cloud/";_paq.push(["setTrackerUrl",a+"matomo.php"]);_paq.push(["setSiteId","4"]);var b=document;a=b.createElement("script");b=b.getElementsByTagName("script")[0];a.type="text/javascript";a.async=!0;a.src="//cdn.matomo.cloud/creatiocompany.matomo.cloud/matomo.js";b.parentNode.insertBefore(a,b)})();</script>
+<noscript><p><img src="https://creatiocompany.matomo.cloud/matomo.php?idsite=4&amp;rec=1" style="border:0;" alt=""></p></noscript>
+<script type="text/javascript" id="">(function(a){function b(a){a=Math.floor(a);return 10>a?"0"+a:a}a.scrollEvent=function(d){var c=a(document),b=a(window),f=c.height();b=b.height();current_value=(c=b+c.scrollTop())?Math.floor(100*c/f):0;return d>current_value?d:current_value};a.fixTime=function(){var a=new Date;return Math.floor(a.getTime()/1E3)};a.timeFormat=function(a){var c=a;a=c/3600%24;var d=c/60%60;c%=60;return b(a)+":"+b(d)+":"+b(c)}})(jQuery);
+function getTimeInterval(a){if(0<=a&&30>a)return"from 0 sec to 30 sec";if(30<=a&&60>a)return"from 30 sec to 1 min";if(60<=a&&120>a)return"from 1 min to 2 min";if(120<=a&&180>a)return"from 2 min to 3 min";if(180<=a&&300>a)return"from 3 min to 5 min";if(300<=a&&480>a)return"from 5 min to 8 min";if(480<=a)return"more 8 min"}
+function getScrollingInterval(a){if(0<=a&&20>a)return"from 0% to 20%";if(20<=a&&40>a)return"from 20% to 40%";if(40<=a&&60>a)return"from 40% to 60%";if(60<=a&&80>a)return"from 60% to 80%";if(80<=a&&100>=a)return"from 80% to 100%"}
+jQuery(document).ready(function(){var a=jQuery.fixTime(),b=0;jQuery(window).scroll(function(){b=jQuery.scrollEvent(b)});jQuery(window).bind("beforeunload",function(){current_max_string=b.toString()+"%";var d=jQuery.fixTime(),c=jQuery.timeFormat(d-a),e=getScrollingInterval(b);d=getTimeInterval(d-a);dataLayer.push({event:"Scroll to",percent_of_scrolling:current_max_string,time_on_page:c,percent_of_scrolling_interval:e,time_on_page_interval:d})})});</script><script type="text/javascript" id="">(function(b,c,a){(c[a]=c[a]||[]).push(function(){try{c.yaCounter11774857=new Ya.Metrika({id:11774857,webvisor:!0,clickmap:!0,trackLinks:!0,accurateTrackBounce:!0})}catch(f){}});var e=b.getElementsByTagName("script")[0],d=b.createElement("script");a=function(){e.parentNode.insertBefore(d,e)};d.type="text/javascript";d.async=!0;d.src=("https:"==b.location.protocol?"https:":"http:")+"//mc.yandex.ru/metrika/watch.js";"[object Opera]"==c.opera?b.addEventListener("DOMContentLoaded",a,!1):a()})(document,
+window,"yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/11774857" style="position:absolute; left:-9999px;" alt=""></div></noscript><iframe name="_hjRemoteVarsFrame" title="_hjRemoteVarsFrame" id="_hjRemoteVarsFrame" src="./ручная регистрация раздела _ Community Creatio_files/box-dfc01efbdc94bb0936d9a35a502b0b64.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;"></iframe>
+<script type="text/javascript" id="">twttr.conversion.trackPid("nuk2e",{tw_sale_amount:0,tw_order_quantity:0});</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=nuk2e&amp;p_id=Twitter&amp;tw_sale_amount=0&amp;tw_order_quantity=0">
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=nuk2e&amp;p_id=Twitter&amp;tw_sale_amount=0&amp;tw_order_quantity=0">
+</noscript>
+<script type="text/javascript" id="">(function(a,b,c,d,e){a=a.creatioTracking=a.creatioTracking||{};a=a.v=a.v||{};a.hst=c;a.tnt=d;a.res=e;c=b.createElement("script");d=b.getElementsByTagName("head")[0];b=-1===b.cookie.indexOf("CRTTRKG_DBG\x3d1");b="creatio-tracking-engine"+(b?".min":"")+".js";c.async=!0;c.src="https://webtracking-v01.bpmonline.com/JS/"+b;d.appendChild(c)})(window,document,"https://tracking-receiver.creatio.com:31390","2b1166ac-e653-4a26-9fb0-45c7098d30c9","A23A28AB-FF66-4A70-8150-54669705E2FD");</script><script src="./ручная регистрация раздела _ Community Creatio_files/adsct" type="text/javascript"></script><iframe src="./ручная регистрация раздела _ Community Creatio_files/supersync.html" frameborder="0" height="0" width="0" style="display: none;"></iframe></body></html>

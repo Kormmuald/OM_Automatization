@@ -1,0 +1,22 @@
+{
+  "Status": "CAPTURE_COMPLETE",
+  "PairId": "cb3722e8-ee9e-4f47-a299-723769ce7bbf",
+  "PullRunId": "80fac4ee-e388-4f25-adf0-a8305950c3c6",
+  "TargetAlias": "http://localhost:8002",
+  "ScopeMode": "VerifiedBoundedBaseline",
+  "SourcePath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\WorkbookDeliveryTool\\runs\\2026\\09\\04\\80fac4ee-e388-4f25-adf0-a8305950c3c6\\evidence\\20260904T212051Z-bounded-baseline.json",
+  "SourceManifestPath": "C:\\CodingAgents\\codex\\projects\\OM_Automatization\\preparation\\WorkbookDeliveryTool\\runs\\2026\\09\\04\\80fac4ee-e388-4f25-adf0-a8305950c3c6\\evidence\\20260904T212051Z-source-manifest.sha256.json",
+  "EndpointBoundary": [
+    "Login",
+    "GetWorkspaceItems",
+    "GetSchema",
+    "SelectQuery"
+  ],
+  "NotRun": [
+    "full catalog",
+    "BPMSoft Write/Manage",
+    "compile/save/create/update/delete",
+    "Google input",
+    "Excel generation"
+  ]
+}

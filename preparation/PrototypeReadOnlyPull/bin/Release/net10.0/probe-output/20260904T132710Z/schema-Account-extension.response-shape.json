@@ -1,0 +1,731 @@
+{
+  "schema": {
+    "caption": {
+      "$kind": "array",
+      "length": 19,
+      "firstItemShape": {
+        "cultureName": "string",
+        "value": "string"
+      }
+    },
+    "localizableStrings": {
+      "$kind": "array",
+      "length": 0
+    },
+    "description": {
+      "$kind": "array",
+      "length": 0
+    },
+    "columns": {
+      "$kind": "array",
+      "length": 1,
+      "firstItemShape": {
+        "caption": {
+          "$kind": "array",
+          "length": 19,
+          "firstItemShape": {
+            "cultureName": "string",
+            "value": "string"
+          }
+        },
+        "isInherited": "boolean",
+        "type": "number",
+        "description": {
+          "$kind": "array",
+          "length": 0
+        },
+        "requirementType": "number",
+        "usageType": "number",
+        "defValue": {
+          "valueSourceType": "number",
+          "value": "number",
+          "valueSource": "string"
+        },
+        "isValueCloneable": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "indexed": "boolean",
+        "isMultiLineText": "boolean",
+        "isLocalizableText": "boolean",
+        "referenceSchema": "null",
+        "isCascade": "boolean",
+        "doNotControlIntegrity": "boolean",
+        "isSimpleLookup": "boolean",
+        "uId": "string",
+        "name": "string"
+      }
+    },
+    "inheritedColumns": {
+      "$kind": "array",
+      "length": 34,
+      "firstItemShape": {
+        "caption": {
+          "$kind": "array",
+          "length": 19,
+          "firstItemShape": {
+            "cultureName": "string",
+            "value": "string"
+          }
+        },
+        "isInherited": "boolean",
+        "type": "number",
+        "description": {
+          "$kind": "array",
+          "length": 0
+        },
+        "requirementType": "number",
+        "usageType": "number",
+        "defValue": {
+          "valueSourceType": "number",
+          "value": "null",
+          "valueSource": "string"
+        },
+        "isValueCloneable": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "indexed": "boolean",
+        "isMultiLineText": "boolean",
+        "isLocalizableText": "boolean",
+        "referenceSchema": {
+          "caption": "null",
+          "localizableStrings": "null",
+          "description": "null",
+          "columns": {
+            "$kind": "array",
+            "length": 0
+          },
+          "inheritedColumns": {
+            "$kind": "array",
+            "length": 0
+          },
+          "indexes": {
+            "$kind": "array",
+            "length": 0
+          },
+          "primaryColumn": "null",
+          "primaryDisplayColumn": "null",
+          "primaryImageColumn": "null",
+          "primaryOrderColumn": "null",
+          "hierarchyColumn": "null",
+          "ownerColumn": "null",
+          "trackChangesSchemaName": "null",
+          "rightSchemaName": "null",
+          "localizationSchemaName": "null",
+          "parentSchema": "null",
+          "extendParent": "boolean",
+          "isDBView": "boolean",
+          "isSSPAvailable": "boolean",
+          "isVirtual": "boolean",
+          "useRecordDeactivation": "boolean",
+          "isTrackChangesInDB": "boolean",
+          "administratedByOperations": "boolean",
+          "administratedByColumns": "boolean",
+          "administratedByRecords": "boolean",
+          "useDenyRecordRights": "boolean",
+          "useCollisionControl": "boolean",
+          "masterRecordColumn": "null",
+          "createdByColumn": "null",
+          "createdOnColumn": "null",
+          "modifiedByColumn": "null",
+          "modifiedOnColumn": "null",
+          "sourceCode": "null",
+          "id": "string",
+          "package": "null",
+          "body": "null",
+          "isReadOnly": "boolean",
+          "isApdexMeasured": "boolean",
+          "dependencies": "null",
+          "uId": "string",
+          "name": "string"
+        },
+        "isCascade": "boolean",
+        "doNotControlIntegrity": "boolean",
+        "isSimpleLookup": "boolean",
+        "uId": "string",
+        "name": "string"
+      }
+    },
+    "indexes": {
+      "$kind": "array",
+      "length": 0
+    },
+    "primaryColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": "null",
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "primaryDisplayColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "null",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": "null",
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "primaryImageColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "null",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": {
+        "caption": "null",
+        "localizableStrings": "null",
+        "description": "null",
+        "columns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "inheritedColumns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "indexes": {
+          "$kind": "array",
+          "length": 0
+        },
+        "primaryColumn": "null",
+        "primaryDisplayColumn": "null",
+        "primaryImageColumn": "null",
+        "primaryOrderColumn": "null",
+        "hierarchyColumn": "null",
+        "ownerColumn": "null",
+        "trackChangesSchemaName": "null",
+        "rightSchemaName": "null",
+        "localizationSchemaName": "null",
+        "parentSchema": "null",
+        "extendParent": "boolean",
+        "isDBView": "boolean",
+        "isSSPAvailable": "boolean",
+        "isVirtual": "boolean",
+        "useRecordDeactivation": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "administratedByOperations": "boolean",
+        "administratedByColumns": "boolean",
+        "administratedByRecords": "boolean",
+        "useDenyRecordRights": "boolean",
+        "useCollisionControl": "boolean",
+        "masterRecordColumn": "null",
+        "createdByColumn": "null",
+        "createdOnColumn": "null",
+        "modifiedByColumn": "null",
+        "modifiedOnColumn": "null",
+        "sourceCode": "null",
+        "id": "string",
+        "package": "null",
+        "body": "null",
+        "isReadOnly": "boolean",
+        "isApdexMeasured": "boolean",
+        "dependencies": "null",
+        "uId": "string",
+        "name": "string"
+      },
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "primaryOrderColumn": "null",
+    "hierarchyColumn": "null",
+    "ownerColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": {
+        "caption": "null",
+        "localizableStrings": "null",
+        "description": "null",
+        "columns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "inheritedColumns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "indexes": {
+          "$kind": "array",
+          "length": 0
+        },
+        "primaryColumn": "null",
+        "primaryDisplayColumn": "null",
+        "primaryImageColumn": "null",
+        "primaryOrderColumn": "null",
+        "hierarchyColumn": "null",
+        "ownerColumn": "null",
+        "trackChangesSchemaName": "null",
+        "rightSchemaName": "null",
+        "localizationSchemaName": "null",
+        "parentSchema": "null",
+        "extendParent": "boolean",
+        "isDBView": "boolean",
+        "isSSPAvailable": "boolean",
+        "isVirtual": "boolean",
+        "useRecordDeactivation": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "administratedByOperations": "boolean",
+        "administratedByColumns": "boolean",
+        "administratedByRecords": "boolean",
+        "useDenyRecordRights": "boolean",
+        "useCollisionControl": "boolean",
+        "masterRecordColumn": "null",
+        "createdByColumn": "null",
+        "createdOnColumn": "null",
+        "modifiedByColumn": "null",
+        "modifiedOnColumn": "null",
+        "sourceCode": "null",
+        "id": "string",
+        "package": "null",
+        "body": "null",
+        "isReadOnly": "boolean",
+        "isApdexMeasured": "boolean",
+        "dependencies": "null",
+        "uId": "string",
+        "name": "string"
+      },
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "trackChangesSchemaName": "string",
+    "rightSchemaName": "string",
+    "localizationSchemaName": "string",
+    "parentSchema": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "localizableStrings": "null",
+      "description": "null",
+      "columns": {
+        "$kind": "array",
+        "length": 0
+      },
+      "inheritedColumns": {
+        "$kind": "array",
+        "length": 0
+      },
+      "indexes": {
+        "$kind": "array",
+        "length": 0
+      },
+      "primaryColumn": "null",
+      "primaryDisplayColumn": "null",
+      "primaryImageColumn": "null",
+      "primaryOrderColumn": "null",
+      "hierarchyColumn": "null",
+      "ownerColumn": "null",
+      "trackChangesSchemaName": "null",
+      "rightSchemaName": "null",
+      "localizationSchemaName": "null",
+      "parentSchema": "null",
+      "extendParent": "boolean",
+      "isDBView": "boolean",
+      "isSSPAvailable": "boolean",
+      "isVirtual": "boolean",
+      "useRecordDeactivation": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "administratedByOperations": "boolean",
+      "administratedByColumns": "boolean",
+      "administratedByRecords": "boolean",
+      "useDenyRecordRights": "boolean",
+      "useCollisionControl": "boolean",
+      "masterRecordColumn": "null",
+      "createdByColumn": "null",
+      "createdOnColumn": "null",
+      "modifiedByColumn": "null",
+      "modifiedOnColumn": "null",
+      "sourceCode": "null",
+      "id": "string",
+      "package": "null",
+      "body": "null",
+      "isReadOnly": "boolean",
+      "isApdexMeasured": "boolean",
+      "dependencies": "null",
+      "uId": "string",
+      "name": "string"
+    },
+    "extendParent": "boolean",
+    "isDBView": "boolean",
+    "isSSPAvailable": "boolean",
+    "isVirtual": "boolean",
+    "useRecordDeactivation": "boolean",
+    "isTrackChangesInDB": "boolean",
+    "administratedByOperations": "boolean",
+    "administratedByColumns": "boolean",
+    "administratedByRecords": "boolean",
+    "useDenyRecordRights": "boolean",
+    "useCollisionControl": "boolean",
+    "masterRecordColumn": "null",
+    "createdByColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": {
+        "caption": "null",
+        "localizableStrings": "null",
+        "description": "null",
+        "columns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "inheritedColumns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "indexes": {
+          "$kind": "array",
+          "length": 0
+        },
+        "primaryColumn": "null",
+        "primaryDisplayColumn": "null",
+        "primaryImageColumn": "null",
+        "primaryOrderColumn": "null",
+        "hierarchyColumn": "null",
+        "ownerColumn": "null",
+        "trackChangesSchemaName": "null",
+        "rightSchemaName": "null",
+        "localizationSchemaName": "null",
+        "parentSchema": "null",
+        "extendParent": "boolean",
+        "isDBView": "boolean",
+        "isSSPAvailable": "boolean",
+        "isVirtual": "boolean",
+        "useRecordDeactivation": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "administratedByOperations": "boolean",
+        "administratedByColumns": "boolean",
+        "administratedByRecords": "boolean",
+        "useDenyRecordRights": "boolean",
+        "useCollisionControl": "boolean",
+        "masterRecordColumn": "null",
+        "createdByColumn": "null",
+        "createdOnColumn": "null",
+        "modifiedByColumn": "null",
+        "modifiedOnColumn": "null",
+        "sourceCode": "null",
+        "id": "string",
+        "package": "null",
+        "body": "null",
+        "isReadOnly": "boolean",
+        "isApdexMeasured": "boolean",
+        "dependencies": "null",
+        "uId": "string",
+        "name": "string"
+      },
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "createdOnColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": "null",
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "modifiedByColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": {
+        "caption": "null",
+        "localizableStrings": "null",
+        "description": "null",
+        "columns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "inheritedColumns": {
+          "$kind": "array",
+          "length": 0
+        },
+        "indexes": {
+          "$kind": "array",
+          "length": 0
+        },
+        "primaryColumn": "null",
+        "primaryDisplayColumn": "null",
+        "primaryImageColumn": "null",
+        "primaryOrderColumn": "null",
+        "hierarchyColumn": "null",
+        "ownerColumn": "null",
+        "trackChangesSchemaName": "null",
+        "rightSchemaName": "null",
+        "localizationSchemaName": "null",
+        "parentSchema": "null",
+        "extendParent": "boolean",
+        "isDBView": "boolean",
+        "isSSPAvailable": "boolean",
+        "isVirtual": "boolean",
+        "useRecordDeactivation": "boolean",
+        "isTrackChangesInDB": "boolean",
+        "administratedByOperations": "boolean",
+        "administratedByColumns": "boolean",
+        "administratedByRecords": "boolean",
+        "useDenyRecordRights": "boolean",
+        "useCollisionControl": "boolean",
+        "masterRecordColumn": "null",
+        "createdByColumn": "null",
+        "createdOnColumn": "null",
+        "modifiedByColumn": "null",
+        "modifiedOnColumn": "null",
+        "sourceCode": "null",
+        "id": "string",
+        "package": "null",
+        "body": "null",
+        "isReadOnly": "boolean",
+        "isApdexMeasured": "boolean",
+        "dependencies": "null",
+        "uId": "string",
+        "name": "string"
+      },
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "modifiedOnColumn": {
+      "caption": {
+        "$kind": "array",
+        "length": 19,
+        "firstItemShape": {
+          "cultureName": "string",
+          "value": "string"
+        }
+      },
+      "isInherited": "boolean",
+      "type": "number",
+      "description": {
+        "$kind": "array",
+        "length": 0
+      },
+      "requirementType": "number",
+      "usageType": "number",
+      "defValue": {
+        "valueSourceType": "number",
+        "value": "string",
+        "valueSource": "string"
+      },
+      "isValueCloneable": "boolean",
+      "isTrackChangesInDB": "boolean",
+      "indexed": "boolean",
+      "isMultiLineText": "boolean",
+      "isLocalizableText": "boolean",
+      "referenceSchema": "null",
+      "isCascade": "boolean",
+      "doNotControlIntegrity": "boolean",
+      "isSimpleLookup": "boolean",
+      "uId": "string",
+      "name": "string"
+    },
+    "sourceCode": "string",
+    "handledEventNames": {
+      "$kind": "array",
+      "length": 2,
+      "firstItemShape": "string"
+    },
+    "id": "string",
+    "package": {
+      "type": "number",
+      "id": "string",
+      "uId": "string",
+      "createdBy": "null",
+      "modifiedBy": "null",
+      "createdOn": "null",
+      "modifiedOn": "null",
+      "name": "string",
+      "position": "number",
+      "description": "null",
+      "maintainer": "null"
+    },
+    "body": "null",
+    "isReadOnly": "boolean",
+    "isApdexMeasured": "boolean",
+    "dependencies": "null",
+    "uId": "string",
+    "name": "string"
+  },
+  "success": "boolean",
+  "errorInfo": "null"
+}

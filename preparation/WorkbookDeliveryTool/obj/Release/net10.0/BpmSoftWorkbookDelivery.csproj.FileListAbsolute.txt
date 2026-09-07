@@ -1,0 +1,15 @@
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\bin\Release\net10.0\BpmSoftWorkbookDelivery.exe
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\bin\Release\net10.0\BpmSoftWorkbookDelivery.deps.json
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\bin\Release\net10.0\BpmSoftWorkbookDelivery.runtimeconfig.json
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\bin\Release\net10.0\BpmSoftWorkbookDelivery.dll
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\bin\Release\net10.0\BpmSoftWorkbookDelivery.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.GeneratedMSBuildEditorConfig.editorconfig
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.AssemblyInfoInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.AssemblyInfo.cs
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.csproj.CoreCompileInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.sourcelink.json
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.dll
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\refint\BpmSoftWorkbookDelivery.dll
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\BpmSoftWorkbookDelivery.genruntimeconfig.cache
+C:\CodingAgents\codex\projects\OM_Automatization\preparation\WorkbookDeliveryTool\obj\Release\net10.0\ref\BpmSoftWorkbookDelivery.dll

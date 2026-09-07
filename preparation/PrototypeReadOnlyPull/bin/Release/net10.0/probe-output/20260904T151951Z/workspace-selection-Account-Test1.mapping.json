@@ -1,0 +1,13 @@
+{
+  "MatchCount": 1,
+  "Type": 3,
+  "Name": "Account",
+  "PackageName": "Test1",
+  "WorkspaceItemUId": "05c46595-729a-4668-94bc-56061dad4fb9",
+  "SourcePaths": {
+    "Type": "items[].type",
+    "Name": "items[].name",
+    "PackageName": "items[].packageName",
+    "WorkspaceItemUId": "items[].uId"
+  }
+}

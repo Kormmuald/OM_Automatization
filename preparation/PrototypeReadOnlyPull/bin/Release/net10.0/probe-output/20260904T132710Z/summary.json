@@ -1,0 +1,53 @@
+{
+  "Target": "http://localhost:8002",
+  "PulledUtc": "2026-09-04T13:27:10.2977895+00:00",
+  "WorkspaceItemCount": 9157,
+  "SelectedSchemas": [
+    {
+      "Name": "ActivityPriority",
+      "PackageName": "Base",
+      "UId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b"
+    },
+    {
+      "Name": "Lookup",
+      "PackageName": "Base",
+      "UId": "2aecdb97-990e-4c17-96f4-240ca6531c84"
+    },
+    {
+      "Name": "Account",
+      "PackageName": "Base",
+      "UId": "25d7c1ab-1de0-4501-b402-02e0e5a72d6e"
+    },
+    {
+      "Name": "Account",
+      "PackageName": "Completeness",
+      "UId": "cc642965-191f-4b55-b1ea-fb8336e623b9"
+    }
+  ],
+  "Pagination": [
+    {
+      "SchemaName": "ActivityPriority",
+      "RecordCount": 3,
+      "PageSize": 2,
+      "PassDigestsMatch": true,
+      "DescendingIsExactReverse": true
+    },
+    {
+      "SchemaName": "Lookup",
+      "RecordCount": 109,
+      "PageSize": 50,
+      "PassDigestsMatch": true,
+      "DescendingIsExactReverse": true
+    }
+  ],
+  "Mapping": {
+    "SchemaUId": "GetSchema.schema.uId",
+    "SysSchemaIdCandidate": "GetSchema.schema.id",
+    "ColumnUId": "GetSchema.schema.columns[].uId / inheritedColumns[].uId",
+    "ReferenceSchemaUId": "GetSchema column.referenceSchema.uId",
+    "LookupRecordId": "SelectQuery Lookup row.Id",
+    "SysEntitySchemaUId": "SelectQuery Lookup row.SysEntitySchemaUId",
+    "RecordId": "SelectQuery lookup-data row.Id"
+  },
+  "Safety": "Only login/read responses were used. Raw rows, captions, descriptions, source code, session values and login response were not persisted."
+}

@@ -1,0 +1,12 @@
+{
+  "Passed": true,
+  "FilesScannedBeforeWrite": 9,
+  "ForbiddenMarkerHitCount": 0,
+  "FullWorkspaceResponsePersisted": false,
+  "FullSchemaResponsePersisted": false,
+  "CaptionDescriptionOrLocalizedValuesPersisted": false,
+  "LoginResponsePersisted": false,
+  "SessionMaterialPersisted": false,
+  "UnsafeIndexScalarValuesPersisted": false,
+  "ExactByteManifestIncluded": true
+}

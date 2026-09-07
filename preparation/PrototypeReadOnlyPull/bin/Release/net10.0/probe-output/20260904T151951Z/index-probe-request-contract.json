@@ -1,0 +1,79 @@
+{
+  "Mode": "--index-probe",
+  "AssemblyContract": {
+    "BpmSoftCommon": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Common.dll",
+      "FileVersion": "1.8.0.14107",
+      "Sha256": "42bed5e551e01e63c35d5439ed71b6335b34feec740185f6a09af8a11228ae20"
+    },
+    "BpmSoftNuiServiceModel": {
+      "Path": "C:\\Creatio\\BpmSoftStandSetup\\Constructor_1.8.0.14107_Net8_PostgreSQL\\BPMSoft.Nui.ServiceModel.dll",
+      "FileVersion": "1.8.0.14107",
+      "Sha256": "3c147aaa90d16a6b4d3fbb3b7773876a741ca2e73f41bb690997c241e057d948"
+    },
+    "VerifiedBeforeLogin": true
+  },
+  "Authentication": {
+    "Endpoint": "/ServiceModel/AuthService.svc/Login",
+    "Input": "interactive-only; response and session material are not persisted"
+  },
+  "Reads": [
+    {
+      "Endpoint": "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems",
+      "Body": "zero-length UTF-8 application/json body",
+      "Count": 1,
+      "Selection": {
+        "Type": 3,
+        "Name": "Account",
+        "PackageName": "Test1",
+        "MatchCount": 1
+      }
+    },
+    {
+      "Endpoint": "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema",
+      "Payload": {
+        "schemaUId": "\u003Cexact selected workspace item uId\u003E"
+      },
+      "Count": 1
+    }
+  ],
+  "OwnerOracle": [
+    {
+      "ColumnName": "Code",
+      "Unique": true,
+      "Ownership": "Own",
+      "SimpleColumnCount": 1
+    },
+    {
+      "ColumnName": "Name",
+      "Unique": false,
+      "Ownership": "Own",
+      "SimpleColumnCount": 1
+    }
+  ],
+  "CandidateSemantics": {
+    "GetSchemaSchemaIdCandidate": "schema.id",
+    "IndexFields": "candidate until exact response paths and owner oracle agree"
+  },
+  "TerminologyOnlyReference": {
+    "Path": "docs/REFERENCES/creatio-terrasoft-manual-section-registration/README.md",
+    "Use": "Id versus UId terminology only; historical SQL is not executed and is not BPMSoft 1.8 API proof"
+  },
+  "Artefacts": [
+    "index-probe-request-contract.json",
+    "workspace-selection-Account-Test1.mapping.json",
+    "schema-Account-Test1.response-shape.json",
+    "schema-Account-Test1.own-columns.mapping.json",
+    "schema-Account-Test1.indexes.shape.json",
+    "schema-Account-Test1.index-candidates.mapping.json",
+    "run-result.json",
+    "redaction-check.json",
+    "artefact-manifest.sha256.json"
+  ],
+  "ExplicitlyNotRun": [
+    "SelectQuery",
+    "full-catalog schema reads",
+    "write/manage/compile/save/create/update/delete",
+    "Excel"
+  ]
+}

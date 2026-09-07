@@ -1,0 +1,66 @@
+{
+  "ExpectedSource": "owner-provided BPMSoft UI observation",
+  "Expected": [
+    {
+      "ColumnName": "Code",
+      "Unique": true
+    },
+    {
+      "ColumnName": "Name",
+      "Unique": false
+    }
+  ],
+  "Candidates": [
+    {
+      "IndexOrdinal": 0,
+      "IndexNameCandidate": "Index1",
+      "IndexNamePath": "/schema/indexes/0/name",
+      "MatchedColumnNames": [],
+      "ColumnMatches": [],
+      "MemberArrayPath": "/schema/indexes/0/columns",
+      "MemberCount": 1,
+      "UniqueFlagCandidate": true,
+      "IsUnambiguousSimpleOneColumn": false,
+      "Issues": [
+        "INDEX_COLUMN_RELATION_NOT_UNIQUE"
+      ],
+      "UniqueFlagPath": "/schema/indexes/0/isUnique",
+      "UniqueFlagRelativePath": "/isUnique"
+    },
+    {
+      "IndexOrdinal": 1,
+      "IndexNameCandidate": "Index2",
+      "IndexNamePath": "/schema/indexes/1/name",
+      "MatchedColumnNames": [],
+      "ColumnMatches": [],
+      "MemberArrayPath": "/schema/indexes/1/columns",
+      "MemberCount": 1,
+      "UniqueFlagCandidate": false,
+      "IsUnambiguousSimpleOneColumn": false,
+      "Issues": [
+        "INDEX_COLUMN_RELATION_NOT_UNIQUE"
+      ],
+      "UniqueFlagPath": "/schema/indexes/1/isUnique",
+      "UniqueFlagRelativePath": "/isUnique"
+    }
+  ],
+  "ValidationErrors": [
+    "OWN_COLUMN_CODE_MATCH_COUNT_NOT_ONE",
+    "OWN_COLUMN_CODE_ALSO_INHERITED",
+    "OWN_COLUMN_CODE_UID_MISSING_OR_INVALID",
+    "OWN_COLUMN_CODE_INDEXED_NOT_TRUE",
+    "OWN_COLUMN_NAME_MATCH_COUNT_NOT_ONE",
+    "OWN_COLUMN_NAME_ALSO_INHERITED",
+    "OWN_COLUMN_NAME_UID_MISSING_OR_INVALID",
+    "OWN_COLUMN_NAME_INDEXED_NOT_TRUE",
+    "CODE_INDEX_CANDIDATE_COUNT_NOT_ONE",
+    "NAME_INDEX_CANDIDATE_COUNT_NOT_ONE"
+  ],
+  "Confirmed": false,
+  "SourcePaths": {
+    "Indexes": "schema.indexes[]",
+    "OwnColumns": "schema.columns[]",
+    "CandidateRule": "exact technical name/UId leaf matches plus direct one-item columns array",
+    "UniqueRule": "shared exact relative boolean path named isUnique or unique"
+  }
+}

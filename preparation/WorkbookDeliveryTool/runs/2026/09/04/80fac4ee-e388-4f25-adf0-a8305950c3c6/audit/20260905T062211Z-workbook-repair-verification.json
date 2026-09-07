@@ -1,0 +1,51 @@
+{
+  "Status": "PASS_AFTER_REPAIR",
+  "Incident": "Excel rejected every worksheet XML in the first generated pair and opened repaired empty sheets.",
+  "RecoveryLog": {
+    "Path": "audit/rejected/20260905T061612Z-excel-recovery-log.xml",
+    "Sha256": "df7d10cb643c7767925851a1a20672b9d6c7124c48ef4c8dd7db05a449f26dbc"
+  },
+  "RootCause": "Worksheet children were emitted as autoFilter, dataValidations, sheetProtection. Excel requires sheetProtection before autoFilter and dataValidations after autoFilter.",
+  "Correction": "Generator element order and workbook-view properties were corrected; verifier now rejects the known invalid order and missing workbook window dimensions.",
+  "RejectedFiles": [
+    {
+      "Path": "audit/rejected/20260905T062043Z-BPMSoft.ModelCatalog.invalid.xlsx",
+      "Sha256": "62e5892111e1d31cf0b0472867676eee79bce29181dfe3b2dff3b56b2c3f0b3e"
+    },
+    {
+      "Path": "audit/rejected/20260905T062043Z-BPMSoft.LookupCatalog.invalid.xlsx",
+      "Sha256": "9f2378c637629bc941e9292b93a49523e3584eca450cb4d9ce6dbf4e113addc1"
+    }
+  ],
+  "CorrectedFiles": [
+    {
+      "Path": "workbooks/BPMSoft.ModelCatalog.xlsx",
+      "Sha256": "ab871d83069222ce9de76f4aaad63db48bbe7c18d8b70cc9a1341f170962f9e5",
+      "SheetCount": 8,
+      "CanonicalWorksheetHash": "8c28a6b75f27622c8b6bfb2f4f4cd97fd5da136b57f88a0064fb6416abd55607"
+    },
+    {
+      "Path": "workbooks/BPMSoft.LookupCatalog.xlsx",
+      "Sha256": "19a6713a49909d9736c76a0db827b254676da2987297d26feaf1ef6d9ab51e58",
+      "SheetCount": 7,
+      "CanonicalWorksheetHash": "44242e7c45b1b945bffe90ba340113ed46e83ead9727f76889d170b0517458d8"
+    }
+  ],
+  "Checks": {
+    "ReleaseBuildZeroWarningsErrors": "PASS",
+    "SelfTestIncludingExcelElementOrderRegression": "PASS",
+    "ToolVerify": "PASS",
+    "FormulaCheckBoth": "PASS_ZERO_FORMULAS_ZERO_ERRORS",
+    "StyleAuditBoth": "PASS_ZERO_VIOLATIONS_ZERO_WARNINGS",
+    "XlsxReaderBoth": "PASS_WITH_EXPECTED_NULL_WARNINGS",
+    "InstalledExcelReadOnlyOpenWithoutRepair": "PASS",
+    "InstalledExcelSheetCounts": "8_AND_7",
+    "InstalledExcelSavedStateUnchanged": true,
+    "HumanVisualReviewAfterRepair": "NOT_RUN"
+  },
+  "PairBaselineHash": "f2480cdbdaa036856ebedbbbae45fe6dd55b919a4156bb6af78833a602e4f65a",
+  "ActualIndexedVersusIndexes": "PASS_EXPORT_PARTIAL_SEMANTICS",
+  "FutureIndexLoadGate": "INDEX_SYNC_UNRESOLVED",
+  "BpmSoftRequestsDuringRepair": "NONE",
+  "WriteManageGoogleSyncOM": "NOT_RUN"
+}

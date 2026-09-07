@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BpmSoftReadOnlyPull")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df8e5485838e2be6563e1f0a2e525d5732cdaa82")]
 [assembly: System.Reflection.AssemblyProductAttribute("BpmSoftReadOnlyPull")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BpmSoftReadOnlyPull")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

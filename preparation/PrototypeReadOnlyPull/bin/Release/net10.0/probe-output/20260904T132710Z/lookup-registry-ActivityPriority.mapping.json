@@ -1,0 +1,20 @@
+{
+  "SchemaName": "ActivityPriority",
+  "SchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+  "LookupRecordId": "318a52d8-bd7c-4ddf-afa7-2fcaeb2d757a",
+  "SysEntitySchemaUId": "b934f48c-5dea-49b9-bde3-697cb4be5d8b",
+  "SysEntitySchemaUIdRepresentation": "scalar-string",
+  "BaseSchemaName": "BaseLookup",
+  "BaseSchemaUId": "11ab4bcb-9b23-4b6d-9c86-520fae925d75",
+  "RecordIds": [
+    "ab96fa02-7fe6-df11-971b-001d60e938c6",
+    "ac96fa02-7fe6-df11-971b-001d60e938c6",
+    "d625a9fc-7ee6-df11-971b-001d60e938c6"
+  ],
+  "SourcePaths": {
+    "LookupRecordId": "Lookup row.Id",
+    "SysEntitySchemaUId": "Lookup row.SysEntitySchemaUId",
+    "RecordId": "ActivityPriority row.Id",
+    "BaseSchemaUId": "GetSchema.schema.parentSchema.uId"
+  }
+}
