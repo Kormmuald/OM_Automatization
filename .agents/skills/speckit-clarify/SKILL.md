@@ -7,7 +7,6 @@ metadata:
   source: "templates/commands/clarify.md"
 ---
 
-
 ## User Input
 
 ```text
@@ -138,36 +137,52 @@ Execution steps:
 
 5. Sequential questioning loop (interactive):
     - Present EXACTLY ONE question at a time.
+    - Before asking the first clarification question, output this Russian note as a normal visible assistant message: `Для удобного ответа через кнопки включите режим "План" в текущей сессии. Если режим "План" недоступен или вы не хотите переключаться, можно ответить текстом по таблице вариантов.`
+    - In Default mode or any non-Plan mode, do not call `request_user_input` under any circumstance. Ask the clarification as the final normal visible assistant response for the turn, include the full option table and typed-answer instruction, then stop and wait for the user's text reply.
+    - In Default mode or any non-Plan mode, do not place the only copy of the question in tool output, command details, collapsed execution details, progress text, or a follow-up "waiting" message. The main visible assistant response itself must contain the full question and answer options.
+    - In Default mode or any non-Plan mode, do not run more tools, print a separate "waiting for answer" message, or continue analysis after presenting the question. The turn must end on the visible question/options message so the user can answer without expanding details.
+    - Ask all user-facing clarification questions in Russian. Multiple-choice option descriptions, recommended/suggested answers, reasoning, "Почему это важно" text, validation/disambiguation prompts, and reply instructions must also be in Russian. Keep only fixed protocol markers, option letters (`A`-`E`, `Short`), requirement IDs, file paths, and command names in their original technical form.
+    - When a multiple-choice question is appropriate, always offer answer options in Russian instead of asking an open-ended question without options. Include `Short` only when a different concise answer is genuinely useful.
+    - Prefer clickable structured choice prompts over typed letter replies whenever the current Codex environment exposes an interactive choice tool, but never hide the question inside tool details:
+       - First render the full clarification question, why-it-matters sentence, recommendation, and option table as a normal visible assistant message.
+       - Then call the real `request_user_input` interactive choice tool as an additional clickable answer channel for the same multiple-choice clarification question, only if the task is running in Plan mode and that tool is available in the current mode.
+       - Keep the question, option labels, option descriptions, recommendation marker, and any free-form alternative in Russian except fixed technical markers.
+       - Put the recommended answer first and mark its label with `(Recommended)` when the structured prompt requires that ordering.
+       - Use a stable per-question identifier such as `clarify_q_1`, `clarify_q_2`, etc.
+       - If the structured prompt supports only 2-3 clickable options, prioritize the recommended option plus the strongest alternatives; use the prompt's free-form/Other affordance for `Short` answers when available.
+       - If the structured prompt cannot represent the needed answer set, the task is not in Plan mode, or the environment does not expose such a tool in this mode, the already visible Markdown table and typed-answer instructions are the fallback.
+       - Do not simulate clickable buttons with Markdown inline code, badges, pills, or text like ``A`` ``B`` ``C``. Those are not real choices and should be used only as ordinary typed-answer examples in the fallback instructions.
+       - After a clicked selection, map the selected option back to the original option letter/answer text and continue the same validation and integration flow.
     - **Question writing quality (applies to every question, MC or short-answer):**
-       - Lead with `**Question:**` followed by a full interrogative that ends with `?`. The question text before the `?` must make sense on its own.
+       - Lead with `**Question:**` followed by a full Russian interrogative that ends with `?`. The question text before the `?` must make sense on its own.
        - NEVER use a topic label, section heading, or requirement id as the question itself. For example, `Acceptance device/runtime matrix (FR-023)` is INVALID — it is a label, not a question.
        - After the `?`, the only permitted suffix is an optional parenthesized requirement/question id. Exact format: `**Question:** <interrogative>?` or `**Question:** <interrogative>? (FR-023)`. Never put the id before the `?`, and never use the id (alone or with a topic label) as the whole prompt.
-       - Immediately after the question line, add one plain-language "Why it matters" sentence (the stake for acceptance or shipping) before the recommendation/options.
-       - Use everyday wording; introduce jargon only if defined in the same sentence. Self-check: a reader who does not know Spec Kit must be able to answer from the Question line alone. Terse is fine; cryptic labels are not.
+       - Immediately after the question line, add one plain-language Russian "Почему это важно" sentence (the stake for acceptance or shipping) before the recommendation/options.
+       - Use everyday Russian wording; introduce jargon only if defined in the same sentence. Self-check: a reader who does not know Spec Kit must be able to answer from the Question line alone. Terse is fine; cryptic labels are not.
     - For multiple‑choice questions:
        - **Analyze all options** and determine the **most suitable option** based on:
           - Best practices for the project type
           - Common patterns in similar implementations
           - Risk reduction (security, performance, maintainability)
           - Alignment with any explicit project goals or constraints visible in the spec
-       - Present your **recommended option prominently** at the top with clear reasoning (1-2 sentences explaining why this is the best choice).
-       - Format as: `**Recommended:** Option [X] - <reasoning>`
-       - Then render all options as a Markdown table:
+       - Present your **recommended option prominently** at the top with clear Russian reasoning (1-2 sentences explaining why this is the best choice).
+       - Format as: `**Recommended:** Option [X] - <reasoning in Russian>`
+       - Then render all options as a Markdown table with Russian descriptions:
 
-       | Option | Description |
+       | Вариант | Описание |
        |--------|-------------|
-       | A | <Option A description> |
-       | B | <Option B description> |
-       | C | <Option C description> (add D/E as needed up to 5) |
-       | Short | Provide a different short answer (<=5 words) (Include only if free-form alternative is appropriate) |
+       | A | <описание варианта A на русском> |
+       | B | <описание варианта B на русском> |
+       | C | <описание варианта C на русском> (add D/E as needed up to 5) |
+       | Short | Другой короткий ответ (<=5 слов) (Include only if free-form alternative is appropriate) |
 
-       - After the table, add: `You can reply with the option letter (e.g., "A"), accept the recommendation by saying "yes" or "recommended", or provide your own short answer.`
+       - After the table, add this instruction in Russian: `Можно ответить буквой варианта (например, "A"), принять рекомендацию словами "да" или "recommended", либо дать свой короткий ответ.`
     - For short‑answer style (no meaningful discrete options):
-       - Provide your **suggested answer** based on best practices and context.
-       - Format as: `**Suggested:** <your proposed answer> - <brief reasoning>`
-       - Then output: `Format: Short answer (<=5 words). You can accept the suggestion by saying "yes" or "suggested", or provide your own answer.`
+       - Provide your **suggested answer** in Russian based on best practices and context.
+       - Format as: `**Suggested:** <your proposed answer in Russian> - <brief reasoning in Russian>`
+       - Then output this instruction in Russian: `Формат: короткий ответ (<=5 слов). Можно принять предложение словами "да" или "suggested", либо дать свой ответ.`
     - After the user answers:
-       - If the user replies with "yes", "recommended", or "suggested", use your previously stated recommendation/suggestion as the answer.
+       - If the user replies with "да", "yes", "recommended", "рекомендованный", "suggested", or "предложенный", use your previously stated recommendation/suggestion as the answer.
        - Otherwise, validate the answer maps to one option or fits the <=5 word constraint.
        - If ambiguous, ask for a quick disambiguation (count still belongs to same question; do not advance).
        - Once satisfactory, record it in working memory (do not yet write to disk) and move to the next queued question.
@@ -182,7 +197,11 @@ Execution steps:
     - Maintain in-memory representation of the spec (loaded once at start) plus the raw file contents.
     - For the first integrated answer in this session:
        - Ensure a `## Clarifications` section exists (create it just after the highest-level contextual/overview section per the spec template if missing).
-       - Under it, create (if not present) a `### Session YYYY-MM-DD` subheading for today.
+       - Under it, create a unique session subheading for the current command run:
+          - Use `### Session YYYY-MM-DD` when no Clarify session for today exists yet.
+          - If `### Session YYYY-MM-DD` already exists, create the next numbered same-day heading: `### Session YYYY-MM-DD #2`, then `#3`, etc.
+          - Reuse only the subheading created by this command run while integrating this run's accepted answers; do not append new answers to an earlier same-day Clarify run.
+          - The 5-question limit applies to this command run/session only. Earlier same-day Clarify session headings do not count toward the current run's quota.
     - Append a bullet line immediately after acceptance: `- Q: <question> → A: <final answer>`.
     - Then immediately apply the clarification to the most appropriate section(s):
        - Functional ambiguity → Update or add a bullet in Functional Requirements.
@@ -201,7 +220,7 @@ Execution steps:
    - Total asked (accepted) questions ≤ 5.
    - Updated sections contain no lingering vague placeholders the new answer was meant to resolve.
    - No contradictory earlier statement remains (scan for now-invalid alternative choices removed).
-   - Markdown structure valid; only allowed new headings: `## Clarifications`, `### Session YYYY-MM-DD`.
+   - Markdown structure valid; only allowed new clarification headings: `## Clarifications`, `### Session YYYY-MM-DD`, and numbered same-day variants `### Session YYYY-MM-DD #N`.
    - Terminology consistency: same canonical term used across all updated sections.
 
 8. Write the updated spec back to `FEATURE_SPEC`.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Jira Complete Spec"
+  short_description: "Завершает связанную задачу feature в Jira"
+  default_prompt: "Use $speckit-jira-complete-spec to complete an archived feature in Jira."

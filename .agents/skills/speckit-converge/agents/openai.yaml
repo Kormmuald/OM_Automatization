@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Converge"
+  short_description: "Находит оставшиеся работы по feature"
+  default_prompt: "Use $speckit-converge to find and append remaining feature work."
+
+policy:
+  allow_implicit_invocation: false

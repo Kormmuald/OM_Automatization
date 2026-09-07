@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Implement"
+  short_description: "Выполняет задачи реализации feature"
+  default_prompt: "Use $speckit-implement to execute the feature implementation tasks."
+
+policy:
+  allow_implicit_invocation: false

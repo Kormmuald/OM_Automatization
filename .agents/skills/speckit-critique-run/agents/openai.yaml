@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Critique Run"
+  short_description: "Критически проверяет спецификацию и план"
+  default_prompt: "Use $speckit-critique-run to review the specification and plan critically."
+
+policy:
+  allow_implicit_invocation: false

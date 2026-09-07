@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Confluence Read"
+  short_description: "Читает документ Confluence для SpecKit"
+  default_prompt: "Use $speckit-confluence-read to read a Confluence document for SpecKit."
+
+policy:
+  allow_implicit_invocation: false

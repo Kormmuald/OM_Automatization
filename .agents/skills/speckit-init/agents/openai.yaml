@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Init"
+  short_description: "Настраивает проект и класс инициативы"
+  default_prompt: "Use $speckit-init to configure project settings and initiative class."
+
+policy:
+  allow_implicit_invocation: false

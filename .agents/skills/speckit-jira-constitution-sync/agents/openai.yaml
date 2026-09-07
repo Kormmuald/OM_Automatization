@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Jira Constitution Sync"
+  short_description: "Синхронизирует конституцию проекта с Jira"
+  default_prompt: "Use $speckit-jira-constitution-sync to synchronize the constitution with Jira."

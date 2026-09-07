@@ -1,0 +1,23 @@
+﻿schema_version: "1.1"
+
+project:
+  document_language: "ru"
+
+initiative:
+  class: null
+  class_name: null
+  classified_at: null
+  decision_owner: null
+  confidence: null
+  rationale: null
+  workflow:
+    base: "speckit"
+    profile: null
+    overlay: null
+
+integrations:
+  jira:
+    sync_enabled: true
+  confluence:
+    sync_enabled: false
+    spec_root_page_url: null

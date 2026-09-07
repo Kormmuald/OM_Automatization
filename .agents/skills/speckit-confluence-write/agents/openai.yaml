@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Confluence Write"
+  short_description: "Создаёт зеркало спецификации в Confluence"
+  default_prompt: "Use $speckit-confluence-write to create a Confluence specification mirror."
+
+policy:
+  allow_implicit_invocation: false

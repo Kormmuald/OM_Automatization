@@ -1,0 +1,102 @@
+schema_version: "1.0"
+
+overlay:
+  id: "l2-pilot"
+  workflow: "speckit"
+  class: "L2"
+  name: "Pilot"
+  description: "Controlled SpecKit path for testing or applying a solution in real work or a production environment within bounded pilot limits."
+
+required_commands:
+  - "/SpecKit Constitution"
+  - "/SpecKit Init"
+  - "/SpecKit Specify"
+  - "/SpecKit Clarify"
+  - "/SpecKit Plan"
+  - "/SpecKit Analyze"
+  - "/SpecKit Tasks"
+  - "/SpecKit Implement"
+  - "/SpecKit Converge"
+  - "speckit.verify.run"
+  - "speckit.archive.run"
+
+required_artifacts:
+  - ".specify/memory/constitution.md"
+  - ".specify/project.yml"
+  - "specs/<feature>/spec.md"
+  - "specs/<feature>/checklists/requirements.md"
+  - "specs/<feature>/plan.md"
+  - "specs/<feature>/research.md"
+  - "specs/<feature>/data-model.md"
+  - "specs/<feature>/quickstart.md"
+  - "specs/<feature>/tasks.md"
+  - ".specify/memory/spec.md"
+  - ".specify/memory/plan.md"
+  - ".specify/memory/changelog.md"
+
+navigation:
+  emphasis:
+    - "Keep the pilot bounded by scope, users, data, success/stop criteria, and fallback."
+    - "Do not proceed on implicit acceptance; pilot outcomes need an explicit decision."
+    - "If the pilot becomes ongoing use, support, monitoring, or release/change management, consider promotion to L3."
+  after_command:
+    "/SpecKit Constitution":
+      next:
+        command: "/SpecKit Init"
+        reason: "Project settings and initial class are initialized after the constitution is approved."
+      human_decision: "Confirm the constitution is Approved before initialization is relied on."
+    "/SpecKit Init":
+      next:
+        command: "/SpecKit Specify"
+        reason: "L2 requires an explicit pilot feature spec before clarification and planning."
+    "/SpecKit Specify":
+      next:
+        command: "/SpecKit Clarify"
+        reason: "L2 requires explicit clarification before planning."
+    "/SpecKit Clarify":
+      next:
+        command: "/SpecKit Plan"
+        reason: "Pilot-blocking unknowns should now be resolved or consciously deferred."
+    "/SpecKit Plan":
+      next:
+        command: "/SpecKit Analyze"
+        reason: "L2 requires cross-artifact analysis before tasks."
+    "/SpecKit Analyze":
+      next:
+        command: "/SpecKit Tasks"
+        reason: "Analysis findings are acceptable or have a remediation path."
+      human_decision: "Resolve critical findings before task generation."
+    "/SpecKit Tasks":
+      automatic_hooks:
+        - command: "speckit.jira.background-trace"
+          reason: "Registered after_tasks hook records Jira projection or a safe skip trace."
+      next:
+        command: "/SpecKit Implement"
+        reason: "Tasks and Jira trace are ready for implementation."
+    "/SpecKit Implement":
+      automatic_hooks:
+        - command: "/SpecKit Converge"
+          reason: "L2 requires convergence after implementation."
+        - command: "speckit.verify.run"
+          reason: "L2 requires post-convergence verification."
+        - command: "speckit.jira.background-sync"
+          reason: "Registered after_implement hook syncs or records skipped Jira status."
+        - command: "speckit.archive.run"
+          reason: "L2 requires full-scope archival into project memory after verification."
+      next:
+        action: "Review convergence/verification/archive traces and make the pilot acceptance decision."
+        reason: "The next step is a human decision: continue, change, stop, scale, or promote to L3."
+      human_decision: "Accept pilot result, request changes, stop, or promote to L3."
+    "/SpecKit Converge":
+      next:
+        command: "speckit.verify.run"
+        reason: "After successful L2 convergence, run the mandatory post-implementation verification gate."
+    "speckit.verify.run":
+      next:
+        command: "speckit.archive.run"
+        reason: "After successful L2 verification, project memory must be updated by full-scope archival."
+    "speckit.archive.run":
+      next:
+        action: "Make the pilot acceptance decision."
+        reason: "Verification evidence and project memory are now available for a human pilot outcome decision."
+      human_decision: "Accept pilot result, request changes, stop, scale, or promote to L3."

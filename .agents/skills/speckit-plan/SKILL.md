@@ -7,7 +7,6 @@ metadata:
   source: "templates/commands/plan.md"
 ---
 
-
 ## User Input
 
 ```text
@@ -26,6 +25,10 @@ You **MUST** consider the user input before proceeding (if not empty).
 - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
   - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
   - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
+- Special handling for `speckit.critique.run`:
+  - Read `.specify/project.yml` and determine the selected class from `initiative.class`.
+  - If the class is `L1` or `L2`, remove this hook from the executable hook set before emitting any mandatory hook block, and report that critique is mandatory only for L3.
+  - If the class is `L3`, invoke the critique command after planning completes and before reporting completion.
 - When constructing command invocations from hook command names, replace dots (`.`) with hyphens (`-`). For example, `speckit.git.commit` → `$speckit-git-commit`.
 - For each executable hook, output the following based on its `optional` flag:
   - **Optional hook** (`optional: true`):
@@ -63,7 +66,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Fill Constitution Check section from constitution
    - Evaluate gates (ERROR if violations unjustified)
    - Phase 0: Generate research.md (resolve all NEEDS CLARIFICATION)
-   - Phase 1: Generate data-model.md, contracts/, quickstart.md
+   - Phase 1: Generate data-model.md, contracts/, quickstart.md, test-plan.md
    - Re-evaluate Constitution Check post-design
 
 ## Mandatory Post-Execution Hooks
@@ -103,7 +106,17 @@ Check if `.specify/extensions.yml` exists in the project root.
 
 ## Completion Report
 
-Command ends after Phase 1 design. Report branch, IMPL_PLAN path, and generated artifacts.
+Command ends after Phase 1 design. Report in Russian regardless of the language settings in `.specify/memory/constitution.md`.
+
+The user should not need to read the full `plan.md` to understand what happened. Provide a detailed but scannable operational report with these sections:
+
+1. `Что сделано`: summarize the completed planning work, including Phase 0 research and Phase 1 design outputs.
+2. `Ключевые архитектурные решения`: list the main architecture, technology, structure, data, contract, testing, and integration decisions that were made. For each decision, include the rationale and the main alternative rejected when that information exists in `research.md`, `plan.md`, `data-model.md`, `contracts/`, `quickstart.md`, or `test-plan.md`.
+3. `Где смотреть детали`: provide paths to `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md`, `test-plan.md`, and any mandatory hook outputs such as critique reports or sync traces.
+4. `Проверки и gates`: report the Constitution Check result before and after design, unresolved risks, skipped artifacts with reasons, and mandatory hook outcomes.
+5. `Что важно перед /SpecKit Tasks`: call out open questions, assumptions, risks, plan gaps, and decisions that must not be silently changed during task generation.
+
+The report MUST be more detailed than a file list, but must not paste the whole `plan.md`. Use concise Russian prose and bullets. Preserve technical identifiers, paths, commands, branch names, status tokens, requirement IDs, and artifact names exactly.
 
 ## Phases
 
@@ -152,7 +165,15 @@ Command ends after Phase 1 design. Report branch, IMPL_PLAN path, and generated 
    - Do not include full implementation code, model/service/controller bodies, migrations, or complete test suites
    - Keep this artifact as a validation/run guide; implementation details belong in `tasks.md` and the implementation phase
 
-**Output**: data-model.md, /contracts/*, quickstart.md
+4. **Create formal test plan** → `test-plan.md`:
+   - Start from `.specify/templates/test-plan-template.md` if present
+   - Define increment-level tests for every user story in `spec.md`
+   - Define final solution tests that prove the selected scope works end-to-end
+   - Map every functional requirement and success criterion to one or more tests, or mark it not testable with a reason
+   - Prefer automated unit, contract, integration, and e2e checks; use manual checks only when automation is impractical
+   - Name expected evidence for each test: command output, log, screenshot, generated file, fixture diff, report, or human sign-off
+
+**Output**: data-model.md, /contracts/*, quickstart.md, test-plan.md
 
 ## Key rules
 
@@ -162,5 +183,6 @@ Command ends after Phase 1 design. Report branch, IMPL_PLAN path, and generated 
 ## Done When
 
 - [ ] Plan workflow executed and design artifacts generated
+- [ ] test-plan.md generated with increment tests, final solution tests, requirement coverage, and evidence rules
 - [ ] Extension hooks dispatched or skipped according to the rules in Mandatory Post-Execution Hooks above
-- [ ] Completion reported to user with branch, plan path, and generated artifacts
+- [ ] Completion reported to user in Russian with branch, plan path, generated artifacts, architecture decisions, rationale, gates, risks, and next-step notes for `/SpecKit Tasks`

@@ -1,131 +1,123 @@
-# Feature Specification: [FEATURE NAME]
+# Спецификация функции: [FEATURE NAME]
 
-**Feature Branch**: `[###-feature-name]`
+**Ветка функции**: `[###-feature-name]`
 
-**Created**: [DATE]
+**Создано**: [DATE]
 
-**Status**: Draft
+**Статус**: Черновик
 
-**Input**: User description: "$ARGUMENTS"
+**Вводные**: Описание пользователя: "$ARGUMENTS"
 
-## User Scenarios & Testing *(mandatory)*
+## Пользовательские сценарии и проверка *(обязательно)*
 
 <!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  ВАЖНО: пользовательские истории должны быть ПРИОРИТИЗИРОВАНЫ как пользовательские
+  маршруты в порядке важности. Каждая история/маршрут должна проверяться независимо:
+  если реализовать только одну из них, она все равно должна давать жизнеспособный
+  минимальный результат.
 
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+  Назначайте приоритеты (P1, P2, P3 и т.д.), где P1 - самый важный.
+  Количество пользовательских историй должно следовать смыслу feature, а не форме
+  шаблона. Не стремитесь к трем историям по умолчанию: если самостоятельная
+  пользовательская способность одна, оставьте одну историю; если их больше трех,
+  перечислите все.
+  Не выделяйте настройку, обработку ошибок или администрирование в отдельную
+  пользовательскую историю, если это не самостоятельная пользовательская ценность
+  и не независимый проверяемый инкремент.
+  Думайте о каждой истории как о самостоятельном срезе функциональности, который можно:
+  - разработать независимо;
+  - проверить независимо;
+  - поставить независимо;
+  - показать пользователям независимо.
 -->
 
-### User Story 1 - [Brief Title] (Priority: P1)
+### Пользовательская история 1 - [Краткое название] (Приоритет: P1)
 
-[Describe this user journey in plain language]
+[Опишите этот пользовательский маршрут простым языком]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**Почему этот приоритет**: [Объясните ценность и причину такого приоритета]
 
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Независимая проверка**: [Опишите, как это можно проверить независимо, например: "Можно полностью проверить через [конкретное действие], которое дает [конкретную ценность]"]
 
-**Acceptance Scenarios**:
+**Сценарии приемки**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Дано** [начальное состояние], **Когда** [действие], **Тогда** [ожидаемый результат]
+2. **Дано** [начальное состояние], **Когда** [действие], **Тогда** [ожидаемый результат]
 
 ---
 
-### User Story 2 - [Brief Title] (Priority: P2)
+[Добавьте следующие пользовательские истории только при необходимости, каждая с назначенным приоритетом]
 
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
-
-**Acceptance Scenarios**:
-
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-
----
-
-### User Story 3 - [Brief Title] (Priority: P3)
-
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
-
-**Acceptance Scenarios**:
-
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-
----
-
-[Add more user stories as needed, each with an assigned priority]
-
-### Edge Cases
+### Граничные случаи
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
+  ТРЕБУЕТ ДЕЙСТВИЯ: содержимое этого раздела является плейсхолдерами.
+  Заполните его релевантными граничными случаями.
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- Что происходит при [граничное условие]?
+- Как система обрабатывает [сценарий ошибки]?
 
-## Requirements *(mandatory)*
+### Ожидания к формальным проверкам *(обязательно)*
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
+  ТРЕБУЕТ ДЕЙСТВИЯ: кратко опишите, что позднее нужно формализовать в test-plan.md.
+  Не дублируйте здесь полные тест-кейсы; зафиксируйте ожидаемый смысл проверок и
+  покрытие рисков.
 -->
 
-### Functional Requirements
+- **Проверки инкрементов**: каждая пользовательская история выше ДОЛЖНА дать как минимум один формальный тест или сценарий проверки в `test-plan.md` до генерации задач реализации.
+- **Проверки итогового решения**: полный выбранный объем ДОЛЖЕН иметь сквозную, регрессионную и соответствующую релизу проверку в `test-plan.md`.
+- **Ожидания к доказательствам**: доказательства проверки ДОЛЖНЫ быть наблюдаемыми: вывод команды, автоматический отчет, скриншот, сгенерированный файл, diff фикстуры, заметка демонстрации или подпись человека.
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
-
-*Example of marking unclear requirements:*
-
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
-
-### Key Entities *(include if feature involves data)*
-
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
-
-## Success Criteria *(mandatory)*
+## Требования *(обязательно)*
 
 <!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
+  ТРЕБУЕТ ДЕЙСТВИЯ: содержимое этого раздела является плейсхолдерами.
+  Заполните его релевантными функциональными требованиями.
 -->
 
-### Measurable Outcomes
+### Функциональные требования
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **FR-001**: Система ОБЯЗАНА [конкретная возможность, например: "позволять пользователям создавать учетные записи"]
+- **FR-002**: Система ОБЯЗАНА [конкретная возможность, например: "проверять адреса электронной почты"]
+- **FR-003**: Пользователи ДОЛЖНЫ иметь возможность [ключевое действие, например: "сбросить пароль"]
+- **FR-004**: Система ОБЯЗАНА [требование к данным, например: "сохранять пользовательские настройки"]
+- **FR-005**: Система ОБЯЗАНА [поведение, например: "журналировать все события безопасности"]
 
-## Assumptions
+*Пример отметки неясных требований:*
+
+- **FR-006**: Система ОБЯЗАНА аутентифицировать пользователей через [ТРЕБУЕТ УТОЧНЕНИЯ: способ аутентификации не указан - пароль, единый вход, OAuth?]
+- **FR-007**: Система ОБЯЗАНА хранить пользовательские данные в течение [ТРЕБУЕТ УТОЧНЕНИЯ: срок хранения не указан]
+
+### Ключевые сущности *(включайте, если функция связана с данными)*
+
+- **[Сущность 1]**: [Что она представляет, ключевые атрибуты без деталей реализации]
+- **[Сущность 2]**: [Что она представляет, связи с другими сущностями]
+
+## Критерии успеха *(обязательно)*
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right assumptions based on reasonable defaults
-  chosen when the feature description did not specify certain details.
+  ТРЕБУЕТ ДЕЙСТВИЯ: задайте измеримые критерии успеха.
+  Они должны быть технологически нейтральными и измеримыми.
 -->
 
-- [Assumption about target users, e.g., "Users have stable internet connectivity"]
-- [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
-- [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
-- [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+### Измеримые результаты
+
+- **SC-001**: [Измеримая метрика, например: "Пользователи завершают создание учетной записи менее чем за 2 минуты"]
+- **SC-002**: [Измеримая метрика, например: "Система поддерживает 1000 одновременных пользователей без ухудшения качества"]
+- **SC-003**: [Метрика удовлетворенности, например: "90% пользователей успешно завершают основную задачу с первой попытки"]
+- **SC-004**: [Бизнес-метрика, например: "Сократить количество обращений в поддержку по [X] на 50%"]
+
+## Допущения
+
+<!--
+  ТРЕБУЕТ ДЕЙСТВИЯ: содержимое этого раздела является плейсхолдерами.
+  Заполните его релевантными допущениями на основе разумных значений по умолчанию,
+  выбранных там, где описание функции не дало конкретики.
+-->
+
+- [Допущение о целевых пользователях, например: "У пользователей есть стабильное интернет-соединение"]
+- [Допущение о границах объема, например: "Поддержка мобильных устройств не входит в объем первой версии"]
+- [Допущение о данных/среде, например: "Будет использована существующая система аутентификации"]
+- [Зависимость от существующей системы/сервиса, например: "Требуется доступ к существующему API профиля пользователя"]

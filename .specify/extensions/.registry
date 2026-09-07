@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "changelog": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:703e19e52065a2d853d81389054b243c111da93147ec684059cb5d53fa226ad5",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "codex": [
+          "speckit.changelog.generate",
+          "speckit.changelog.release",
+          "speckit.changelog.diff",
+          "speckit.changelog.notify"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-08-24T10:45:24.876871+00:00"
+    }
+  }
+}

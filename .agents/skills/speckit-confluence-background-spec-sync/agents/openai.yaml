@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Confluence Background Sync"
+  short_description: "Фоново синхронизирует спецификацию с Confluence"
+  default_prompt: "Use $speckit-confluence-background-spec-sync to mirror a confirmed spec."

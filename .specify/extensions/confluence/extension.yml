@@ -1,0 +1,31 @@
+schema_version: "1.0"
+
+extension:
+  id: "confluence"
+  name: "Spec Confluence"
+  version: "1.1.1"
+  description: "Create, read, and update Confluence spec mirrors for your project"
+  author: "Aaron Sun"
+  repository: "https://github.com/aaronrsun/spec-kit-confluence"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.1.0"
+
+provides:
+  commands:
+    - name: "speckit.confluence.write"
+      file: "commands/write.md"
+      description: "Creates a Confluence mirror page from the active feature spec.md"
+    - name: "speckit.confluence.read"
+      file: "commands/read.md"
+      description: "Retrieves the contents of an existing Confluence page"
+    - name: "speckit.confluence.update"
+      file: "commands/update.md"
+      description: "Updates an existing Confluence spec mirror from the active feature spec.md"
+    - name: "speckit.confluence.background-spec-sync"
+      file: "commands/background-spec-sync.md"
+      description: "Automatically creates or updates a Confluence mirror for the confirmed feature spec.md before planning"
+
+tags:
+  - "confluence"

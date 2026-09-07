@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Analyze"
+  short_description: "Проверяет согласованность артефактов feature"
+  default_prompt: "Use $speckit-analyze to check feature artifacts for consistency."
+
+policy:
+  allow_implicit_invocation: false

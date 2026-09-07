@@ -7,7 +7,6 @@ metadata:
   source: "templates/commands/constitution.md"
 ---
 
-
 ## User Input
 
 ```text
@@ -77,6 +76,11 @@ You are updating the project constitution at `.specify/memory/constitution.md`. 
 constitution scaffold is resolved at command time from `constitution-template` through the Spec Kit
 preset/template resolution stack.
 
+Project-level runtime settings such as document language, selected initiative class, Jira
+synchronization policy, and Confluence root page are owned by `.specify/project.yml` and mapping
+files, not by the constitution markdown. This command may read `.specify/project.yml` to determine
+the document language, but it must not create or modify project settings.
+
 Follow this execution flow:
 
 1. Run `.specify/scripts/powershell/resolve-template.ps1 constitution-template -Json` from the repository root and parse `TEMPLATE_CONTENT` as the active template.
@@ -95,6 +99,10 @@ Follow this execution flow:
 2. Collect/derive values for placeholders:
    - If user input (conversation) supplies a value, use it.
    - Otherwise infer from existing repo context (README, docs, prior constitution versions if embedded).
+   - Determine the constitution document language from `.specify/project.yml` key
+     `project.document_language`. Supported values are `ru`/`Russian`/`Русский` and
+     `en`/`English`/`Английский`. If the file or key is absent, default to Russian (`ru`).
+     Do not ask for language in this command; project language is configured by `/SpecKit Init`.
    - For governance dates: `RATIFICATION_DATE` is the original adoption date (if unknown ask or mark TODO), `LAST_AMENDED_DATE` is today if changes are made, otherwise keep previous.
    - `CONSTITUTION_VERSION` must increment according to semantic versioning rules:
      - MAJOR: Backward incompatible governance/principle removals or redefinitions.
@@ -104,6 +112,14 @@ Follow this execution flow:
 
 3. Draft the updated constitution content using the resolved template as the required structure:
    - Replace every placeholder with concrete text (no bracketed tokens left except intentionally retained template slots that the project has chosen not to define yet—explicitly justify any left).
+   - If project document language is Russian, the constitution content must be fully Russian,
+     including section titles, metadata fields, approval status values, initiative class names,
+     acceptance decision values, normative words such as `MUST`/`SHOULD`, and scenario-style
+     markers if they appear. Preserve only stable technical identifiers that would lose meaning
+     if translated: command names, file paths, URLs, code identifiers, requirement IDs, Jira keys,
+     and placeholder tokens before they are filled.
+   - If project document language is English, write the constitution in English while preserving
+     stable technical identifiers.
    - Preserve heading hierarchy and comments can be removed once replaced unless they still add clarifying guidance.
    - Ensure each Principle section: succinct name line, paragraph (or bullet list) capturing non‑negotiable rules, explicit rationale if not obvious.
    - Ensure Governance section lists amendment procedure, versioning policy, and compliance review expectations.
@@ -121,7 +137,9 @@ Follow this execution flow:
    - Dates ISO format YYYY-MM-DD.
    - Principles are declarative, testable, and free of vague language ("should" → replace with MUST/SHOULD rationale where appropriate).
 
-6. Write the completed constitution back to `.specify/memory/constitution.md` (overwrite).
+6. Write the completed constitution back to `.specify/memory/constitution.md` (overwrite). Do not
+   write `.specify/project.yml`, `.specify/jira-constitution-mapping.json`,
+   or Confluence mapping files from this command.
 
 7. Output a final summary to the user with:
    - New version and bump rationale.

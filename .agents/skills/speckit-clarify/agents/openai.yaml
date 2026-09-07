@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Clarify"
+  short_description: "Уточняет неоднозначности в спецификации feature"
+  default_prompt: "Use $speckit-clarify to resolve ambiguities in the feature specification."
+
+policy:
+  allow_implicit_invocation: false

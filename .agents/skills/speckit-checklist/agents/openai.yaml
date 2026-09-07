@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Checklist"
+  short_description: "Создаёт чек-лист качества требований feature"
+  default_prompt: "Use $speckit-checklist to create a requirements quality checklist."
+
+policy:
+  allow_implicit_invocation: false

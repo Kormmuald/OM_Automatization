@@ -52,6 +52,7 @@ specs/[###-feature]/
 ├── research.md          # Phase 0 output ($speckit-plan command)
 ├── data-model.md        # Phase 1 output ($speckit-plan command)
 ├── quickstart.md        # Phase 1 output ($speckit-plan command)
+├── test-plan.md         # Phase 1 output ($speckit-plan command)
 ├── contracts/           # Phase 1 output ($speckit-plan command)
 └── tasks.md             # Phase 2 output ($speckit-tasks command - NOT created by $speckit-plan)
 ```
@@ -102,6 +103,37 @@ ios/ or android/
 
 **Structure Decision**: [Document the selected structure and reference the real
 directories captured above]
+
+## Test Strategy
+
+### Increment Tests
+
+For every user story in `spec.md`, define the concrete tests or verification scenarios that prove
+the increment works independently. Each row must be traceable to a user story, acceptance scenario,
+functional requirement, and expected evidence.
+
+| Increment | Requirement / Scenario | Test Type | Test Artifact / Location | Evidence Expected |
+|-----------|------------------------|-----------|--------------------------|-------------------|
+| US1 | [FR/Scenario ID] | [unit/contract/integration/e2e/manual/data/visual] | [path or planned path] | [pass log, screenshot, report, fixture diff, demo note] |
+
+### Final Solution Tests
+
+Define the checks that prove the whole delivered solution works as one system after all selected
+increments are implemented.
+
+| Final Check | Scope Covered | Test Type | Test Artifact / Location | Evidence Expected |
+|-------------|---------------|-----------|--------------------------|-------------------|
+| End-to-end acceptance | [Primary workflow / release scope] | [e2e/manual/data/visual/performance/security] | [path or planned path] | [pass log, screenshot, report, sign-off] |
+
+### Coverage Rules
+
+- Every P1/P2/P3 user story must have at least one increment-level test or verification scenario.
+- Every functional requirement must be covered by at least one increment test, final solution test,
+  or explicitly marked as not testable with a documented reason.
+- Every success criterion must have a measurable final validation method.
+- Manual checks are allowed only when automation is impractical; they still need written steps and
+  expected evidence.
+- Missing test artifacts are plan gaps and must be resolved before `/SpecKit Tasks`.
 
 ## Complexity Tracking
 

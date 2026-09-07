@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Changelog Generate"
+  short_description: "Формирует журнал изменений спецификации"
+  default_prompt: "Use $speckit-changelog-generate to build a specification changelog."
+
+policy:
+  allow_implicit_invocation: false

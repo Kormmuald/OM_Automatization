@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Changelog Diff"
+  short_description: "Сравнивает версии спецификации feature"
+  default_prompt: "Use $speckit-changelog-diff to compare specification versions."
+
+policy:
+  allow_implicit_invocation: false

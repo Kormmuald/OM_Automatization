@@ -1,0 +1,32 @@
+{panel:title=Название проекта|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#f4f5f7|bgColor=#f4f5f7}
+{{project_name}}
+{panel}
+{panel:title=Бизнес-заказчик|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#f4f5f7|bgColor=#f4f5f7}
+{{business_customer}}
+{panel}
+{panel:title=Проблема / Возможность|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#fff4e6|bgColor=#fff4e6}
+{{problem_or_opportunity}}
+{panel}
+{panel:title=Описание идеи|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#e6f7ff|bgColor=#e6f7ff}
+{{idea_description}}
+{panel}
+{panel:title=Предполагаемый эффект|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#f0fff0|bgColor=#f0fff0}
+ * {*}{{*}}Экономия:{{*}}{*} {{effect_savings}}
+ * {*}{{*}}Ускорение:{{*}}{*} {{effect_acceleration}}
+ * {*}{{*}}Новые возможности:{{*}}{*} {{effect_new_capabilities}}
+{panel}
+{panel:title=Сроки|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#f4f5f7|bgColor=#f4f5f7}
+{{timeline}}
+{panel}
+{panel:title=Бюджет|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#fff4e6|bgColor=#fff4e6}
+{{budget}}
+{panel}
+{panel:title=Риски|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#fff0f0|bgColor=#fff0f0}
+{{risks}}
+{panel}
+{panel:title=Ограничения и допущения|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#f4f5f7|bgColor=#f4f5f7}
+{{constraints_and_assumptions}}
+{panel}
+{panel:title=Коммуникации|borderStyle=solid|borderColor=#a6a6a6|titleBGColor=#e6f7ff|bgColor=#e6f7ff}
+{{communications}}
+{panel}

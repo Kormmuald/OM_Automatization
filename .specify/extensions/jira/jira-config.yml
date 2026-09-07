@@ -1,0 +1,96 @@
+# Jira Integration Configuration
+# Corporate default for this template_project.
+
+# MCP Server Configuration
+mcp_server: "atlassian"
+
+# Jira Project Configuration
+project:
+  key: "TPL"
+
+# Artifact Mapping Configuration
+# Defines how spec-kit artifacts map to Jira issue types
+mapping:
+  # Constitution artifact mapping (initiative/stage level from .specify/memory/constitution.md)
+  constitution_artifact: "Stage"
+
+  # Spec artifact mapping (feature/spec level from specs/<feature>/spec.md)
+  spec_artifact: "Epic"
+
+  # Phase and task synchronization is intentionally disabled for this template.
+  # The Jira projection stops at Stage -> Epic; phases and implementation tasks remain local Spec Kit artifacts.
+  phase_artifact: ""
+  task_artifact: ""
+
+  sync_phases: false
+  sync_tasks: false
+
+  # Relationships between issues
+  # Options for each: "Parent", "Epic Link", "Relates", "Blocks", "Implements", "is child of", "none"
+  relationships:
+    # Epic.Stage field in TPL, discovered via Atlassian MCP on 2026-08-19.
+    constitution_spec: "customfield_18723"
+    spec_phase: "none"
+    phase_task: "none"
+    spec_task: "none"
+
+# Default Values for Issue Creation
+defaults:
+  constitution:
+    labels: ["spec-driven", "vibe-coding", "stage"]
+    custom_fields: {}
+  spec:
+    labels: ["spec-driven", "vibe-coding"]
+    custom_fields:
+      customfield_10104: "{{ spec.title }}"
+  phase:
+    labels: []
+    custom_fields: {}
+  task:
+    labels: []
+    custom_fields: {}
+
+# Field Mappings (discovered via Atlassian MCP)
+field_mappings:
+  epic_name: "customfield_10104"
+  epic_stage: "customfield_18723"
+
+stage:
+  source: ".specify/memory/constitution.md"
+  issue_type: "Stage"
+  description_renderer: "jira-wiki-business-case-panels"
+  renderer_template: ".specify/extensions/jira/renderers/constitution-stage.jira"
+
+epic:
+  source: "specs/<feature>/spec.md"
+  issue_type: "Epic"
+  stage_field: "customfield_18723"
+
+sync:
+  create_stage_from_constitution: true
+  create_epic_from_spec: true
+  create_phases: false
+  create_tasks: false
+  sync_task_status: false
+
+# Status Mapping for sync-status command
+status_mapping:
+  completed: "Done"       # [x] in TASKS.md
+  pending: "New"        # [ ] in TASKS.md
+  in_progress: "In Progress"  # [~] in TASKS.md (optional)
+
+# Workflow transition used by the post-archive hook that completes the
+# feature-level Jira issue for the archived spec.
+workflow:
+  done_status: "Done"
+  done_transition: "Done"
+
+# Environment Variable Overrides:
+# - SPECKIT_JIRA_MCP_SERVER
+# - SPECKIT_JIRA_PROJECT_KEY
+# - SPECKIT_JIRA_SPEC_ARTIFACT
+# - SPECKIT_JIRA_PHASE_ARTIFACT
+# - SPECKIT_JIRA_TASK_ARTIFACT
+# - SPECKIT_JIRA_SPEC_PHASE_RELATIONSHIP
+# - SPECKIT_JIRA_PHASE_TASK_RELATIONSHIP
+# - SPECKIT_JIRA_SPEC_TASK_RELATIONSHIP

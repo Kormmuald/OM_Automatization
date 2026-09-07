@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Process Navigator"
+  short_description: "Подсказывает следующий шаг процесса SpecKit"
+  default_prompt: "Use $speckit-process-navigator to identify the next SpecKit workflow step."

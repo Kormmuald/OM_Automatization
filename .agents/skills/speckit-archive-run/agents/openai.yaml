@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Archive Run"
+  short_description: "Архивирует завершённую feature в память проекта"
+  default_prompt: "Use $speckit-archive-run to archive a completed feature."
+
+policy:
+  allow_implicit_invocation: false

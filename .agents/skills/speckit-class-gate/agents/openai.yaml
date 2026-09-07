@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Class Gate"
+  short_description: "Проверяет класс перед командами"
+  default_prompt: "Use $speckit-class-gate to enforce the selected SpecKit class before running a workflow command."

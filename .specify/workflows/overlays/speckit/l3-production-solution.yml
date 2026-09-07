@@ -1,0 +1,113 @@
+schema_version: "1.0"
+
+overlay:
+  id: "l3-production-solution"
+  workflow: "speckit"
+  class: "L3"
+  name: "Production Solution"
+  description: "Full SpecKit path for accepting a solution as an ongoing operational or product capability."
+
+required_commands:
+  - "/SpecKit Constitution"
+  - "/SpecKit Init"
+  - "/SpecKit Specify"
+  - "/SpecKit Clarify"
+  - "/SpecKit Plan"
+  - "speckit.critique.run"
+  - "/SpecKit Analyze"
+  - "/SpecKit Tasks"
+  - "/SpecKit Implement"
+  - "/SpecKit Converge"
+  - "speckit.verify.run"
+  - "speckit.archive.run"
+
+required_artifacts:
+  - ".specify/memory/constitution.md"
+  - ".specify/project.yml"
+  - "specs/<feature>/spec.md"
+  - "specs/<feature>/checklists/requirements.md"
+  - "specs/<feature>/plan.md"
+  - "specs/<feature>/critiques/critique-*.md"
+  - "specs/<feature>/research.md"
+  - "specs/<feature>/data-model.md"
+  - "specs/<feature>/contracts/"
+  - "specs/<feature>/quickstart.md"
+  - "specs/<feature>/tasks.md"
+  - ".specify/memory/spec.md"
+  - ".specify/memory/plan.md"
+  - ".specify/memory/changelog.md"
+
+navigation:
+  emphasis:
+    - "Treat L3 as an ongoing operational or product capability, not a bounded experiment."
+    - "Keep support, release/change management, monitoring, data rules, and ownership visible in every transition."
+    - "Do not claim production acceptance without evidence, review, and a human release/support decision."
+  after_command:
+    "/SpecKit Constitution":
+      next:
+        command: "/SpecKit Init"
+        reason: "Project settings and initial class are initialized after the constitution is approved."
+      human_decision: "Confirm the constitution is Approved before initialization is relied on."
+    "/SpecKit Init":
+      next:
+        command: "/SpecKit Specify"
+        reason: "L3 requires an explicit production feature spec before clarification and planning."
+    "/SpecKit Specify":
+      next:
+        command: "/SpecKit Clarify"
+        reason: "L3 requires clarification before planning."
+    "/SpecKit Clarify":
+      next:
+        command: "/SpecKit Plan"
+        reason: "Production-blocking unknowns should now be resolved or explicitly governed."
+    "/SpecKit Plan":
+      automatic_hooks:
+        - command: "speckit.critique.run"
+          reason: "Registered after_plan hook performs mandatory L3 critique."
+      next:
+        command: "/SpecKit Analyze"
+        reason: "After critique, run cross-artifact analysis before task generation."
+      human_decision: "Resolve critical critique findings before tasks."
+    "speckit.critique.run":
+      next:
+        command: "/SpecKit Analyze"
+        reason: "The production critique is complete or has findings to handle in analysis/remediation."
+    "/SpecKit Analyze":
+      next:
+        command: "/SpecKit Tasks"
+        reason: "Analysis findings are acceptable or have a remediation path."
+      human_decision: "Resolve critical findings before task generation."
+    "/SpecKit Tasks":
+      automatic_hooks:
+        - command: "speckit.jira.background-trace"
+          reason: "Registered after_tasks hook records Jira projection or a safe skip trace."
+      next:
+        command: "/SpecKit Implement"
+        reason: "Tasks and Jira trace are ready for controlled implementation."
+    "/SpecKit Implement":
+      automatic_hooks:
+        - command: "/SpecKit Converge"
+          reason: "L3 requires convergence after implementation."
+        - command: "speckit.verify.run"
+          reason: "L3 requires post-convergence verification."
+        - command: "speckit.jira.background-sync"
+          reason: "Registered after_implement hook syncs or records skipped Jira status."
+        - command: "speckit.archive.run"
+          reason: "L3 requires full-scope archival into project memory after verification."
+      next:
+        action: "Review convergence/verification/archive traces and make the production acceptance or release decision."
+        reason: "The next step is a human release/support decision, not automatic acceptance."
+      human_decision: "Accept for release, request changes, defer release, or update support/change-management expectations."
+    "speckit.verify.run":
+      next:
+        command: "speckit.archive.run"
+        reason: "After successful L3 verification, project memory must be updated before release/support decisions."
+    "/SpecKit Converge":
+      next:
+        command: "speckit.verify.run"
+        reason: "After successful L3 convergence, run the mandatory post-implementation verification gate."
+    "speckit.archive.run":
+      next:
+        action: "Make the production acceptance or release decision."
+        reason: "Verification evidence and consolidated project memory are now available for the human release/support gate."
+      human_decision: "Accept for release, request changes, defer release, or update support/change-management expectations."

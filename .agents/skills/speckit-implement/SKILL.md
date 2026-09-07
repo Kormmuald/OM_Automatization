@@ -7,7 +7,6 @@ metadata:
   source: "templates/commands/implement.md"
 ---
 
-
 ## User Input
 
 ```text
@@ -95,6 +94,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **REQUIRED**: Read plan.md for tech stack, architecture, and file structure
    - **IF EXISTS**: Read data-model.md for entities and relationships
    - **IF EXISTS**: Read contracts/ for API specifications and test requirements
+   - **IF EXISTS**: Read test-plan.md for increment tests, final solution tests, coverage, and expected evidence
    - **IF EXISTS**: Read research.md for technical decisions and constraints
    - **IF EXISTS**: Read .specify/memory/constitution.md for governance constraints
    - **IF EXISTS**: Read quickstart.md for integration scenarios
@@ -148,11 +148,24 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **Task dependencies**: Sequential vs parallel execution rules
    - **Task details**: ID, description, file paths, parallel markers [P]
    - **Execution flow**: Order and dependency requirements
+   - **Automation boundary**: Identify tasks that are explicitly manual, human-gated, environment-gated, deployment-gated, dev/prod operational windows, approvals, publication/republish operations requiring an operator, or tasks that require credentials/access not available in the current session.
+
+   Manual or gated tasks are not implementation blockers by themselves:
+   - Do not execute, simulate, or mark them `[X]` unless the required human approval, environment access, and concrete execution evidence are available in this session.
+   - Do not stop early merely because such tasks exist later in tasks.md.
+   - Continue executing all preceding and independent automatable tasks in dependency order.
+   - Stop only when the next uncompleted manual/gated task is a direct prerequisite for the remaining automatable work; report that dependency explicitly.
+   - In the completion report, list deferred manual/gated task IDs separately and state that overall implementation is partial until those tasks are completed by the responsible operator.
+
+   Corporate test gate:
+   - Confirm every user story phase has test or verification tasks before implementation tasks.
+   - Confirm the final phase has solution-level validation tasks.
+   - If test-plan.md exists, confirm tasks.md references its increment tests and final solution tests.
+   - If any of these are missing, stop and recommend regenerating tasks with `$speckit-tasks` before implementation.
 
 6. Execute implementation following the task plan:
    - **Phase-by-phase execution**: Complete each phase before moving to the next
    - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together
-   - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
    - **File-based coordination**: Tasks affecting the same files must run sequentially
    - **Validation checkpoints**: Verify each phase completion before proceeding
 
@@ -176,6 +189,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Check that implemented features match the original specification
    - Validate that tests pass and coverage meets requirements
    - Confirm the implementation follows the technical plan
+   - If manual/gated tasks remain deferred, do not report the feature as fully complete; report the automatable implementation status and the exact remaining manual task IDs.
 
 Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `$speckit-tasks` first to regenerate the task list.
 
@@ -191,6 +205,21 @@ Check if `.specify/extensions.yml` exists in the project root.
 - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
   - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
   - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
+- Special handling for `speckit.verify.run`:
+  - Read `.specify/project.yml` and determine the selected class from `initiative.class`.
+  - If the class is `L1`, remove this hook from the executable hook set before emitting any mandatory hook block, and report that verification is mandatory only for L2/L3.
+  - If the class is `L2` or `L3`, invoke the verify command after mandatory convergence and before Jira status sync or archival.
+- Special handling for `speckit.converge`:
+  - Read `.specify/project.yml` and determine the selected class from `initiative.class`.
+  - If the class is `L1`, remove this hook from the executable hook set before emitting any mandatory hook block, and report that convergence is mandatory only for L2/L3.
+  - If the class is `L2` or `L3`, invoke the converge command after implementation and before verification, Jira status sync, or archival.
+  - If converge appends new tasks or reports an outcome other than `converged`, stop remaining `after_implement` hooks for this run, report the appended work, and instruct the user to rerun implementation followed by convergence. Do not run `speckit.verify.run`, `speckit.jira.background-sync`, or `speckit.archive.run` until convergence reports `converged`.
+- Special handling for `speckit.archive.run`:
+  - Read `.specify/project.yml` and determine the selected class from `initiative.class`.
+  - If the class is `L1`, invoke the archive command after implementation and skipped L2/L3-only hooks.
+  - If the class is `L2` or `L3`, invoke the archive command only after mandatory convergence and verification have succeeded.
+  - Invoke the archive command with the absolute `FEATURE_DIR` resolved in Outline step 1.
+  - Do not add scope-only modifiers such as `--spec-only`, `--plan-only`, `--changelog-only`, or `--agent-only`; class archival is full-scope.
 - When constructing command invocations from hook command names, replace dots (`.`) with hyphens (`-`). For example, `speckit.git.commit` → `$speckit-git-commit`.
 - For each executable hook, output the following based on its `optional` flag:
   - **Mandatory hook** (`optional: false`) — **You MUST emit `EXECUTE_COMMAND:` for each mandatory hook**:
@@ -222,5 +251,7 @@ Report final status with summary of completed work.
 
 - [ ] All tasks in tasks.md completed and marked `[X]`
 - [ ] Implementation validated against specification, plan, and test coverage
+- [ ] Increment-level tests and final solution tests executed or explicitly documented as not run with reasons
+- [ ] Manual, human-gated, environment-gated, deployment-gated, and dev/prod operational tasks are either completed with evidence and marked `[X]`, or explicitly listed as deferred and left unchecked
 - [ ] Extension hooks dispatched or skipped according to the rules in Mandatory Post-Execution Hooks above
 - [ ] Completion reported to user with summary of completed work

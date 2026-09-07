@@ -1,0 +1,77 @@
+schema_version: "1.0"
+
+overlay:
+  id: "l1-proof-of-concept"
+  workflow: "speckit"
+  class: "L1"
+  name: "Proof of Concept"
+  description: "Minimal SpecKit path for proving whether an idea, approach, scenario, or technical possibility is worth continuing."
+
+required_commands:
+  - "/SpecKit Constitution"
+  - "/SpecKit Init"
+  - "/SpecKit Specify"
+  - "/SpecKit Plan"
+  - "/SpecKit Tasks"
+  - "/SpecKit Implement"
+  - "speckit.archive.run"
+
+required_artifacts:
+  - ".specify/memory/constitution.md"
+  - ".specify/project.yml"
+  - "specs/<feature>/spec.md"
+  - "specs/<feature>/checklists/requirements.md"
+  - "specs/<feature>/plan.md"
+  - "specs/<feature>/tasks.md"
+  - ".specify/memory/spec.md"
+  - ".specify/memory/plan.md"
+  - ".specify/memory/changelog.md"
+
+navigation:
+  emphasis:
+    - "Keep L1 lightweight and focused on learning."
+    - "Do not add heavier artifacts unless an unknown can change scope, safety, acceptance, or effort."
+    - "If the result is intended for real work, real users, or working data, consider promotion to L2 before continuing."
+  after_command:
+    "/SpecKit Constitution":
+      next:
+        command: "/SpecKit Init"
+        reason: "Project settings and initial class are initialized after the constitution is approved."
+      human_decision: "Confirm the constitution is Approved before initialization is relied on."
+    "/SpecKit Init":
+      next:
+        command: "/SpecKit Specify"
+        reason: "L1 still requires an explicit lightweight feature spec before planning."
+    "/SpecKit Specify":
+      conditional_next:
+        - when: "Unknowns can change scope, acceptance, safety, or effort."
+          command: "/SpecKit Clarify"
+          reason: "Clarification is optional for L1, but needed when ambiguity can change the result."
+        - otherwise:
+          command: "/SpecKit Plan"
+          reason: "The lightweight spec is ready for implementation planning."
+    "/SpecKit Clarify":
+      next:
+        command: "/SpecKit Plan"
+        reason: "Critical ambiguity has been resolved or explicitly deferred."
+    "/SpecKit Plan":
+      next:
+        command: "/SpecKit Tasks"
+        reason: "L1 does not require analysis before task generation unless the user requests it."
+    "/SpecKit Tasks":
+      next:
+        command: "/SpecKit Implement"
+        reason: "The task list is ready for execution."
+    "/SpecKit Implement":
+      automatic_hooks:
+        - command: "speckit.archive.run"
+          reason: "L1 requires archival after implementation to preserve the PoC outcome."
+      next:
+        action: "Review evidence, decide whether to close, continue, or promote to L2."
+        reason: "L1 completion is a learning decision; archive preserves the result before the human decision."
+      human_decision: "Decide whether the PoC is accepted as learning, discarded, continued, or promoted."
+    "speckit.archive.run":
+      next:
+        action: "Make the L1 learning decision."
+        reason: "The PoC result is archived and ready for a human continue/stop/promote decision."
+      human_decision: "Accept the learning result, discard, continue, or promote to L2."

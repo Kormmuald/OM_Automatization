@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Jira Background Sync"
+  short_description: "Фоново синхронизирует статусы с Jira"
+  default_prompt: "Use $speckit-jira-background-sync to synchronize implementation status with Jira."

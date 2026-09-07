@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Confluence Update"
+  short_description: "Обновляет зеркало спецификации в Confluence"
+  default_prompt: "Use $speckit-confluence-update to update the Confluence specification mirror."
+
+policy:
+  allow_implicit_invocation: false

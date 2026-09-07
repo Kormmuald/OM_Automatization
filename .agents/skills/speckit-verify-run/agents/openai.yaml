@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Verify Run"
+  short_description: "Проверяет реализацию feature по артефактам"
+  default_prompt: "Use $speckit-verify-run to verify implementation against feature artifacts."
+
+policy:
+  allow_implicit_invocation: false

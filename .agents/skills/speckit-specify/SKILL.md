@@ -1,12 +1,11 @@
 ---
 name: "speckit-specify"
-description: "Create or update the feature specification from a natural language feature description."
+description: "Initialize a feature specification from a natural language feature description. This is the required feature step after /SpecKit Init."
 compatibility: "Requires spec-kit project structure with .specify/ directory"
 metadata:
   author: "github-spec-kit"
   source: "templates/commands/specify.md"
 ---
-
 
 ## User Input
 
@@ -111,7 +110,34 @@ Given that feature description, do this:
 
 4. Load the resolved active `spec-template` file to understand required sections.
 
-5. **IF EXISTS**: Load `.specify/memory/constitution.md` for project principles and governance constraints.
+5. Load project policy and constitution context.
+   - Load `.specify/project.yml` if it exists. Determine the document language from
+     `project.document_language`.
+   - Backward compatibility: if `.specify/project.yml` or `project.document_language` is absent,
+     read `.specify/memory/constitution.md` and use the first non-empty line after the legacy
+     `## Язык документов` / `## Document Language` heading. If no value is available, default to
+     Russian (`ru`).
+   - Supported values:
+     - Russian: `ru`, `Русский`, `Russian`, `русский`
+     - English: `en`, `English`, `Английский`, `английский`
+   - This language setting applies only to documents created by this command:
+     `SPECIFY_FEATURE_DIRECTORY/spec.md` and
+     `SPECIFY_FEATURE_DIRECTORY/checklists/requirements.md`.
+   - If the language is Russian, write the whole specification and requirements checklist in
+     Russian: headings, metadata labels, status field (`**Статус**: Черновик`), user-story labels,
+     acceptance scenario markers (`Дано`, `Когда`, `Тогда`), normative words (`ОБЯЗАНА`,
+     `ДОЛЖНЫ`, `СЛЕДУЕТ`), validation notes, table headings, and explanatory prose. Preserve only
+     stable technical identifiers that would lose meaning if translated: command names, file paths,
+     URLs, code identifiers, requirement IDs (`FR-001`), success criteria IDs (`SC-001`), Jira keys,
+     branch names, and JSON field names.
+   - If the language is English, write these two documents in English using the resolved template
+     language and the standard Spec Kit wording.
+   - Do not change the language of artifacts created by other commands (`plan.md`, `tasks.md`,
+     `research.md`, `test-plan.md`, archive reports, etc.); those remain governed by their own
+     skills and templates.
+   - Load `.specify/memory/constitution.md` for project principles and governance constraints when
+     it exists. Do not read initiative class, Jira sync policy, or Confluence root page from the
+     constitution except as explicit legacy fallback for old projects.
 
 6. Follow this execution flow:
     1. Parse user description from arguments
@@ -120,14 +146,21 @@ Given that feature description, do this:
        Identify: actors, actions, data, constraints
     3. For unclear aspects:
        - Make informed guesses based on context and industry standards
-       - Only mark with [NEEDS CLARIFICATION: specific question] if:
+       - Only add a clarification marker if:
          - The choice significantly impacts feature scope or user experience
          - Multiple reasonable interpretations exist with different implications
          - No reasonable default exists
-       - **LIMIT: Maximum 3 [NEEDS CLARIFICATION] markers total**
+       - **LIMIT: Maximum 3 clarification markers total**. Use `[ТРЕБУЕТ УТОЧНЕНИЯ: ...]` for
+         Russian specs and `[NEEDS CLARIFICATION: ...]` for English specs.
        - Prioritize clarifications by impact: scope > security/privacy > user experience > technical details
     4. Fill User Scenarios & Testing section
        If no clear user flow: ERROR "Cannot determine user scenarios"
+       Do not target exactly three user stories by default. The number of `User Story` sections
+       must follow the feature semantics, not the example count in the template. If the feature
+       contains one standalone user capability, create one `User Story`. If it contains more than
+       three standalone user capabilities, list all of them instead of stopping at three. Do not
+       split setup, error handling, or administration into a separate `User Story` unless it is
+       standalone user value and an independently testable increment.
     5. Generate Functional Requirements
        Each requirement must be testable
        Use reasonable defaults for unspecified details (document assumptions in Assumptions section)
@@ -143,6 +176,47 @@ Given that feature description, do this:
 8. **Specification Quality Validation**: After writing the initial spec, validate it against quality criteria:
 
    a. **Create Spec Quality Checklist**: Generate a checklist file at `SPECIFY_FEATURE_DIRECTORY/checklists/requirements.md` using the checklist template structure with these validation items:
+
+      For Russian document language, use this checklist shape:
+
+      ```markdown
+      # Чеклист качества спецификации: [FEATURE NAME]
+
+      **Назначение**: Проверить полноту и качество спецификации перед переходом к планированию
+      **Создано**: [DATE]
+      **Функция**: [Ссылка на spec.md]
+
+      ## Качество содержания
+
+      - [ ] Нет деталей реализации: языков программирования, фреймворков, API
+      - [ ] Фокус на пользовательской ценности и бизнес-потребностях
+      - [ ] Написано для нетехнических заинтересованных участников
+      - [ ] Все обязательные разделы заполнены
+
+      ## Полнота требований
+
+      - [ ] Не осталось маркеров [ТРЕБУЕТ УТОЧНЕНИЯ]
+      - [ ] Требования проверяемые и однозначные
+      - [ ] Критерии успеха измеримые
+      - [ ] Критерии успеха технологически нейтральные, без деталей реализации
+      - [ ] Все сценарии приемки определены
+      - [ ] Граничные случаи определены
+      - [ ] Объем работ явно ограничен
+      - [ ] Зависимости и допущения определены
+
+      ## Готовность функции
+
+      - [ ] Все функциональные требования имеют ясные критерии приемки
+      - [ ] Пользовательские сценарии покрывают основные потоки
+      - [ ] Функция соответствует измеримым результатам из критериев успеха
+      - [ ] Детали реализации не просачиваются в спецификацию
+
+      ## Заметки
+
+      - Невыполненные пункты требуют обновления спецификации перед `$speckit-clarify` или `$speckit-plan`
+      ```
+
+      For English document language, use this checklist shape:
 
       ```markdown
       # Specification Quality Checklist: [FEATURE NAME]
@@ -189,23 +263,28 @@ Given that feature description, do this:
 
       - **If all items pass**: Mark checklist complete and proceed to the Mandatory Post-Execution Hooks section
 
-      - **If items fail (excluding [NEEDS CLARIFICATION])**:
+      - **If items fail (excluding unresolved clarification markers)**:
         1. List the failing items and specific issues
         2. Update the spec to address each issue
         3. Re-run validation until all items pass (max 3 iterations)
         4. If still failing after 3 iterations, document remaining issues in checklist notes and warn user
 
-      - **If [NEEDS CLARIFICATION] markers remain**:
-        1. Extract all [NEEDS CLARIFICATION: ...] markers from the spec
+      - **If clarification markers remain**:
+        1. Extract all `[ТРЕБУЕТ УТОЧНЕНИЯ: ...]` and `[NEEDS CLARIFICATION: ...]` markers
+           from the spec
         2. **LIMIT CHECK**: If more than 3 markers exist, keep only the 3 most critical (by scope/security/UX impact) and make informed guesses for the rest
-        3. For each clarification needed (max 3), present options to user in this format:
+        3. For each clarification needed (max 3), present options to the user in the configured
+           document language. For Russian, translate the whole question block, including headings,
+           context labels, table columns, option descriptions, implications, and reply prompt.
+           Preserve only option letters (`A`, `B`, `C`, `Custom`) and technical identifiers.
+           For English, use this format:
 
            ```markdown
            ## Question [N]: [Topic]
 
            **Context**: [Quote relevant spec section]
 
-           **What we need to know**: [Specific question from NEEDS CLARIFICATION marker]
+           **What we need to know**: [Specific question from the clarification marker]
 
            **Suggested Answers**:
 
@@ -227,7 +306,7 @@ Given that feature description, do this:
         5. Number questions sequentially (Q1, Q2, Q3 - max 3 total)
         6. Present all questions together before waiting for responses
         7. Wait for user to respond with their choices for all questions (e.g., "Q1: A, Q2: Custom - [details], Q3: B")
-        8. Update the spec by replacing each [NEEDS CLARIFICATION] marker with the user's selected or provided answer
+        8. Update the spec by replacing each clarification marker with the user's selected or provided answer
         9. Re-run validation after all clarifications are resolved
 
    d. **Update Checklist**: After each validation iteration, update the checklist file with current pass/fail status
@@ -296,7 +375,9 @@ When creating this spec from a user prompt:
 
 1. **Make informed guesses**: Use context, industry standards, and common patterns to fill gaps
 2. **Document assumptions**: Record reasonable defaults in the Assumptions section
-3. **Limit clarifications**: Maximum 3 [NEEDS CLARIFICATION] markers - use only for critical decisions that:
+3. **Limit clarifications**: Maximum 3 clarification markers - use
+   `[ТРЕБУЕТ УТОЧНЕНИЯ: ...]` for Russian specs and `[NEEDS CLARIFICATION: ...]` for English
+   specs. Use markers only for critical decisions that:
    - Significantly impact feature scope or user experience
    - Have multiple reasonable interpretations with different implications
    - Lack any reasonable default

@@ -1,0 +1,126 @@
+schema_version: '1.0'
+hooks:
+  before_specify:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure project initiative class exists before feature initialization/specification.
+  - extension: jira
+    command: speckit.jira.constitution-sync
+    optional: false
+    description: Ensure an approved constitution is synchronized to Jira Stage before
+      feature initialization/specification when project Jira sync is enabled.
+  before_clarify:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure clarification is allowed by the selected initiative class.
+  before_plan:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure planning is allowed by the selected initiative class.
+  - extension: confluence
+    command: speckit.confluence.background-spec-sync
+    optional: false
+    description: Publish or update the confirmed feature spec.md mirror in Confluence
+      before planning; always leaves a local trace and skips safely when project
+      Confluence sync is disabled or not configured.
+  before_analyze:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure analysis is allowed by the selected initiative class.
+  before_tasks:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure task generation is allowed by the selected initiative class.
+  before_implement:
+  - extension: speckit-class-workflow
+    command: speckit.class.gate
+    optional: false
+    description: Ensure implementation is allowed by the selected initiative class.
+  after_specify:
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after specification.
+  after_clarify:
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after clarification.
+  after_analyze:
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after analysis.
+  after_tasks:
+  - extension: jira
+    command: speckit.jira.background-trace
+    optional: false
+    description: Background Jira projection after task generation; always leaves a
+      local trace and skips safely when project Jira sync is disabled or Jira is not
+      configured.
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after task generation.
+  after_plan:
+  - extension: critique
+    command: speckit.critique.run
+    optional: false
+    description: Mandatory L3 dual-lens critique after planning and before task generation.
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after planning and plan hooks.
+  after_implement:
+  - extension: speckit-core
+    command: speckit.converge
+    optional: false
+    description: Mandatory L2/L3 convergence against spec, plan, and tasks after
+      implementation. If convergence appends tasks, stop downstream hooks and rerun
+      implementation before verification or archival.
+  - extension: verify
+    command: speckit.verify.run
+    optional: false
+    description: Mandatory L2/L3 post-convergence verification gate before downstream
+      status sync or archival.
+  - extension: jira
+    command: speckit.jira.background-sync
+    optional: false
+    description: Background Jira status sync after implementation for L1 or after
+      successful convergence and verification for L2/L3; always leaves a local trace
+      and skips safely when project Jira sync is disabled or no Jira mapping exists.
+  - extension: archive
+    command: speckit.archive.run
+    optional: false
+    description: Mandatory archival after implementation. For L1, run after implementation;
+      for L2/L3, run only after successful convergence and verification. Invoke with
+      the current feature directory and no scope-only flags.
+  - extension: speckit-class-workflow
+    command: speckit.process.navigator
+    optional: false
+    description: Show class-aware next-step guidance after implementation hooks.
+  - extension: changelog
+    command: speckit.changelog.generate
+    enabled: true
+    optional: true
+    priority: 10
+    prompt: Execute speckit.changelog.generate?
+    description: Offer to generate changelog entry after implementation
+    condition: null
+  after_archive:
+  - extension: jira
+    command: speckit.jira.complete-spec
+    enabled: true
+    optional: false
+    description: Transition the archived feature spec's mapped Jira issue to Done;
+      skips safely when project Jira sync is disabled, Jira is not configured, or
+      no mapping exists.
+installed:
+- changelog
+settings:
+  auto_execute_hooks: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Plan"
+  short_description: "Создаёт технический план реализации feature"
+  default_prompt: "Use $speckit-plan to create the feature implementation plan."
+
+policy:
+  allow_implicit_invocation: false

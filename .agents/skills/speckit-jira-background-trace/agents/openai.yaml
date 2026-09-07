@@ -1,0 +1,4 @@
+interface:
+  display_name: "SpecKit Jira Background Trace"
+  short_description: "Фоново проецирует задачи SpecKit в Jira"
+  default_prompt: "Use $speckit-jira-background-trace to project SpecKit tasks into Jira."

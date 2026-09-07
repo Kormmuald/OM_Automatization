@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Specify"
+  short_description: "Создаёт спецификацию feature из описания"
+  default_prompt: "Use $speckit-specify to create a feature specification from a description."
+
+policy:
+  allow_implicit_invocation: false

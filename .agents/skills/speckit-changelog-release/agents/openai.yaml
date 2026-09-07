@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Changelog Release"
+  short_description: "Формирует release notes по изменениям спецификации"
+  default_prompt: "Use $speckit-changelog-release to create release notes from spec changes."
+
+policy:
+  allow_implicit_invocation: false

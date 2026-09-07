@@ -1,0 +1,7 @@
+interface:
+  display_name: "SpecKit Changelog Notify"
+  short_description: "Готовит уведомление об изменениях спецификации"
+  default_prompt: "Use $speckit-changelog-notify to draft a specification change notice."
+
+policy:
+  allow_implicit_invocation: false
