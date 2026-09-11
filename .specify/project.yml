@@ -4,20 +4,20 @@ project:
   document_language: "ru"
 
 initiative:
-  class: null
-  class_name: null
-  classified_at: null
-  decision_owner: null
-  confidence: null
-  rationale: null
+  class: "L2"
+  class_name: "Pilot"
+  classified_at: "2026-09-07T14:49:03+03:00"
+  decision_owner: "Евгений Харитонов"
+  confidence: "high"
+  rationale: "Локальный Windows-инструмент для управляемого обновления BPMSoft из зафиксированных Excel-книг предназначен для применения в реальной рабочей среде, но текущие границы ограничены пилотом: разрешённые operation kinds требуют qualification, owner allowlist, version-specific evidence, явного подтверждения plan и решения человека по результату. Постоянная эксплуатация с поддержкой, мониторингом и change management пока не утверждена."
   workflow:
     base: "speckit"
-    profile: null
-    overlay: null
+    profile: "l2-pilot"
+    overlay: "l2-pilot"
 
 integrations:
   jira:
-    sync_enabled: true
+    sync_enabled: false
   confluence:
     sync_enabled: false
     spec_root_page_url: null
