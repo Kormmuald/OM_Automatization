@@ -1,0 +1,5 @@
+{
+  "fixtureId": "catalog-valid-v1",
+  "classification": "sanitized",
+  "workspaceItemIds": ["workspace-001", "workspace-002"]
+}

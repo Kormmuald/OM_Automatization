@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType></PropertyGroup><ItemGroup><ProjectReference Include="..\..\src\BpmSoftSync.Cli\BpmSoftSync.Cli.csproj" /><ProjectReference Include="..\BpmSoftSync.Testing\BpmSoftSync.Testing.csproj" /></ItemGroup></Project>

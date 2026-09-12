@@ -1,0 +1,9 @@
+{
+  "schema": "LegacyDispositionManifest/v1",
+  "semantics": [
+    { "id": "ordered-reader", "disposition": "rewrite" },
+    { "id": "safe-read-contract", "disposition": "reuse-semantics" },
+    { "id": "legacy-write-call", "disposition": "drop" },
+    { "id": "unproved-schema-case", "disposition": "defer" }
+  ]
+}

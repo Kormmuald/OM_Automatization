@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="..\..\src\BpmSoftSync.Domain\BpmSoftSync.Domain.csproj" /><ProjectReference Include="..\..\src\BpmSoftSync.Application\BpmSoftSync.Application.csproj" /></ItemGroup></Project>

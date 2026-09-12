@@ -1,0 +1,5 @@
+{
+  "fixtureId": "unknown-shape-safe-v1",
+  "classification": "sanitized",
+  "workspaceItem": { "workspaceItemUId": "66666666-6666-6666-6666-666666666666", "packageId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "itemType": "UnknownWidget", "payload": { "reference": "RAW_LOOKUP_CANARY", "rank": 7, "nested": [true, null] } }
+}

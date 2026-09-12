@@ -1,0 +1,9 @@
+{
+  "fixtureId": "paging-max-page-v1",
+  "classification": "sanitized",
+  "pages": [
+    { "cursor": "0", "identities": ["item-001"], "terminal": false },
+    { "cursor": "1", "identities": ["item-002"], "terminal": false },
+    { "cursor": "2", "identities": ["item-003"], "terminal": true }
+  ]
+}

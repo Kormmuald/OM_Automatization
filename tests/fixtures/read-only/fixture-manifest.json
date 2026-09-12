@@ -1,0 +1,17 @@
+{
+  "schema": "SanitizedFixtureManifest/v1",
+  "fixtures": [
+    { "id": "catalog-valid-v1", "file": "catalog-valid.json", "classification": "sanitized" },
+    { "id": "paging-valid-v1", "file": "paging-valid.json", "classification": "sanitized" },
+    { "id": "paging-duplicate-v1", "file": "paging-duplicate.json", "classification": "sanitized" },
+    { "id": "paging-overlap-v1", "file": "paging-overlap.json", "classification": "sanitized" },
+    { "id": "paging-gap-v1", "file": "paging-gap.json", "classification": "sanitized" },
+    { "id": "paging-empty-middle-v1", "file": "paging-empty-middle.json", "classification": "sanitized" },
+    { "id": "paging-nonempty-after-terminal-v1", "file": "paging-nonempty-after-terminal.json", "classification": "sanitized" },
+    { "id": "paging-loop-v1", "file": "paging-loop.json", "classification": "sanitized" },
+    { "id": "paging-max-page-v1", "file": "paging-max-page.json", "classification": "sanitized" },
+    { "id": "workspace-inventory-v1", "file": "workspace-inventory.json", "classification": "sanitized" },
+    { "id": "unknown-shape-safe-v1", "file": "unknown-shape-safe.json", "classification": "sanitized" },
+    { "id": "unknown-shape-missing-v1", "file": "unknown-shape-missing.json", "classification": "sanitized" }
+  ]
+}
