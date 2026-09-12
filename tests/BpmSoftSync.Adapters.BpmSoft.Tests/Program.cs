@@ -5,6 +5,7 @@ try
     BpmSoftSync.Adapters.BpmSoft.Tests.SessionTests.EphemeralStateIsClearedOnDispose();
     Console.WriteLine("PASS SessionTests.EphemeralStateIsClearedOnDispose");
     BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.UnknownShapeUsesOnlyStructuralEnvelope();
+    BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.MissingUnknownShapeEnvelopeFailsClosedWithNamedBlocker();
     BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.IndexesUseOnlyColumnUIdAndRemainReadOnly();
     BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.WorkspaceFixtureHasCompleteTypedStatusCoverage();
     Console.WriteLine("PASS UnknownShapeTests");

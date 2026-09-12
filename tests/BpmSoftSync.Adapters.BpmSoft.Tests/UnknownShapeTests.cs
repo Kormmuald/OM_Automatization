@@ -13,6 +13,13 @@ public static class UnknownShapeTests
         Assert(result.InventoryItem is not null && result.InventoryItem.SupportStatus == SupportStatus.Unsupported && result.InventoryItem.Envelope is not null && !result.InventoryItem.Envelope.StructuralTree.Contains("RAW_LOOKUP_CANARY", StringComparison.Ordinal), "Unknown shape leaked raw scalar or was dropped.");
     }
 
+    public static void MissingUnknownShapeEnvelopeFailsClosedWithNamedBlocker()
+    {
+        using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "unknown-shape-missing.json")));
+        var result = WorkspaceInventoryAdapter.AdaptUnknown(document.RootElement.GetProperty("workspaceItem"));
+        Assert(result.InventoryItem is null && result.Blocker?.Code == BlockerCode.UnknownShapeUnqualified && result.Blocker.Reason == "UNKNOWN_SHAPE_ENVELOPE_REQUIRED", "Missing unknown-shape envelope did not produce the required named blocker.");
+    }
+
     public static void IndexesUseOnlyColumnUIdAndRemainReadOnly()
     {
         using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "workspace-inventory.json")));

@@ -20,8 +20,22 @@ public static class CatalogReaderPagingTests
     public static void ValidPagingHasCanonicalSafeManifests()
     {
         var result = OrderedCatalogReader.Read(new CollectionDefinition("fixture", "fixture-id", 4), Pages("paging-valid"));
-        Assert(result.IsQualified && result.Manifests.Count == 2 && result.Manifests.All(manifest => manifest.IdentityDigest.Length == 64 && manifest.ProgressTokenDigest.Length == 64), "Valid paging did not produce canonical manifests.");
+        var expected = new[]
+        {
+            new ExpectedManifest(0, "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9", 2, "3771dcf24d74407b7106f3f85370caee66e0e37ea57ec777d8259898e3914808", "54eed5cfdee554e061e27acbf172a97dab8191d88428b9be8127b2482a497bd2", "0cb7a658f8b7a14a822993fd686c6926045545284e72a22fe01fdd92d5f03159", "1-10"),
+            new ExpectedManifest(1, "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b", 1, "556620b431cf9217da34773ac10e8fb8ceeb2c625232820e83d4aede4ecd3492", "556620b431cf9217da34773ac10e8fb8ceeb2c625232820e83d4aede4ecd3492", "556620b431cf9217da34773ac10e8fb8ceeb2c625232820e83d4aede4ecd3492", "1-10")
+        };
+
+        Assert(result.IsQualified && result.Manifests.Count == expected.Length, "Valid paging did not produce the expected number of canonical manifests.");
+        for (var index = 0; index < expected.Length; index++)
+        {
+            var actual = result.Manifests[index];
+            var vector = expected[index];
+            Assert(actual.Ordinal == vector.Ordinal && actual.ProgressTokenDigest == vector.ProgressTokenDigest && actual.Count == vector.Count && actual.FirstIdentity == vector.FirstIdentityDigest && actual.LastIdentity == vector.LastIdentityDigest && actual.IdentityDigest == vector.IdentityDigest && actual.ResponseSizeBucket == vector.ResponseSizeBucket, $"Canonical page manifest {index} did not match its independent safe vector.");
+        }
     }
+
+    private sealed record ExpectedManifest(int Ordinal, string ProgressTokenDigest, int Count, string FirstIdentityDigest, string LastIdentityDigest, string IdentityDigest, string ResponseSizeBucket);
 
     private static IReadOnlyList<CatalogPage> Pages(string name)
     {

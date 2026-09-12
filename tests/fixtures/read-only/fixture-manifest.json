@@ -1,17 +1,17 @@
 {
   "schema": "SanitizedFixtureManifest/v1",
   "fixtures": [
-    { "id": "catalog-valid-v1", "file": "catalog-valid.json", "classification": "sanitized" },
-    { "id": "paging-valid-v1", "file": "paging-valid.json", "classification": "sanitized" },
-    { "id": "paging-duplicate-v1", "file": "paging-duplicate.json", "classification": "sanitized" },
-    { "id": "paging-overlap-v1", "file": "paging-overlap.json", "classification": "sanitized" },
-    { "id": "paging-gap-v1", "file": "paging-gap.json", "classification": "sanitized" },
-    { "id": "paging-empty-middle-v1", "file": "paging-empty-middle.json", "classification": "sanitized" },
-    { "id": "paging-nonempty-after-terminal-v1", "file": "paging-nonempty-after-terminal.json", "classification": "sanitized" },
-    { "id": "paging-loop-v1", "file": "paging-loop.json", "classification": "sanitized" },
-    { "id": "paging-max-page-v1", "file": "paging-max-page.json", "classification": "sanitized" },
-    { "id": "workspace-inventory-v1", "file": "workspace-inventory.json", "classification": "sanitized" },
-    { "id": "unknown-shape-safe-v1", "file": "unknown-shape-safe.json", "classification": "sanitized" },
-    { "id": "unknown-shape-missing-v1", "file": "unknown-shape-missing.json", "classification": "sanitized" }
+    { "id": "catalog-valid-v1", "file": "catalog-valid.json", "classification": "sanitized", "sha256": "2babf9f0a77e6456fa926829409761a325514a0a768ac4bc312bdbf0ec048501" },
+    { "id": "paging-valid-v1", "file": "paging-valid.json", "classification": "sanitized", "sha256": "cac0a23e20c25ab8e0504dfa769756e033d244ab7e6a3c2018c3b1da43fc9ca4" },
+    { "id": "paging-duplicate-v1", "file": "paging-duplicate.json", "classification": "sanitized", "sha256": "87a46d90fdcf0cbdd7b73d8c92c5aff74f0649be1055acbbc05679d0e2ee0b22" },
+    { "id": "paging-overlap-v1", "file": "paging-overlap.json", "classification": "sanitized", "sha256": "a367c203a05c906624c565bfcc1ac1b2dc01ebd40d3d4a7988ecbf6adf0bd344" },
+    { "id": "paging-gap-v1", "file": "paging-gap.json", "classification": "sanitized", "sha256": "7741fcc1f806688a2dfd812fa9e23b6c9cba94eb9d7b16c958a41f978d00ae27" },
+    { "id": "paging-empty-middle-v1", "file": "paging-empty-middle.json", "classification": "sanitized", "sha256": "7c1432d7b4cb12c6a4ce22daa7aafd72d048dd68a939145fe25ac2c4bce236c3" },
+    { "id": "paging-nonempty-after-terminal-v1", "file": "paging-nonempty-after-terminal.json", "classification": "sanitized", "sha256": "ee573a9e5dd1dcffc068e1f323e59ff3558dee4dd52d7002083d6bad5790254d" },
+    { "id": "paging-loop-v1", "file": "paging-loop.json", "classification": "sanitized", "sha256": "4d290768ab441eed45def628eed1696f836d2ff851b6e16e7f9e777d4e5460ba" },
+    { "id": "paging-max-page-v1", "file": "paging-max-page.json", "classification": "sanitized", "sha256": "ae0178dd476f78f6f1a4517b0c870bc31255bd7be7ef29b091359f554b122987" },
+    { "id": "workspace-inventory-v1", "file": "workspace-inventory.json", "classification": "sanitized", "sha256": "5f2674b64c14e9e4ca4bcd0d1b84b531c3bb5f562b36b47a27ef63059acc4fe3" },
+    { "id": "unknown-shape-safe-v1", "file": "unknown-shape-safe.json", "classification": "sanitized", "sha256": "0197363eabb31728dcb38ca970de45134c2dec453441ceb20194b06ae7ebb44c" },
+    { "id": "unknown-shape-missing-v1", "file": "unknown-shape-missing.json", "classification": "sanitized", "sha256": "7498eec6b36dfd5f2131e65eac9bc288ebbb40fd2011ad9cc274a7fa2a400d02" }
   ]
 }
