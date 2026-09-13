@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-09-14T00:23:45.5929640+03:00",
+  "hook": "before_plan",
+  "spec_name": "001-read-only-catalog-qualification",
+  "project_settings_path": ".specify/project.yml",
+  "action": "skipped",
+  "reason": "confluence sync disabled by project settings",
+  "confluence_sync_enabled": false,
+  "root_page_url": null,
+  "mapping_path": "specs/001-read-only-catalog-qualification/confluence-mapping.json",
+  "source_path": "specs/001-read-only-catalog-qualification/spec.md",
+  "source_hash": "5c859577a62bc1199490da3551ea85ddbb9e0fa46e77864c56210925bf9d64ba"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "RepoNativeSlicePack/v1",
+  "feature": "001-read-only-catalog-qualification",
+  "slice": "S04-live-readiness",
+  "status": "preparation-input",
+  "generator": {
+    "claimed": false,
+    "finding": "No installed slice-generator executable, instructions, or templates exist inside this repository; the only project reference identifies an external course asset."
+  },
+  "authoritativeInputs": [
+    "../../handoff-current-thread-20260914.md",
+    "../../s04-live-readiness-slice.md",
+    "../../s04-live-readiness-tasks.md",
+    "../../tasks.md",
+    "../../implementation-slices.md",
+    "../../spec.md",
+    "../../plan.md",
+    "../../research.md",
+    "../../data-model.md",
+    "../../contracts/cli-contract.md",
+    "../../test-plan.md",
+    "../../quickstart.md",
+    "../../../../preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md"
+  ],
+  "deliverables": [
+    "README.md",
+    "project-specific-info.md",
+    "slice-budget-preflight.md",
+    "s04-prompt-pack-runner.md",
+    "s04-orchestration-task.md",
+    "s04-implementation-prompt.md",
+    "acceptance-report-template.md"
+  ],
+  "formalTaskTracker": "../../tasks.md",
+  "supplementalTaskList": "../../s04-live-readiness-tasks.md",
+  "immutableSourceRoot": "../../../../preparation/docs/product-specs/",
+  "prohibitedDuringImplementation": [
+    "real BPMSoft access",
+    "credential collection or persistence",
+    "real network HTTP",
+    "Write/Manage",
+    "browser",
+    "Excel",
+    "compare",
+    "Apply",
+    "Git actions",
+    "automatic live invocation",
+    "Pass C or retry"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-09-14T00:30:39.8090198+03:00",
+  "hook": "after_tasks",
+  "spec": "001-read-only-catalog-qualification",
+  "project_settings_path": ".specify/project.yml",
+  "config_path": ".specify/extensions/jira/jira-config.yml",
+  "action": "skipped",
+  "reason": "jira sync disabled by project settings",
+  "jira_sync_enabled": false,
+  "jira_project_key": "TPL",
+  "mapping_path": "specs/001-read-only-catalog-qualification/jira-mapping.json"
+}
