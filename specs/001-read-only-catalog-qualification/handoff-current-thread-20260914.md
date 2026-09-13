@@ -409,3 +409,26 @@ separate human-gated. Decision 1 имеет четыре endpoints; `GET_PACKAGE
 defect-to-remove. Pack честно обозначен repo-native equivalent, canonical `tasks.md` — единственный
 formal tracker; S04 docs/prompts не заявляют production completion; expected pre-Archive memory
 absence корректно non-blocking. Следующий этап — адресный Git audit/commit/push.
+
+### Git — подготовительное состояние S04
+
+**Первый подготовительный commit.** Ветка `codex/pre-spec-kit-baseline-20260907`:
+`bad9d13b5f5759a2888267b4758dbc670a6dace3` —
+`docs: prepare S04 live-readiness implementation`. Commit успешно отправлен в
+`origin/codex/pre-spec-kit-baseline-20260907`.
+
+**Включённый scope.** Commit содержит только 40 подготовительных Markdown/JSON-артефактов
+Feature 001: canonical `spec.md`/`plan.md`/`tasks.md`, S04 slice и supplemental tasks,
+repo-native S04 pack и implementation prompts, Clarify, requirements/checklist, hook traces,
+historical prompts/critique/evidence, текущий handoff и обязательный
+`docs/read-only-handoff/`. Последний каталог включён потому, что его напрямую требуют
+S04-018, T041 и T046. Не включены production source, tests, `bin/`/`obj/`, `.specify/traces/`
+(исторический trace Feature 004), source drafts, остальные feature или иные существующие
+dirty changes. Перед commit cached diff был проверен, а `git diff --cached --check` прошёл.
+
+**Итог.** Подготовительная стадия S04 сохранена и опубликована; следующий самостоятельный
+агент должен использовать этот handoff и уже reconciled artifacts для `/SpecKit Implement`
+в основном worktree, без повторения Plan/Tasks. Следующий и единственный metadata commit
+синхронизирует эту запись handoff; его hash не добавляется сюда, чтобы не создавать бесконечную
+цепочку self-referential commits. В финальном отчёте он обозначается как latest handoff
+synchronization commit.
