@@ -12,6 +12,9 @@ public static class WorkbookContractTests
         var rebound = WorkbookPairProjection.Create(snapshot with { RunId = Guid.NewGuid(), PairId = Guid.NewGuid() });
         Assert(pair.PairBaselineHash == rebound.PairBaselineHash, "Pair baseline hash depends on self-referential RunId/PairId manifest fields.");
 
+        var projectedCells = string.Join("\n", pair.Model.Sheets.Concat(pair.Lookup.Sheets).SelectMany(sheet => sheet.Rows).SelectMany(row => row));
+        Assert(!projectedCells.Contains("opaque-package-one", StringComparison.Ordinal) && !projectedCells.Contains("opaque-package-two", StringComparison.Ordinal), "Opaque package provenance leaked into an Excel cell.");
+
         Assert(pair.Model.Sheets.Select(sheet => sheet.Name).SequenceEqual(WorkbookContract.ModelSheetOrder), "Model sheet order differs from contract.");
         Assert(pair.Lookup.Sheets.Select(sheet => sheet.Name).SequenceEqual(WorkbookContract.LookupSheetOrder), "Lookup sheet order differs from contract.");
         AssertHeaders(pair.Model, WorkbookContract.ModelHeaders);
@@ -65,7 +68,7 @@ public static class WorkbookContractTests
 
         foreach (var schema in snapshot.Workspace.Schemas)
         {
-            var expectedIdentity = $"schema:{schema.Identity.SchemaUId:D}:layer:{schema.Identity.PackageLayer.PackageId:D}:{schema.Identity.PackageLayer.PackageUId:D}:{schema.Identity.PackageLayer.LayerKind}";
+            var expectedIdentity = $"schema:{schema.Identity.SchemaUId:D}:layer:{schema.Identity.PackageLayer.PrimaryIdentityKey}";
             var expected = snapshot.ComponentDigests.Single(item => item.ComponentKind == "schema" && item.StableIdentity == expectedIdentity).Digest;
             Assert(schemas.Rows.Single(row => row[1] == schema.Identity.SchemaUId.ToString("D"))[11] == expected, "Schema ActualFingerprint is not the exact qualified component digest.");
         }

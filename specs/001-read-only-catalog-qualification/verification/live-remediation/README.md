@@ -1,39 +1,52 @@
 # Журнал remediation live qualification — Feature 001
 
 **Актуализирован:** 2026-09-15
-**Статус:** два последовательных remediation cycle исчерпаны. Feature 001
-**не квалифицирована**: full live qualification, Pass A/B, snapshot,
-reconciliation и Excel-пара не выполнялись после bounded diagnostics.
+**Статус:** Cycle 3 controlled full live run завершился fail-closed. Feature 001
+**не квалифицирована**; новая попытка не запускалась и credentials повторно не
+использовались.
 
-## Текущий итог после Cycle 2
+## Итог Cycle 3 — controlled full run
 
-- Baseline: `e7babcb2a6d5be243e860d8f6089543dec7bc752`
-  (`codex: baseline before live schema remediation`).
-- Cycle 1 добавил изолированный read-only bounded diagnostic и sealed safe
-  evidence; его локализация первого blocker привела к Cycle 2, но не изменила
-  strict qualification contract.
-- Cycle 2 ограничил источник ровно одной детерминированной `SCHEMA_GET` и
-  добавил closed companion discriminator для H-005. Контролируемая bounded
-  live-attempt создала только safe sealed evidence с token
-  `c18fb82f1ab83de5a644beba1b442eaf6ae70b6a` в user-local path
-  `%LOCALAPPDATA%/BpmSoftSync/diagnostic-evidence/diagnostic-runs/2026/09/15/c18fb82f1ab83de5a644beba1b442eaf6ae70b6a/`.
-  В root ровно `.sealed` и `diagnostic-terminal.json`; repo не содержит их
-  содержимого.
-- Результат bounded attempt **поддерживает H-005, но не доказывает её**. Он не
-  является доказательством допустимой package identity, endpoint semantics или
-  production defect и не authorizes identity rewrite.
-- Полная qualification и Excel-пара не запускались; actual Excel paths/hashes
-  отсутствуют. `FULL_CATALOG_NOT_QUALIFIED` и `INDEX_SYNC_UNRESOLVED` остаются
-  открытыми.
-- Зафиксировано process/scope нарушение: raw-like diagnostic material появился
-  только в transient tool output вне approved safe-evidence route. Оно не
-  переносилось в repo-документы и не используется как evidence. В дальнейшем
-  допустимы только закрытые категории и sealed user-local artifacts.
-- Новые remediation cycles не запускаются без нового явного запроса человека.
-  Безопасные варианты: (1) утвердить отдельный contract-design cycle для
-  H-005 с collision/two-pass proof; (2) провести независимый security/process
-  review диагностической observability и повторно получить user decision; (3)
-  остановить Feature 001 как unqualified и сохранить текущий baseline/evidence.
+- RunId: `75e23f1f-d177-439a-b53e-ce566e13845c`.
+- Terminal outcome: `CATALOG_ORDER_OR_PAGING_UNQUALIFIED`, `RetryCount=0`.
+  Единственный установленный live blocker — lookup pagination/offset. Он не
+  доказывает источник дефекта и не даёт права принимать другой порядок или
+  paging fallback.
+- Pass A не завершился успешно; Pass B не начинался. Нет qualified snapshot,
+  output, reconciliation-success или Excel pair. Actual Excel paths/hashes,
+  pair/read-back/OOXML checks и human approval отсутствуют.
+- `FULL_CATALOG_NOT_QUALIFIED` и `INDEX_SYNC_UNRESOLVED` остаются открытыми.
+
+Safe sealed root находится только локально:
+`%LOCALAPPDATA%/BpmSoftSync/controlled-full-20260915-001/runs/2026/09/15/75e23f1f-d177-439a-b53e-ce566e13845c/`.
+`run-journal.json` имеет SHA-256
+`54eaa941a5e22af464d7bf75f8bbb9fd95ac07c8f10f187e66fa8375552ae1f7`;
+sealed terminal record имеет payload digest
+`ad1e72525775b61bf43e51141d793ffbee9a4008302c7caf4211a7f44252d6e4` и file
+SHA-256 `60650e540d232a6ed91b39cc16f3c6b263801797ac459e6a520f8f4fcae7fbbd`;
+reconciliation terminal record имеет payload digest
+`311387b82a4f38a02bb9fad089e13184a7b10b223f625b499393e16c731f8e02` и file
+SHA-256 `0d91a166ea3d7bf7f6636a940a7c0071dae1822ddfe7a7297632889e3010b5e2`.
+Файл `.sealed` содержит closed marker `blocked-terminal` и SHA-256
+`006399676594510e9cad733a52725666c06cc257c818df3177d7a398608b56ee`.
+
+В repo не копируются содержимое локальных artifacts, credentials, URL, raw
+responses или lookup values. Эта запись содержит только closed metadata и
+digests.
+
+## Состояние remediation cycles
+
+- Cycle 1: bounded read-only diagnostic route и sealed safe evidence.
+- Cycle 2: H-005 companion discriminator и one deterministic `SCHEMA_GET` for
+  diagnostics; bounded result только поддержал гипотезу.
+- Cycle 3: opaque `package.id` remediation, offline proof/revalidation и один
+  controlled full run; terminal blocker переместился в lookup paging/offset.
+
+Следующее действие требует нового явного решения человека: отдельный offline
+contract-design/remediation для lookup ordering/paging, независимый
+security/process review с новым ограниченным решением или остановка Feature 001
+как unqualified. До него запрещены retry/rerun, lookup replay, `SELECT_QUERY`,
+Pass B/C, Excel publication и любые write-oriented actions.
 
 ## Scope и исходный факт
 
@@ -400,3 +413,70 @@ safe diagnostic boundary и characterization tests; без этого новый
   live admission: reviewer должен отдельно оценить current hypothesis и ровно одну
   разрешённую bounded live attempt. Отчёт:
   `cycle-02-single-schema-validation.md`.
+
+## Cycle 3 — H-005 semantic rewrite opaque `package.id`
+
+- После отдельного contract decision `schema.package.id` принят только как
+  non-empty opaque string при обязательном valid GUID `schema.package.uId`.
+  GUID — единственная primary package identity; raw opaque scalar — только
+  in-memory provenance и никогда не stable key.
+- Pass builder требует оба условия, поэтому любой direct/non-adapter source без
+  non-empty opaque provenance или typed `package.uId` terminally fails. Изменение
+  provenance между Pass A/B не сливается: безопасный digest меняет reconciliation
+  и terminal result остаётся `TARGET_STATE_CHANGED_DURING_QUALIFICATION` без
+  retry/Pass C.
+- Offline tests покрывают required-string/Guid failures, identity/collision,
+  safe fingerprint, A/B mismatch, no raw durable evidence и отсутствие opaque
+  scalar в Excel projection. Выполнены Release build и шесть offline suites;
+  live/network/auth/credentials/Excel publication и все mutation routes не
+  выполнялись.
+- Это implementation evidence, не self-review и не разрешение на live run.
+  Полный отчёт: `cycle-03-h005-semantic-rewrite.md`.
+
+## Cycle 3 — независимая validation H-005
+
+- Independent validation выполнила Release build, шесть автономных offline
+  suites и `git diff --check`: все exit `0`, build без warnings/errors. Live,
+  network/auth, credentials и Excel publication не выполнялись.
+- Inspection подтвердил narrow parser/domain rewrite, GUID-only primary
+  identity, safe provenance digest, A/B target-change behavior без retry/Pass C
+  и отсутствие raw opaque scalar в evidence/CLI/Excel projections.
+- **Gate verdict: Fail.** Нет executable negative collision test для duplicate
+  `(schema.uId, package.uId)` с `PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED`, а parser
+  matrix не покрывает `package.id` JSON `object`/`array`/`boolean`. До этих
+  focused offline tests и новой independent validation fresh reviewer не должен
+  разрешать controlled full live qualification/export.
+- Отчёт: `cycle-03-h005-validation.md`.
+
+## Cycle 3 — H-005: закрытие validation gaps B/C
+
+- Добавлены только offline proof-тесты. Дубликат пары
+  `(schema.uId, package.uId)` в Pass A теперь подтверждён как terminal
+  `PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED`: `RetryCount=0`, нет Pass B, нет
+  построенных Pass A/Pass B и snapshot output. Fixture сохраняет валидную
+  read-attestation для двух schema reads, поэтому проверяется именно duplicate
+  guard, а не более ранняя проверка attestation.
+- Parser matrix дополнена `schema.package.id` как JSON `object`, `array` и
+  `boolean`; все три формы fail-closed на `SchemaPackageId` с ожидаемой
+  категорией `RequiredString` и без scalar diagnostics.
+- Это тестовое remediation без изменения production semantics, live/network/
+  auth/credentials, Excel publication, commit или mutation routes. Нужна новая
+  независимая validation до любого решения о controlled full live
+  qualification/export.
+
+## Cycle 3 — независимая повторная validation H-005 (gaps B/C)
+
+- Independent validation после gap-тестов выполнила Release build, все шесть
+  автономных offline suites и `git diff --check`: все завершились exit `0`,
+  build — без warnings/errors. Live BPMSoft/network, реальная auth/credentials,
+  CLI against target и Excel publication не выполнялись.
+- Проверены новые executable proofs: duplicate `(schema.uId, package.uId)`
+  terminally блокируется как `PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED` до Pass B,
+  retry, snapshot и output; JSON `object`/`array`/`boolean` для `package.id`
+  fail-closed как `RequiredString` без scalar leak. Подтверждены GUID-only
+  primary identity, safe provenance digest, Pass A/B target-change без retry/Pass
+  C и отсутствие opaque value в Excel cells/durable evidence.
+- **Validation verdict: Pass для передачи fresh independent gate reviewer.** Это
+  не live admission: только reviewer может принять отдельное решение о
+  controlled full live qualification/export с существующими explicit admission
+  controls. Полный отчёт: `cycle-03-h005-revalidation.md`.

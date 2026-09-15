@@ -244,6 +244,12 @@ public static class CatalogPassBuilder
             return false;
         }
 
+        if (!PrimaryPackageIdentitiesAreUnambiguous(read.Workspace))
+        {
+            blocker = Blocked("PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED");
+            return false;
+        }
+
         var orderedIdentities = OrderedIdentities(read.Workspace, read.Lookups);
         var counts = Counts(read.Workspace, read.Lookups);
         var manifests = PageManifests(read.Lookups);
@@ -253,10 +259,10 @@ public static class CatalogPassBuilder
         var manifestDigest = CatalogCanonical.Digest(manifests);
         var componentDigest = CatalogCanonical.Digest(components);
         var unsupportedDigest = CatalogCanonical.Digest(unsupported);
-        var schemaEntries = read.Workspace.Schemas.Select(schema => new FingerprintSchemaEntry(schema.Identity.SchemaUId, schema.Identity.PackageLayer.PackageUId ?? schema.Identity.PackageLayer.PackageId ?? Guid.Empty, components.Single(item => item.StableIdentity == $"schema:{Id(schema.Identity.SchemaUId)}:layer:{Layer(schema.Identity.PackageLayer)}").Digest)).ToArray();
+        var schemaEntries = read.Workspace.Schemas.Select(schema => new FingerprintSchemaEntry(schema.Identity.SchemaUId, schema.Identity.PackageLayer.PackageUId!.Value, components.Single(item => item.StableIdentity == $"schema:{Id(schema.Identity.SchemaUId)}:layer:{Layer(schema.Identity.PackageLayer)}").Digest)).ToArray();
         var collectionEntries = CollectionFingerprints(read.Lookups);
         var unsupportedEntries = unsupported.Select(item => new FingerprintUnsupportedEntry(item.StableIdentity, item.SupportStatus.ToString(), item.ShapeDigest, item.SupportStatus)).ToArray();
-        var workspaceEntries = read.Workspace.Inventory.Items.Select(item => new FingerprintWorkspaceEntry(item.Identity.WorkspaceItemUId, item.Identity.PackageLayer.PackageUId ?? item.Identity.PackageLayer.PackageId ?? Guid.Empty, item.Identity.ItemType, item.SupportStatus)).ToArray();
+        var workspaceEntries = read.Workspace.Inventory.Items.Select(item => new FingerprintWorkspaceEntry(item.Identity.WorkspaceItemUId, item.Identity.PackageLayer.PackageUId ?? Guid.Empty, item.Identity.ItemType, item.SupportStatus)).ToArray();
         var versions = read.ObservedTargetVersionEvidence.Select(Normalize).OrderBy(value => value, StringComparer.Ordinal).ToArray();
         var sortedResponseSizeBuckets = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var item in read.ResponseSizeBuckets) sortedResponseSizeBuckets.Add(item.Key, Normalize(item.Value));
@@ -310,8 +316,8 @@ public static class CatalogPassBuilder
     private static IReadOnlyList<CatalogComponentDigest> Components(WorkspaceObjectModel workspace, LookupCatalog lookups)
     {
         var result = new List<CatalogComponentDigest>();
-        foreach (var item in workspace.Inventory.Items) result.Add(Component($"workspace:{Id(item.Identity.WorkspaceItemUId)}:layer:{Layer(item.Identity.PackageLayer)}", "workspace", item));
-        foreach (var schema in workspace.Schemas) result.Add(Component($"schema:{Id(schema.Identity.SchemaUId)}:layer:{Layer(schema.Identity.PackageLayer)}", "schema", schema));
+        foreach (var item in workspace.Inventory.Items) result.Add(Component($"workspace:{Id(item.Identity.WorkspaceItemUId)}:layer:{Layer(item.Identity.PackageLayer)}", "workspace", WorkspaceComponent(item)));
+        foreach (var schema in workspace.Schemas) result.Add(Component($"schema:{Id(schema.Identity.SchemaUId)}:layer:{Layer(schema.Identity.PackageLayer)}", "schema", SchemaComponent(schema)));
         foreach (var registry in lookups.Registry) result.Add(Component($"lookup-registry:{Id(registry.LookupRecordId)}", "lookup-registry", registry));
         if (lookups.RegistryManifest is not null) result.Add(Component("lookup-registry-manifest", "lookup-registry-manifest", ManifestContent(lookups.RegistryManifest)));
         foreach (var collection in lookups.Collections)
@@ -346,11 +352,11 @@ public static class CatalogPassBuilder
         var unsupportedDigest = CatalogCanonical.Digest(unsupported);
         var schemaEntries = pass.Content.Workspace.Schemas.Select(schema => new FingerprintSchemaEntry(
             schema.Identity.SchemaUId,
-            schema.Identity.PackageLayer.PackageUId ?? schema.Identity.PackageLayer.PackageId ?? Guid.Empty,
+            schema.Identity.PackageLayer.PackageUId ?? Guid.Empty,
             components.Single(item => item.StableIdentity == $"schema:{Id(schema.Identity.SchemaUId)}:layer:{Layer(schema.Identity.PackageLayer)}").Digest)).ToArray();
         var workspaceEntries = pass.Content.Workspace.Inventory.Items.Select(item => new FingerprintWorkspaceEntry(
             item.Identity.WorkspaceItemUId,
-            item.Identity.PackageLayer.PackageUId ?? item.Identity.PackageLayer.PackageId ?? Guid.Empty,
+            item.Identity.PackageLayer.PackageUId ?? Guid.Empty,
             item.Identity.ItemType,
             item.SupportStatus)).ToArray();
         var unsupportedEntries = unsupported.Select(item => new FingerprintUnsupportedEntry(item.StableIdentity, item.SupportStatus.ToString(), item.ShapeDigest, item.SupportStatus)).ToArray();
@@ -404,7 +410,54 @@ public static class CatalogPassBuilder
         _ => throw new InvalidDataException("LOOKUP_TYPED_VALUE_UNQUALIFIED")
     };
 
-    private static string Layer(PackageLayerIdentity layer) => $"{Id(layer.PackageId)}:{Id(layer.PackageUId)}:{Normalize(layer.LayerKind ?? string.Empty)}";
+    private static bool PrimaryPackageIdentitiesAreUnambiguous(WorkspaceObjectModel workspace) =>
+        workspace.Schemas.All(schema => !string.IsNullOrWhiteSpace(schema.Identity.PackageLayer.OpaquePackageId) && schema.Identity.PackageLayer.PackageUId is not null) &&
+        workspace.Schemas.Select(schema => (schema.Identity.SchemaUId, schema.Identity.PackageLayer.PackageUId!.Value)).Distinct().Count() == workspace.Schemas.Count;
+
+    private static object WorkspaceComponent(WorkspaceInventoryItem item) => new
+    {
+        identity = new
+        {
+            item.Identity.WorkspaceItemUId,
+            item.Identity.ItemType,
+            item.Identity.SchemaUId,
+            package = PackageComponent(item.Identity.PackageLayer)
+        },
+        item.SupportStatus,
+        item.SafeReason,
+        item.Envelope,
+        item.DisplayName,
+        item.UnknownProperties
+    };
+
+    private static object SchemaComponent(EntitySchemaModel schema) => new
+    {
+        identity = new
+        {
+            schema.Identity.SchemaName,
+            schema.Identity.SchemaUId,
+            schema.Identity.ServerSchemaIdCandidate,
+            schema.Identity.ParentSchemaName,
+            schema.Identity.ParentSchemaUId,
+            package = PackageComponent(schema.Identity.PackageLayer)
+        },
+        schema.Columns,
+        schema.Indexes,
+        schema.UnknownProperties
+    };
+
+    private static object PackageComponent(PackageLayerIdentity layer) => new
+    {
+        layer.PackageUId,
+        layer.LayerKind,
+        layer.PackageName,
+        opaquePackageIdProvenanceDigest = layer.OpaquePackageIdDigest
+    };
+
+    // Stable identities and joins are GUID-based. The opaque source value is
+    // intentionally absent here, while its safe digest participates only in
+    // component change detection above.
+    private static string Layer(PackageLayerIdentity layer) => layer.PrimaryIdentityKey;
     private static string Id(Guid value) => value.ToString("D").ToLowerInvariant();
     private static string Id(Guid? value) => value?.ToString("D").ToLowerInvariant() ?? string.Empty;
     private static string Normalize(string value) => value.Normalize(NormalizationForm.FormC);

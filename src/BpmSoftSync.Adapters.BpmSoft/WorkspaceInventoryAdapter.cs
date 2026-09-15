@@ -58,7 +58,7 @@ public static class WorkspaceInventoryAdapter
         if (!TryGuid(item, "workspaceItemUId", out var workspaceItemUId) || !TryGuid(item, "packageId", out var packageId) || !TryRequiredString(item, "itemType", out var itemType) || !item.TryGetProperty("payload", out var payload)) return new UnknownShapeResult(null, UnknownBlocker("workspace-item", "UNKNOWN_SHAPE_ENVELOPE_REQUIRED"));
         var packageUId = TryGuid(item, "packageUId", out var parsedPackageUId) ? parsedPackageUId : (Guid?)null;
         var schemaUId = TryGuid(item, "schemaUId", out var parsedSchemaUId) ? parsedSchemaUId : (Guid?)null;
-        var identity = new WorkspaceItemIdentity(workspaceItemUId, new PackageLayerIdentity(packageId, packageUId, TryOptionalString(item, "layerKind"), TryOptionalString(item, "packageName")), itemType, schemaUId);
+        var identity = new WorkspaceItemIdentity(workspaceItemUId, new PackageLayerIdentity(packageId.ToString("D"), packageUId, TryOptionalString(item, "layerKind"), TryOptionalString(item, "packageName")), itemType, schemaUId);
         return new UnknownShapeResult(new WorkspaceInventoryItem(identity, SupportStatus.Unsupported, "UNKNOWN_SHAPE_INVENTORY_ONLY", BuildEnvelope(itemType, payload), TryOptionalString(item, "displayName"), UnknownProperties(item, WorkspaceProperties, "workspace-item-property")), null);
     }
 
@@ -110,19 +110,13 @@ public static class WorkspaceInventoryAdapter
             !TryGuid(source, "uId", FailedShapePath.SchemaUId, out var schemaUId, out failure) ||
             !TryGuid(source, "id", FailedShapePath.SchemaId, out var schemaId, out failure) ||
             !TryObject(source, "package", FailedShapePath.SchemaPackage, out package, out failure) ||
-            !TryGuid(package, "id", FailedShapePath.SchemaPackageId, out var packageId, out failure) ||
+            !TryRequiredString(package, "id", FailedShapePath.SchemaPackageId, out var opaquePackageId, out failure) ||
             !TryGuid(package, "uId", FailedShapePath.SchemaPackageUId, out var packageUId, out failure) ||
             !TryRequiredString(package, "name", FailedShapePath.SchemaPackageName, out var packageName, out failure) ||
             !TryArray(source, "columns", FailedShapePath.SchemaColumns, out var ownColumns, out failure) ||
             !TryArray(source, "inheritedColumns", FailedShapePath.SchemaInheritedColumns, out var inheritedColumns, out failure) ||
             !TryArray(source, "indexes", FailedShapePath.SchemaIndexes, out var indexes, out failure))
         {
-            // H-005 diagnostic-only discriminator: when the primary package-id
-            // predicate is the first failure, classify the already loaded
-            // companion uId locally. No scalar is retained, and normal strict
-            // acceptance remains unchanged.
-            if (failure?.Path == FailedShapePath.SchemaPackageId)
-                failure = failure with { CompanionGuidStringStatus = GuidStringStatus(package, "uId") };
             blocker = UnknownBlocker("schema", "SCHEMA_INVENTORY_UNQUALIFIED", failure);
             return false;
         }
@@ -135,7 +129,10 @@ public static class WorkspaceInventoryAdapter
         }
         if (!TryReadObservedColumns(ownColumns, ColumnOwnership.Own, 0, out var own, out failure) || !TryReadObservedColumns(inheritedColumns, ColumnOwnership.Inherited, own.Count, out var inherited, out failure) || !TryReadObservedIndexes(indexes, out var typedIndexes, out failure))
         { blocker = UnknownBlocker("schema-members", "SCHEMA_INVENTORY_UNQUALIFIED", failure); return false; }
-        schema = new EntitySchemaModel(new SchemaIdentity(schemaName, schemaUId, schemaId, parentName, parentUId, new PackageLayerIdentity(packageId, packageUId, "schema-package", packageName)), own.Concat(inherited).ToArray(), typedIndexes, UnknownProperties(source, ObservedSchemaProperties, "schema-property"));
+        // H-005: package.id is accepted only as a required opaque string. The
+        // immediately following package.uId predicate is still mandatory and
+        // defines package identity; opaquePackageId never becomes a join key.
+        schema = new EntitySchemaModel(new SchemaIdentity(schemaName, schemaUId, schemaId, parentName, parentUId, new PackageLayerIdentity(opaquePackageId, packageUId, "schema-package", packageName)), own.Concat(inherited).ToArray(), typedIndexes, UnknownProperties(source, ObservedSchemaProperties, "schema-property"));
         return true;
     }
 

@@ -32,7 +32,7 @@ try
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.BoundedDiagnosticStopsAfterOneDeterministicSuccessfulSchemaAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.BoundedDiagnosticWithoutSchemaCandidateStopsBeforeSchemaGetAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.FailedRequiredSchemaPathsProduceOnlyClosedStructuralDiagnosticsAsync();
-    await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.SchemaPackageIdCompanionStatusUsesTheSameBoundedSchemaResponseAsync();
+    await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.SchemaPackageIdIsOpaqueOnlyWithAGuidCompanionAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.SchemaIdentityMismatchFailsClosedBeforeAnotherTraversalAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.SchemaTransportFailureMarksRequestedItemUnreadableAndReturnsSafeBlockerAsync();
     Console.WriteLine("PASS WorkspaceInventoryAdapterTests");

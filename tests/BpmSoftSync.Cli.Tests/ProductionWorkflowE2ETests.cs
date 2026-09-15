@@ -57,7 +57,7 @@ public static class ProductionWorkflowE2ETests
         public ValueTask<FullCatalogRead> ReadFullAsync(CatalogReadRequest request, CancellationToken cancellationToken = default)
         {
             ReadCount++;
-            var layer = new PackageLayerIdentity(Id("10000000-0000-0000-0000-000000000001"), Id("10000000-0000-0000-0000-000000000002"), "Current", "FixturePackage");
+            var layer = new PackageLayerIdentity("opaque-fixture-package", Id("10000000-0000-0000-0000-000000000002"), "Current", "FixturePackage");
             var schemaIdentity = new SchemaIdentity("FixtureLookup", Id("30000000-0000-0000-0000-000000000001"), null, null, null, layer);
             var record = Id("70000000-0000-0000-0000-000000000001");
             var idColumn = Id("40000000-0000-0000-0000-000000000001"); var nameColumn = Id("40000000-0000-0000-0000-000000000002");

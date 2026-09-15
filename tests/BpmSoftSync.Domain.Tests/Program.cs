@@ -10,6 +10,7 @@ try
     BpmSoftSync.Domain.Tests.WorkspaceInventoryTests.PackageLayerIdentityDoesNotMergeDisplayNames();
     BpmSoftSync.Domain.Tests.WorkspaceInventoryTests.EverySourceItemHasExactlyOneSupportStatus();
     BpmSoftSync.Domain.Tests.WorkspaceInventoryTests.TypedInventoryRetainsSchemaCandidateAndDisplayCollision();
+    BpmSoftSync.Domain.Tests.WorkspaceInventoryTests.PackageUIdAloneDefinesPrimaryIdentity();
     Console.WriteLine("PASS WorkspaceInventoryTests");
     BpmSoftSync.Domain.Tests.TargetFingerprintTests.PropertyOrderDoesNotChangeDigestButContractDataDoes();
     BpmSoftSync.Domain.Tests.TargetFingerprintTests.SemanticallyEquivalentJsonPropertyOrdersProduceSameFingerprint();

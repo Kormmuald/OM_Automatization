@@ -73,6 +73,42 @@ public static class CatalogQualificationServiceTests
         finally { DeleteRoot(root); }
     }
 
+    public static async Task OpaquePackageProvenanceChangeIsNotMergedAcrossPassesAsync()
+    {
+        const string opaqueCanary = "OPAQUE_PACKAGE_PROVENANCE_CANARY";
+        var source = new CountingFullCatalogSource(opaquePackageIdPassB: opaqueCanary);
+        var root = NewRoot();
+        try
+        {
+            var result = await new CatalogQualificationService(source, FixtureCatalog.Policy(), new AppendOnlyRunStore(root)).QualifyAsync();
+            Assert(!result.IsQualified && result.Snapshot is null && result.Result.Reason == "TARGET_STATE_CHANGED_DURING_QUALIFICATION" && result.RetryCount == 0, "An opaque provenance change was merged into a qualified A/B result.");
+            Assert(source.FullReadCount == 2, "An opaque provenance collision triggered a retry or Pass C.");
+            Assert(result.PassA is not null && result.PassB is not null && result.PassA.Fingerprint.Digest != result.PassB.Fingerprint.Digest, "Opaque provenance change did not alter the safe target fingerprint.");
+            var durable = Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories).Select(File.ReadAllText).ToArray();
+            Assert(durable.All(text => !text.Contains(opaqueCanary, StringComparison.Ordinal)), "Opaque package provenance leaked into durable qualification evidence.");
+        }
+        finally { DeleteRoot(root); }
+    }
+
+    public static async Task EmptyOpaquePackageProvenanceFailsClosedBeforePassBAsync()
+    {
+        var source = new CountingFullCatalogSource(opaquePackageIdPassA: "  ");
+        var result = await new CatalogQualificationService(source, FixtureCatalog.Policy()).QualifyAsync();
+        Assert(!result.IsQualified && result.Snapshot is null && result.Result.Reason == "PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED" && result.RetryCount == 0, "Empty opaque package provenance crossed the domain qualification boundary.");
+        Assert(source.FullReadCount == 1, "An invalid package provenance advanced to Pass B or a retry.");
+    }
+
+    public static async Task DuplicateSchemaAndPackagePrimaryIdentityFailsClosedBeforePassBAndOutputAsync()
+    {
+        var source = new CountingFullCatalogSource(duplicatePrimaryIdentityPassA: true);
+
+        var result = await new CatalogQualificationService(source, FixtureCatalog.Policy()).QualifyAsync();
+
+        Assert(!result.IsQualified && result.Result.Reason == "PACKAGE_PRIMARY_IDENTITY_UNQUALIFIED" && result.RetryCount == 0, "A duplicate (schema.uId, package.uId) pair was not a terminal zero-retry blocker.");
+        Assert(source.FullReadCount == 1 && source.Requests.Single().Pass == CatalogPassOrdinal.A, "A duplicate primary identity advanced to Pass B or a retry.");
+        Assert(result.PassA is null && result.PassB is null && result.Snapshot is null, "A duplicate primary identity produced a pass or snapshot output.");
+    }
+
     public static async Task SecondPassBlockerStopsWithoutRetryAsync()
     {
         var source = new CountingFullCatalogSource(blockPassB: true);
@@ -106,7 +142,7 @@ public static class CatalogQualificationServiceTests
 
 internal enum ContractMutation { None, OrderKey, QueryContract, Limits }
 
-internal sealed class CountingFullCatalogSource(bool cachePassAForB = false, bool mutatePassB = false, bool blockPassB = false, int? declaredWorkbookLimit = null, bool reusePassASchemasForB = false, bool deepClonePassACacheForB = false, ContractMutation contractMutation = ContractMutation.None) : IFullCatalogSource
+internal sealed class CountingFullCatalogSource(bool cachePassAForB = false, bool mutatePassB = false, bool blockPassB = false, int? declaredWorkbookLimit = null, bool reusePassASchemasForB = false, bool deepClonePassACacheForB = false, ContractMutation contractMutation = ContractMutation.None, string? opaquePackageIdPassB = null, string? opaquePackageIdPassA = null, bool duplicatePrimaryIdentityPassA = false) : IFullCatalogSource
 {
     private FullCatalogRead? _first;
     public int FullReadCount { get; private set; }
@@ -129,7 +165,7 @@ internal sealed class CountingFullCatalogSource(bool cachePassAForB = false, boo
         WorkspaceReadCount++;
         SchemaReadCount++;
         LookupReadCount++;
-        var result = FixtureCatalog.Read(request, mutatePassB && request.Pass == CatalogPassOrdinal.B, blockPassB && request.Pass == CatalogPassOrdinal.B, declaredWorkbookLimit);
+        var result = FixtureCatalog.Read(request, mutatePassB && request.Pass == CatalogPassOrdinal.B, blockPassB && request.Pass == CatalogPassOrdinal.B, declaredWorkbookLimit, request.Pass == CatalogPassOrdinal.B ? opaquePackageIdPassB : opaquePackageIdPassA, duplicatePrimaryIdentityPassA && request.Pass == CatalogPassOrdinal.A);
         if (reusePassASchemasForB && _first is not null) result = result with { Workspace = result.Workspace with { Schemas = _first.Workspace.Schemas } };
         if (request.Pass == CatalogPassOrdinal.B && contractMutation != ContractMutation.None)
         {
@@ -173,9 +209,9 @@ internal static class FixtureCatalog
         QualifiedCatalogSnapshot.SchemaVersion,
         "WorkbookProjection/v1");
 
-    public static FullCatalogRead Read(CatalogReadRequest request, bool mutate, bool blocked, int? declaredWorkbookLimit)
+    public static FullCatalogRead Read(CatalogReadRequest request, bool mutate, bool blocked, int? declaredWorkbookLimit, string? opaquePackageId = null, bool duplicatePrimaryIdentity = false)
     {
-        var layer = new PackageLayerIdentity(PackageId, PackageUId, "Current", "FixturePackage");
+        var layer = new PackageLayerIdentity(opaquePackageId ?? PackageId.ToString("D"), PackageUId, "Current", "FixturePackage");
         var schemaIdentity = new SchemaIdentity("FixtureLookup", SchemaUId, null, null, null, layer);
         var inventoryItem = new WorkspaceInventoryItem(new WorkspaceItemIdentity(WorkspaceId, layer, "EntitySchema", SchemaUId), SupportStatus.Structured, "STRUCTURED", null, "FixtureLookup", []);
         var inventory = WorkspaceInventory.Create([inventoryItem]);
@@ -185,7 +221,10 @@ internal static class FixtureCatalog
             new("Name", NameColumnUId, 1, ColumnOwnership.Own, 1, 1, false, null, [])
         };
         var schema = new EntitySchemaModel(schemaIdentity, columns, [new EntityIndexModel(IndexUId, "PK_FixtureLookup", true, true, [new IndexMember(IdColumnUId, 0, [])], [])], []);
-        var model = new WorkspaceObjectModel(true, inventory, [schema], null);
+        var schemas = duplicatePrimaryIdentity
+            ? new[] { schema, schema with { Columns = schema.Columns.ToArray(), Indexes = schema.Indexes.ToArray() } }
+            : new[] { schema };
+        var model = new WorkspaceObjectModel(true, inventory, schemas, null);
         var registry = new LookupRegistryRecord(RegistryId, SchemaUId, schemaIdentity, null, "registry-source");
         var raw = mutate ? RawLookupCanary + "-changed" : RawLookupCanary;
         var values = new NormalizedLookupValue[]
@@ -203,7 +242,7 @@ internal static class FixtureCatalog
         var blocker = blocked ? new Blocker(BlockerCode.CatalogOrderOrPagingUnqualified, "lookup:FixtureLookup", "LOOKUP_PAGE_OFFSET_UNQUALIFIED", "Inspect the safe fixture.", "Stop without retry.") : null;
         var appliedContracts = request.SealedScope?.Collections.ToArray() ?? request.Policy.CreatePassAContracts([manifest.CollectionId]);
         var responseSizeBuckets = new Dictionary<string, string>(StringComparer.Ordinal) { ["workspace"] = "0-16KiB", ["schemas"] = "0-16KiB", ["lookup-registry"] = "0-16KiB", ["lookup:FixtureLookup"] = "0-16KiB" };
-        var attestation = new CatalogReadAttestation(Guid.NewGuid(), [Guid.NewGuid()], Guid.NewGuid(), new Dictionary<string, Guid> { ["lookup:FixtureLookup"] = Guid.NewGuid() });
+        var attestation = new CatalogReadAttestation(Guid.NewGuid(), Enumerable.Range(0, schemas.Length).Select(_ => Guid.NewGuid()).ToArray(), Guid.NewGuid(), new Dictionary<string, Guid> { ["lookup:FixtureLookup"] = Guid.NewGuid() });
         return new FullCatalogRead(request.IndependentReadId, "fake:s04-full-catalog-v1", model, lookups, ["fixture-v1"], appliedContracts, attestation, responseSizeBuckets, TimeSpan.FromMilliseconds(20), declaredWorkbookLimit ?? 1_048_576, blocker);
     }
 }

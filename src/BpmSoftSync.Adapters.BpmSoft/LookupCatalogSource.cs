@@ -417,7 +417,10 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
                 throw new InvalidOperationException("LOOKUP_CANONICAL_JSON_UNSUPPORTED");
         }
     }
-    private static string PackageKey(PackageLayerIdentity package) => $"{package.PackageId?.ToString("D") ?? "none"}|{package.PackageUId?.ToString("D") ?? "none"}|{package.LayerKind ?? "none"}|{package.PackageName ?? "none"}";
+    // The GUID companion is the only package identity. The opaque source id
+    // contributes solely through its one-way provenance digest so it cannot
+    // become a raw value or a collision-prone join key.
+    private static string PackageKey(PackageLayerIdentity package) => $"{package.PackageUId?.ToString("D") ?? "none"}|{package.LayerKind ?? "none"}|{package.PackageName ?? "none"}|{package.OpaquePackageIdDigest ?? "none"}";
     private static string SafeIdentity(string value) => Digest(value)[..16];
     private static string Digest(string value) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
     private static Blocker PagingBlocker(string scope, string reason) => new(BlockerCode.CatalogOrderOrPagingUnqualified, scope, reason, "Inspect the declared Id order, bounded page contract and sanitized fake response.", "Stop this qualification run; do not retry automatically.");

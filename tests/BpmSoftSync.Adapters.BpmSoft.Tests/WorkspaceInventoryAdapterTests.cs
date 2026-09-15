@@ -115,31 +115,42 @@ public static class WorkspaceInventoryAdapterTests
         }
     }
 
-    public static async Task SchemaPackageIdCompanionStatusUsesTheSameBoundedSchemaResponseAsync()
+    public static async Task SchemaPackageIdIsOpaqueOnlyWithAGuidCompanionAsync()
     {
         using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "s02-full-object-model.json")));
-        var cases = new (string Name, string Response, GuidStringPredicateStatus ExpectedStatus)[]
+        var accepted = new (string Name, string PackageId)[]
         {
-            ("guid-companion", MutateSchema(fixture, schema => schema["package"]!["id"] = "opaque-package-key"), GuidStringPredicateStatus.Passed),
-            ("invalid-companion", MutateSchema(fixture, schema => { schema["package"]!["id"] = "opaque-package-key"; schema["package"]!["uId"] = "not-a-guid"; }), GuidStringPredicateStatus.Failed)
+            ("opaque", "opaque-package-key"),
+            ("guid-looking-is-still-opaque", "99999999-9999-9999-9999-999999999999")
         };
 
-        foreach (var testCase in cases)
+        foreach (var testCase in accepted)
         {
-            var handler = new FixtureHandler("{\"Code\":0}", fixture.RootElement.GetProperty("workspaceResponse").GetRawText(), testCase.Response);
-            using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
-            using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
-            await transport.LoginAsync(credentials);
-
-            var blocker = await new BpmSoftSchemaDiagnosticSource(transport).ReadUntilFirstBlockerAsync();
-            var diagnostic = blocker?.FailedShape;
-            Assert(blocker?.Reason == "SCHEMA_INVENTORY_UNQUALIFIED" && diagnostic?.Path == FailedShapePath.SchemaPackageId && diagnostic.CompanionGuidStringStatus == testCase.ExpectedStatus, testCase.Name + " did not report only the closed companion predicate result.");
-            Assert(handler.Paths.SequenceEqual(new[] { "/ServiceModel/AuthService.svc/Login", "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems", "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema" }, StringComparer.Ordinal), testCase.Name + " performed an additional source request.");
-            Assert(!diagnostic!.ToString().Contains("opaque-package-key", StringComparison.Ordinal) && !diagnostic.ToString().Contains("not-a-guid", StringComparison.Ordinal), testCase.Name + " leaked a companion scalar.");
+            var result = await ReadSingleSchemaAsync(fixture, MutateSchema(fixture, schema => schema["package"]!["id"] = testCase.PackageId));
+            var package = result.Schemas.Single().Identity.PackageLayer;
+            Assert(result.IsQualified && result.Blocker is null && package.OpaquePackageId == testCase.PackageId && package.PackageUId is not null, testCase.Name + " did not retain opaque provenance alongside the GUID identity.");
+            Assert(package.PrimaryIdentityKey.StartsWith(package.PackageUId!.Value.ToString("D"), StringComparison.OrdinalIgnoreCase) && !package.PrimaryIdentityKey.Contains(testCase.PackageId, StringComparison.Ordinal), testCase.Name + " allowed opaque provenance into the primary identity key.");
         }
 
-        var unrelated = await ReadSingleSchemaAsync(fixture, MutateSchema(fixture, schema => schema["id"] = null));
-        Assert(unrelated.Blocker?.FailedShape?.Path == FailedShapePath.SchemaId && unrelated.Blocker.FailedShape.CompanionGuidStringStatus is null, "A companion predicate status appeared outside SchemaPackageId.");
+        var rejected = new (string Name, Action<JsonObject> Mutate, FailedShapePath Path, ExpectedShapeCategory Expected, ObservedJsonKind Observed, string? ForbiddenScalar)[]
+        {
+            ("missing", schema => schema["package"]!.AsObject().Remove("id"), FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Missing, null),
+            ("null", schema => schema["package"]!["id"] = null, FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Null, null),
+            ("whitespace", schema => schema["package"]!["id"] = "   ", FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.String, null),
+            ("number", schema => schema["package"]!["id"] = 7, FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Number, null),
+            ("object", schema => schema["package"]!["id"] = new JsonObject { ["unexpected"] = "package-id-object-canary" }, FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Object, "package-id-object-canary"),
+            ("array", schema => schema["package"]!["id"] = new JsonArray("package-id-array-canary"), FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Array, "package-id-array-canary"),
+            ("boolean", schema => schema["package"]!["id"] = true, FailedShapePath.SchemaPackageId, ExpectedShapeCategory.RequiredString, ObservedJsonKind.Boolean, null),
+            ("invalid-uid", schema => schema["package"]!["uId"] = "not-a-guid", FailedShapePath.SchemaPackageUId, ExpectedShapeCategory.GuidString, ObservedJsonKind.String, "not-a-guid")
+        };
+
+        foreach (var testCase in rejected)
+        {
+            var result = await ReadSingleSchemaAsync(fixture, MutateSchema(fixture, testCase.Mutate));
+            var diagnostic = result.Blocker?.FailedShape;
+            Assert(!result.IsQualified && result.Blocker?.Reason == "SCHEMA_INVENTORY_UNQUALIFIED" && diagnostic?.Path == testCase.Path && diagnostic.Expected == testCase.Expected && diagnostic.Observed == testCase.Observed, testCase.Name + " did not fail closed with the expected shape contract.");
+            Assert(testCase.ForbiddenScalar is null || !diagnostic!.ToString().Contains(testCase.ForbiddenScalar, StringComparison.Ordinal), testCase.Name + " leaked an opaque or invalid scalar.");
+        }
     }
 
     public static async Task SchemaIdentityMismatchFailsClosedBeforeAnotherTraversalAsync()
@@ -186,7 +197,9 @@ public static class WorkspaceInventoryAdapterTests
 
     private static async Task<WorkspaceObjectModel> ReadSingleSchemaAsync(JsonDocument fixture, string schemaResponse)
     {
-        var handler = new FixtureHandler("{\"Code\":0}", fixture.RootElement.GetProperty("workspaceResponse").GetRawText(), schemaResponse);
+        var workspace = JsonNode.Parse(fixture.RootElement.GetProperty("workspaceResponse").GetRawText())!.AsObject();
+        foreach (var item in workspace["items"]!.AsArray().Skip(1)) item!["type"] = 9;
+        var handler = new FixtureHandler("{\"Code\":0}", workspace.ToJsonString(), schemaResponse);
         using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
         using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
         await transport.LoginAsync(credentials);

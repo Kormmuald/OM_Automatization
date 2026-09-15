@@ -165,7 +165,7 @@ public static class LookupCatalogSourceTests
 
     private static EntitySchemaModel Schema(string name, Guid schemaUId, string packageName, Guid packageId, Guid? parentUId, IReadOnlyList<EntityColumnModel> columns) =>
         new(new SchemaIdentity(name, schemaUId, DeterministicGuid(name + "-server"), parentUId is null ? null : "BaseLookup", parentUId,
-            new PackageLayerIdentity(packageId, packageId, "schema-package", packageName)), columns, [], []);
+            new PackageLayerIdentity(packageId.ToString("D"), packageId, "schema-package", packageName)), columns, [], []);
 
     private static EntityColumnModel Column(string name, int type, SchemaReference? reference = null) =>
         new(name, DeterministicGuid(name), 0, ColumnOwnership.Own, type, 0, false, reference, []);

@@ -49,8 +49,8 @@ internal static class SyntheticSnapshot
 
     private static FullCatalogRead Read(CatalogReadRequest request)
     {
-        var packageOne = new PackageLayerIdentity(Id("20000000-0000-0000-0000-000000000001"), Id("21000000-0000-0000-0000-000000000001"), "Current", "PackageOne");
-        var packageTwo = new PackageLayerIdentity(Id("20000000-0000-0000-0000-000000000002"), Id("21000000-0000-0000-0000-000000000002"), "Current", "PackageTwo");
+        var packageOne = new PackageLayerIdentity("opaque-package-one", Id("21000000-0000-0000-0000-000000000001"), "Current", "PackageOne");
+        var packageTwo = new PackageLayerIdentity("opaque-package-two", Id("21000000-0000-0000-0000-000000000002"), "Current", "PackageTwo");
         var baseReference = new SchemaReference("BaseLookup", Id("30000000-0000-0000-0000-000000000099"));
         var primaryIdentity = new SchemaIdentity("PrimaryLookup", PrimarySchemaUId, Id("31000000-0000-0000-0000-000000000001"), baseReference.SchemaName, baseReference.SchemaUId, packageOne);
         var secondaryIdentity = new SchemaIdentity("SecondaryLookup", SecondarySchemaUId, Id("31000000-0000-0000-0000-000000000002"), baseReference.SchemaName, baseReference.SchemaUId, packageTwo);

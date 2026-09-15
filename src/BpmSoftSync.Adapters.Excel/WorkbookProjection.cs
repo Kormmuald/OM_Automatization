@@ -150,7 +150,7 @@ public sealed record WorkbookPairProjection(Guid RunId, Guid PairId, string Pair
     {
         if (!workbook.Sheets.Select(sheet => sheet.Name).SequenceEqual(order, StringComparer.Ordinal)) throw new InvalidDataException("WORKBOOK_SHEET_ORDER_INVALID");
     }
-    private static string SchemaFingerprint(QualifiedCatalogSnapshot snapshot, EntitySchemaModel schema) => ExactComponentFingerprint(snapshot, $"schema:{GuidText(schema.Identity.SchemaUId)}:layer:{GuidText(schema.Identity.PackageLayer.PackageId)}:{GuidText(schema.Identity.PackageLayer.PackageUId)}:{schema.Identity.PackageLayer.LayerKind}", "schema");
+    private static string SchemaFingerprint(QualifiedCatalogSnapshot snapshot, EntitySchemaModel schema) => ExactComponentFingerprint(snapshot, $"schema:{GuidText(schema.Identity.SchemaUId)}:layer:{schema.Identity.PackageLayer.PrimaryIdentityKey}", "schema");
     private static string ExactComponentFingerprint(QualifiedCatalogSnapshot snapshot, string stableIdentity, string kind)
     {
         var matches = snapshot.ComponentDigests.Where(item => string.Equals(item.StableIdentity, stableIdentity, StringComparison.Ordinal) && string.Equals(item.ComponentKind, kind, StringComparison.Ordinal)).ToArray();

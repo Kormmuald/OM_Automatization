@@ -1,6 +1,23 @@
+using System.Security.Cryptography;
+using System.Text;
+
 namespace BpmSoftSync.Domain;
 
-public sealed record PackageLayerIdentity(Guid? PackageId, Guid? PackageUId, string? LayerKind, string? PackageName = null);
+// package.id is source provenance, not a join key.  BPMSoft supplies the
+// companion package.uId for the typed package identity.  Keeping the source
+// scalar private to the in-memory model lets component digests notice a
+// provenance change without allowing that scalar to define identity or leak
+// through the safe-output contracts.
+public sealed record PackageLayerIdentity(string? OpaquePackageId, Guid? PackageUId, string? LayerKind, string? PackageName = null)
+{
+    public string? OpaquePackageIdDigest => OpaquePackageId is null
+        ? null
+        : Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(OpaquePackageId.Normalize(NormalizationForm.FormC)))).ToLowerInvariant();
+
+    // The layer name is descriptive provenance too.  It must not split the
+    // same typed package identity, which is defined by package.uId alone.
+    public string PrimaryIdentityKey => PackageUId?.ToString("D").ToLowerInvariant() ?? "none";
+}
 
 public sealed record WorkspaceItemIdentity(Guid WorkspaceItemUId, PackageLayerIdentity PackageLayer, string ItemType, Guid? SchemaUId = null);
 

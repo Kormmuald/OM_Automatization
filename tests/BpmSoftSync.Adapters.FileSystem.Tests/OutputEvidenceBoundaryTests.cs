@@ -58,7 +58,7 @@ public static class OutputEvidenceBoundaryTests
         var columnUId = Guid.Parse("a0000000-0000-0000-0000-000000000004");
         var recordId = Guid.Parse("a0000000-0000-0000-0000-000000000005");
         var registryId = Guid.Parse("a0000000-0000-0000-0000-000000000006");
-        var layer = new PackageLayerIdentity(Guid.Parse("a0000000-0000-0000-0000-000000000001"), packageUId, "Current", "FixturePackage");
+        var layer = new PackageLayerIdentity("opaque-fixture-package", packageUId, "Current", "FixturePackage");
         var identity = new SchemaIdentity("FixtureLookup", schemaUId, null, null, null, layer);
         var inventory = WorkspaceInventory.Create([new WorkspaceInventoryItem(new WorkspaceItemIdentity(Guid.Parse("a0000000-0000-0000-0000-000000000007"), layer, "EntitySchema", schemaUId), SupportStatus.Structured, "STRUCTURED", null, "FixtureLookup", [])]);
         var schema = new EntitySchemaModel(identity, [new("Name", columnUId, 0, ColumnOwnership.Own, 10, 1, false, null, [])], [], []);
