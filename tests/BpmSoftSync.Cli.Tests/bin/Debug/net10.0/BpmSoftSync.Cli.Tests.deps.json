@@ -1,0 +1,127 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "BpmSoftSync.Cli.Tests/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Adapters.FileSystem": "1.0.0",
+          "BpmSoftSync.Cli": "1.0.0",
+          "BpmSoftSync.Testing": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Cli.Tests.dll": {}
+        }
+      },
+      "BpmSoftSync.Adapters.BpmSoft/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Application": "1.0.0",
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Adapters.BpmSoft.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Adapters.FileSystem/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Application": "1.0.0",
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Adapters.FileSystem.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Application/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Cli/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Adapters.BpmSoft": "1.0.0",
+          "BpmSoftSync.Adapters.FileSystem": "1.0.0",
+          "BpmSoftSync.Application": "1.0.0",
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Cli.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Domain/1.0.0": {
+        "runtime": {
+          "BpmSoftSync.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Testing/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Application": "1.0.0",
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Testing.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BpmSoftSync.Cli.Tests/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Adapters.BpmSoft/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Adapters.FileSystem/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Cli/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Testing/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

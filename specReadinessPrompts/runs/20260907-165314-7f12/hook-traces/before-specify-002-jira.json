@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-09-07T17:10:00+03:00",
+  "hook": "before_specify",
+  "action": "skipped",
+  "reason": "jira sync disabled by project settings",
+  "jira_sync_enabled": false,
+  "jira_project_key": "TPL",
+  "constitution_hash": "34AC7A4BE5231ED2E36E9728F69556081EC7A88CA7CB3152891621B43E1DC836",
+  "feature_directory": "specs/002-workbook-pair-control",
+  "authoritative_trace": ".specify/traces/jira/constitution-sync.json"
+}

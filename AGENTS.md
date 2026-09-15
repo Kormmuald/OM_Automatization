@@ -6,6 +6,19 @@
 
 Creating and updating project artifacts is authorized.
 
+### Handoff Policy
+
+For the active feature, keep exactly one current handoff at
+`specs/<feature>/HANDOFF.md`. It is a concise, self-contained snapshot of the
+current state and must be rewritten on each handoff; it must not grow as an
+append-only session log. When facts or next actions become stale, replace them
+in that file and move the superseded handoff document to
+`docs/archive/handoffs/` with its date and provenance preserved. Historical
+handoffs are evidence only and cannot override the current `HANDOFF.md`.
+
+`docs/read-only-handoff/` is an operator-facing, testable documentation package,
+not a session handoff archive; do not move it under this policy.
+
 ### Draft Preservation
 
 The authoritative source drafts for GitHub Spec Kit are in

@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "BpmSoftSync.Adapters.BpmSoft/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Application": "1.0.0",
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Adapters.BpmSoft.dll": {}
+        }
+      },
+      "BpmSoftSync.Application/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BpmSoftSync.Domain/1.0.0": {
+        "runtime": {
+          "BpmSoftSync.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BpmSoftSync.Adapters.BpmSoft/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

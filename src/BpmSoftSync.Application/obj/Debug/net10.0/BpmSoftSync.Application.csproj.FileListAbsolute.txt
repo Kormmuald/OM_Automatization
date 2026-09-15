@@ -1,0 +1,16 @@
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\bin\Debug\net10.0\BpmSoftSync.Application.deps.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\bin\Debug\net10.0\BpmSoftSync.Application.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\bin\Debug\net10.0\BpmSoftSync.Application.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\bin\Debug\net10.0\BpmSoftSync.Domain.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\bin\Debug\net10.0\BpmSoftSync.Domain.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.csproj.AssemblyReference.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.AssemblyInfoInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.AssemblyInfo.cs
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.csproj.CoreCompileInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.sourcelink.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftS.042842C5.Up2Date
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\refint\BpmSoftSync.Application.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\BpmSoftSync.Application.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Application\obj\Debug\net10.0\ref\BpmSoftSync.Application.dll

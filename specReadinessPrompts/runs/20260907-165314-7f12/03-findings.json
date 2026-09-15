@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260907-165314-7f12",
+  "review_revision": "r003",
+  "author_role": "03-spec-reviewer",
+  "created_at": "2026-09-08T12:00:38+03:00",
+  "status": "COMPLETED_WITH_FINDINGS",
+  "verdicts": {
+    "source_fidelity": "PARTIAL",
+    "continuity": "PARTIAL",
+    "clarify_readiness": "NOT_READY_FOR_CLARIFY",
+    "future_l2_workflow": "NOT_EXECUTABLE",
+    "implementation": "IMPLEMENTATION_NOT_STARTED",
+    "live_apply": "DENIED"
+  },
+  "summary": {
+    "total": 7,
+    "critical": 0,
+    "high": 2,
+    "medium": 4,
+    "low": 1,
+    "open": 6,
+    "resolved": 0,
+    "needs_owner_decision": 1
+  },
+  "findings": [
+    {
+      "id": "RF-001",
+      "severity": "HIGH",
+      "category": "workflow",
+      "status": "NEEDS_OWNER_DECISION",
+      "location": {
+        "file": ".specify/workflows/overlays/speckit/l2-pilot.yml",
+        "line": 16,
+        "requirement": "L2 required_commands"
+      },
+      "observed_excerpt": "`/SpecKit Analyze` расположен перед `/SpecKit Tasks`.",
+      "comparison_source": {
+        "file": ".agents/skills/speckit-analyze/SKILL.md",
+        "line": 56,
+        "requirement": "Analyze Goal / Pre-Execution",
+        "excerpt": "Analyze MUST run only after Tasks and line 68 invokes prerequisites with `-RequireTasks`."
+      },
+      "violated_rule": "Выбранный L2 workflow должен быть исполним в declared required_commands order и не может требовать артефакт будущей команды.",
+      "impact": "После Plan обязательный Analyze завершится до анализа, потому что target `tasks.md` ещё не существует; полный L2 lifecycle неисполняем.",
+      "minimal_fix": "В отдельном owner-approved methodology change согласовать workflow и Analyze contract; не переставлять команды и не создавать fake tasks в correction run.",
+      "recheck_criterion": "На чистой feature после Plan следующий требуемый command может выполнить свою declared goal без заранее созданного артефакта более поздней команды, а class gate/overlay/skill согласованы.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": true,
+        "live_apply": false
+      }
+    },
+    {
+      "id": "RF-002",
+      "severity": "MEDIUM",
+      "category": "source-loss",
+      "status": "OPEN",
+      "location": {
+        "file": "specs/003-compare-read-only-plan/spec.md",
+        "line": 100,
+        "requirement": "FR-014 / OPS-005"
+      },
+      "observed_excerpt": "Target фиксирует deterministic plan-fixed sample 10%/min/max, но не источник детерминизма.",
+      "comparison_source": {
+        "file": "preparation/docs/product-specs/local-bpmsoft-synchronizer/05-verification-operations-spec.md",
+        "line": 15,
+        "requirement": "OPS-005",
+        "excerpt": "Выборка вычисляется до Apply из хеша плана + стабильного ключа операции."
+      },
+      "violated_rule": "Технический source contract OPS-005 должен сохраняться без ослабления; material owner находится в 003, executor в 004.",
+      "impact": "Разные реализации могут выбрать разные deterministic seeds и получить разные browser samples для одного плана; независимая сверка и 004 acceptance перестают быть однозначными.",
+      "minimal_fix": "Добавить в 003 FR-014/SC и 004 FR-014/SC точное правило basis `plan hash + stable operation key`, сохранив выбор до Apply и 10%/min/max/new-update coverage.",
+      "recheck_criterion": "003 однозначно материализует sample из plan hash и stable operation key, а 004 принимает ровно этот sample без пересчёта/смещения.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": true,
+        "live_apply": true
+      }
+    },
+    {
+      "id": "RF-003",
+      "severity": "MEDIUM",
+      "category": "contradiction",
+      "status": "OPEN",
+      "location": {
+        "file": "specs/003-compare-read-only-plan/spec.md",
+        "line": 94,
+        "requirement": "FR-008 / SC-003"
+      },
+      "observed_excerpt": "Plan обязан содержать `creation time`, но повторный compare одинаковых semantic inputs обязан давать identical plan bytes/hash.",
+      "comparison_source": {
+        "file": "preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md",
+        "line": 75,
+        "requirement": "FR-012",
+        "excerpt": "Одинаковые входные данные дают семантически идентичный на уровне байтов план; source CMP-008 одновременно требует время создания."
+      },
+      "violated_rule": "Producer contract immutable plan должен быть внутренне непротиворечив и иметь проверяемую канонизацию.",
+      "impact": "Без определения, входит ли timestamp/RunId в semantic input, hash scope или deterministic envelope, SC-003 невоспроизводим и validation-only consumer 004 может отклонять легитимные планы.",
+      "minimal_fix": "На Clarify/Plan определить fixed run metadata или разделить hashed canonical payload и non-hashed envelope; явно задать, что именно сравнивается byte-for-byte.",
+      "recheck_criterion": "Два теста с одинаковыми declared semantic inputs и различным wall-clock time имеют однозначно ожидаемые bytes/hash, не противоречащие обязательной metadata.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": true,
+        "live_apply": true
+      }
+    },
+    {
+      "id": "RF-004",
+      "severity": "HIGH",
+      "category": "source-loss",
+      "status": "OPEN",
+      "location": {
+        "file": "specs/004-gated-apply-operations/spec.md",
+        "line": 139,
+        "requirement": "FR-011 / FR-015 / FR-018"
+      },
+      "observed_excerpt": "FR-011 разрешает workbook-only writeback сразу после successful read-back; FR-015 блокирует только Git при browser failure, а FR-018 не требует human confirmation после optional writeback.",
+      "comparison_source": {
+        "file": "preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md",
+        "line": 30,
+        "requirement": "§3 end-to-end flow",
+        "excerpt": "Полный read-back → read-only browser verification → optional workbook writeback → explicit success confirmation → atomic Git; failed gate ends the branch."
+      },
+      "violated_rule": "Общий immutable end-to-end safety flow должен быть нормативно сохранён; поздний gate не должен допускать предшествующую local mutation, которую source ставит после него.",
+      "impact": "Будущий plan может изменить книги до browser PASS или использовать confirmation, данное до writeback; при browser failure останется workbook mutation, хотя source требует завершить ветвь до writeback/Git.",
+      "minimal_fix": "Добавить единое нормативное sequence requirement и acceptance scenario: full CLI read-back PASS → browser 100% PASS → optional hash-gated writeback → explicit human success confirmation текущего post-writeback state → atomic Git.",
+      "recheck_criterion": "Ни один branch не вызывает writeback до browser PASS; при выполненном writeback Git требует confirmation после него; failure любого gate запрещает последующие шаги.",
+      "blocks": {
+        "ready_for_clarify": true,
+        "future_plan_tasks": true,
+        "live_apply": true
+      }
+    },
+    {
+      "id": "RF-005",
+      "severity": "MEDIUM",
+      "category": "approval",
+      "status": "OPEN",
+      "location": {
+        "file": "specs/004-gated-apply-operations/spec.md",
+        "line": 110,
+        "requirement": "unnumbered candidate operation kinds"
+      },
+      "observed_excerpt": "Target сворачивает source candidates до `create schema/column/lookup row and update fields`, не перечисляя exact candidate boundaries.",
+      "comparison_source": {
+        "file": "preparation/docs/product-specs/local-bpmsoft-synchronizer/04-gated-apply-spec.md",
+        "line": 34,
+        "requirement": "Кандидатные виды операций (не одобрены)",
+        "excerpt": "Source отдельно перечисляет create schema/parent/save, own column, Required update, existing/new lookup registration, row create, row values update, index и delete statuses."
+      },
+      "violated_rule": "Ненумерованные requirements и approval questions должны переноситься без расширяющего обобщения; candidate не означает approved.",
+      "impact": "Generic `update fields` скрывает, какие exact owner decisions и field-level evidence нужны, и может быть ошибочно прочитан как более широкий кандидатный scope.",
+      "minimal_fix": "Восстановить exact source candidate table в 004 с каждым исходным default-denied status и явным текстом, что список не является allowlist/approval.",
+      "recheck_criterion": "Каждая строка source candidate table имеет один target counterpart с тем же scope/status; новые kinds отсутствуют; все остаются denied без human record/evidence.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": true,
+        "live_apply": true
+      }
+    },
+    {
+      "id": "RF-006",
+      "severity": "MEDIUM",
+      "category": "continuity",
+      "status": "OPEN",
+      "location": {
+        "file": "specReadinessPrompts/runs/20260907-165314-7f12/traceability.md",
+        "line": 61,
+        "requirement": "spec.md:NFR-009"
+      },
+      "observed_excerpt": "Матрица указывает 004 FR-024 как consumer NFR-009, но 004 FR-024 описывает operation-key audit trace и прямо ссылается на NFR-006.",
+      "comparison_source": {
+        "file": "preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md",
+        "line": 97,
+        "requirement": "NFR-009",
+        "excerpt": "Domain core не зависит от Excel/BPMSoft/browser adapters; external contracts покрыты fixtures."
+      },
+      "violated_rule": "Общие architecture constraints нельзя считать покрытыми несвязанным audit requirement; source→target и target→source должны быть предметно верны.",
+      "impact": "004 не имеет явного requirement о независимости Apply domain/admission/read-back semantics от write/browser/Git adapters, хотя matrix заявляет полное покрытие.",
+      "minimal_fix": "Добавить в 004 отдельный architecture/fixture requirement как consumer NFR-009 и исправить traceability/dependency mappings; оставить FR-024 только под NFR-006.",
+      "recheck_criterion": "004 имеет самостоятельный source-qualified NFR-009 consumer с dependency-direction и fixture acceptance, а matrix не связывает NFR-009 с audit-only FR-024.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": true,
+        "live_apply": false
+      }
+    },
+    {
+      "id": "RF-007",
+      "severity": "LOW",
+      "category": "artifact",
+      "status": "OPEN",
+      "location": {
+        "file": "specs/001-read-only-catalog-qualification/spec.md",
+        "line": 73,
+        "requirement": "source citations across targets 001–004"
+      },
+      "observed_excerpt": "После первого полного citation targets используют shorthand `READ-002`, `WB-002`, `CMP-002`, `APPLY-002`, `OPS-002` и `общий FR-*` без file path namespace.",
+      "comparison_source": {
+        "file": "specReadinessPrompts/README.md",
+        "line": 102,
+        "requirement": "HANDOFF traceability contract",
+        "excerpt": "ID всегда квалифицировать путём источника; одинаковые FR-001 не равнозначны."
+      },
+      "violated_rule": "Каждый source ID должен иметь namespace через source file path, чтобы target FR и общий FR не смешивались.",
+      "impact": "При переносе строки, генерации Plan/Tasks или machine parsing shorthand может быть ошибочно связан с target-local FR либо не тем source document; текущая run matrix частично компенсирует риск.",
+      "minimal_fix": "Квалифицировать каждую source citation полным project-relative path или однозначным file-qualified namespace во всех четырёх target specs и matrices.",
+      "recheck_criterion": "Каждый source ID occurrence в target requirement разрешается до одного immutable source file без зависимости от окружающего абзаца или implicit `общий` label.",
+      "blocks": {
+        "ready_for_clarify": false,
+        "future_plan_tasks": false,
+        "live_apply": false
+      }
+    }
+  ]
+}

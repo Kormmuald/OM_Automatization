@@ -1,0 +1,12 @@
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\bin\Release\net10.0\BpmSoftSync.Domain.deps.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\bin\Release\net10.0\BpmSoftSync.Domain.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\bin\Release\net10.0\BpmSoftSync.Domain.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.AssemblyInfoInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.AssemblyInfo.cs
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.csproj.CoreCompileInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.sourcelink.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\refint\BpmSoftSync.Domain.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\BpmSoftSync.Domain.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Domain\obj\Release\net10.0\ref\BpmSoftSync.Domain.dll

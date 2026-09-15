@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-09-07T17:20:00+03:00",
+  "hook": "before_specify",
+  "project_settings_path": ".specify/project.yml",
+  "config_path": ".specify/extensions/jira/jira-config.yml",
+  "constitution_path": ".specify/memory/constitution.md",
+  "action": "skipped",
+  "reason": "jira sync disabled by project settings",
+  "jira_sync_enabled": false,
+  "jira_project_key": "TPL",
+  "mapping_path": ".specify/jira-constitution-mapping.json",
+  "constitution_hash": "34AC7A4BE5231ED2E36E9728F69556081EC7A88CA7CB3152891621B43E1DC836",
+  "stage_key": null,
+  "feature_directory": "specs/004-gated-apply-operations"
+}

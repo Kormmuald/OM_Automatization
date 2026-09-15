@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260907-165314-7f12",
+  "created_at": "2026-09-07T17:00:31.2046350+03:00",
+  "project_root": "C:/CodingAgents/codex/projects/OM_Automatization",
+  "immutable_tree": {
+    "path": "preparation/docs/product-specs",
+    "aggregate_sha256": "1D62DB3B4527226570985744F5471D98DE20C2D85E7CA112150E7D593EE874DD",
+    "aggregation": "SHA-256 of UTF-8 sorted lines path<TAB>length<TAB>file_sha256<LF>"
+  },
+  "files": [
+    {"path":".specify/extensions.yml","bytes":5142,"sha256":"F0A65E81A2CCFEC3908B309C9E93C8154CF978235F6027EB478A298A96775C48"},
+    {"path":".specify/memory/constitution.md","bytes":24536,"sha256":"34AC7A4BE5231ED2E36E9728F69556081EC7A88CA7CB3152891621B43E1DC836"},
+    {"path":".specify/project.yml","bytes":1145,"sha256":"11BBACD17A54AD1AAF3DEF9865372065A78C55CA768173C5DACDDEF697E7B2D8"},
+    {"path":".specify/workflows/overlays/speckit/l2-pilot.yml","bytes":4205,"sha256":"83D9EDD5AFEE88AE64A100AF34213576C140A3F1D92F15ACDF72EA1CA2AC1CC7"},
+    {"path":".specify/workflows/speckit/class-workflow.yml","bytes":12726,"sha256":"6C74801CF9280523D9FD225BC719FA1404CD613900107B251EBBDEF310C52EC7"},
+    {"path":"AGENTS.md","bytes":4052,"sha256":"46BDF83A8637E556950F7C2197AAA87C9495D887B55AEDCECEAEF9FB1ED36E88"},
+    {"path":"preparation/docs/WORKBOOK_CONTRACT_VISION.md","bytes":36044,"sha256":"584DC55BB54EDD50BF84E4649AF1B4C060C095CD3F4BF603C0CDE0A52162F9ED"},
+    {"path":"preparation/docs/product-specs/constitution.md","bytes":12067,"sha256":"716C02954750304FC8E651351FD492BBA6F1F111676B4AEFDCC69AFB8B68B0BA"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/01-read-only-catalog-spec.md","bytes":7401,"sha256":"97125E29777AECA351F40BCC3927A18F78976ED59E63B3A991EBEE09B40594EB"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/01-read-only-catalog-spec.transfer-prompt.md","bytes":3236,"sha256":"7D8A59D53A71FC7E4501555B7AB31417E931082F9159FD7A3ADCECCC31A9B8E7"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/02-workbook-pair-spec.md","bytes":6306,"sha256":"43B45785C06854874AB83D9C12CAB588FC78C318830876D22A6A0B0C207F799B"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/02-workbook-pair-spec.transfer-prompt.md","bytes":3093,"sha256":"0B4EF26EA184E4A3066CC148BE7C026242644003C75FC06F1D17156616E3149C"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/03-compare-plan-spec.md","bytes":5989,"sha256":"535C1EBDE9C388B9BDCCD568E45B4D5FF709406B9C775C11E0D74902661BD970"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/03-compare-plan-spec.transfer-prompt.md","bytes":3045,"sha256":"49230ACDE4AA44C34DC9ACD2149D8D8454AF84A4BF4450B4CB1D222B06CEAAB2"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/04-gated-apply-spec.md","bytes":7683,"sha256":"56FCAF12BF561BAE187E442196C29155994B4B818B2D5FC33478A01E23347911"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/04-gated-apply-spec.transfer-prompt.md","bytes":3099,"sha256":"6280D429A006EDFB04C0EB164ED60F72446884C67B3519200B609560CA72B36A"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/05-verification-operations-spec.md","bytes":6318,"sha256":"1ED0C809AB5E592DB5DE23D6257B26C8CAE77B319B082B66E892A1118AF0A0C2"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/05-verification-operations-spec.transfer-prompt.md","bytes":3183,"sha256":"E84C532F8D8317246061B3CB3F0749D69DD57DC348A1148B9E6E42C01C87D723"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/README.md","bytes":6673,"sha256":"89CFE594BC40E3ACF83D0E222B3E067F064AC0B5C96353D709B57F2F73244BD4"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/analyze.md","bytes":13446,"sha256":"A34E7909332E8C8CE49E883D44D78145D46C8ADBB04D2C298FE164B0410366D3"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/clarify-review.md","bytes":17357,"sha256":"B5395F6C94022A52B2581F47F261B5C2D6A2912105AC9391F8DAB0297A32B5DF"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/constitution.md","bytes":5277,"sha256":"2A8DFA61FB58595BEBB1210A97F38021C031AE3AD26DCC8813C064C27B2672F0"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md","bytes":19254,"sha256":"B6EA4BA97A7E23BAD416676C57EA742859B405481363BB7DD77D6D3597765355"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.transfer-prompt.md","bytes":3804,"sha256":"66BB54E96A29062DA5765FA83DE014E1EA128BAD5FEF6C28B20DD49013C6E22D"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/tasks.md","bytes":19502,"sha256":"C4D30802AD844555D2E3E18D9487404C75DA81E7D5A31D831C3FC1BBB09CF418"},
+    {"path":"preparation/docs/product-specs/local-bpmsoft-synchronizer/traceability.md","bytes":12343,"sha256":"BB4F6DBECD8E951B73F9BD3DA18F8F7E972FDF91DFF2ACEDC865DA0F3C0FABDC"}
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0",
+  "run_id": "20260907-165314-7f12",
+  "created_at": "2026-09-07T16:53:14+03:00",
+  "project_root": "C:/CodingAgents/codex/projects/OM_Automatization",
+  "project_id": "25d4b380-7443-40eb-b1e3-fe9949a2592d",
+  "host_id": "local",
+  "checkout": {
+    "type": "local",
+    "path": "C:/CodingAgents/codex/projects/OM_Automatization",
+    "shared_by_all_roles": true
+  },
+  "roles": {
+    "01-spec-rebuilder": {
+      "model": "gpt-5.6-sol",
+      "thinking": "high",
+      "state": "COMPLETED_WITH_FINDINGS",
+      "thread_id": "01a07c27-aace-7221-9b53-1bd9b4beda8a",
+      "host_id": "local",
+      "input_revision": null,
+      "output_revision": "r001",
+      "wait_cursor": "8aebe27b-606f-4012-8e52-bb77f65ade85:69",
+      "report": "specReadinessPrompts/runs/20260907-165314-7f12/01-rebuild-report.md"
+    },
+    "02-feature-continuity": {
+      "model": "gpt-5.6-terra",
+      "thinking": "high",
+      "state": "COMPLETED_WITH_FINDINGS",
+      "thread_id": "01a07c52-a73d-78a3-b096-63e19730f015",
+      "host_id": "local",
+      "input_revision": "r001",
+      "output_revision": "r002",
+      "wait_cursor": "7ef63a21-92bf-4966-a2d4-5bdf8e30ff02:32",
+      "report": "specReadinessPrompts/runs/20260907-165314-7f12/02-continuity-report.md"
+    },
+    "03-spec-reviewer": {
+      "model": "gpt-5.6-sol",
+      "thinking": "high",
+      "state": "OWNER_CORRECTIONS_APPLIED_PENDING_INDEPENDENT_REVIEW",
+      "thread_id": "01a08036-9daf-7110-a5df-770c60789ef1",
+      "host_id": "local",
+      "input_revision": "r002",
+      "output_revision": "r004",
+      "output_revision": null,
+      "wait_cursor": "9fc73049-e186-4322-b819-ccac8c1c9b25:25",
+      "report": null
+    },
+    "04-spec-corrector": {
+      "model": "gpt-5.6-sol",
+      "thinking": "high",
+      "state": "NOT_STARTED",
+      "thread_id": null,
+      "host_id": null,
+      "input_revision": null,
+      "output_revision": null,
+      "wait_cursor": null,
+      "report": null
+    }
+  },
+  "gates": {
+    "G0": {
+      "state": "APPROVED",
+      "scope": "01 backup/delete/rebuild",
+      "approval": {
+        "at": "2026-09-07T16:54:57.5991542+03:00",
+        "user_quote": "да",
+        "control_package_sha256": "209566B0CD0CD2D780DA76116BA8FF9B7FFB56DE37F0BBBF7BAB18355CB3DCAC"
+      }
+    },
+    "G1": {
+      "state": "APPROVED",
+      "approval": {
+        "at": "2026-09-07T17:40:50.4226381+03:00",
+        "user_quote": "да",
+        "handoff_revision": "r001",
+        "handoff_sha256": "31DA694E24E0FCF023D2D14295A3C6E948447F5934EB95D0C5E6C529025F2E3A",
+        "manifest_sha256": "43E54EBE295EBC7BEBF8569AE367229A0F7FB0E4F4508E75FC529D8340D89D6B"
+      },
+      "handoff_revision": "r001",
+      "handoff_sha256": "31DA694E24E0FCF023D2D14295A3C6E948447F5934EB95D0C5E6C529025F2E3A",
+      "manifest_sha256": "43E54EBE295EBC7BEBF8569AE367229A0F7FB0E4F4508E75FC529D8340D89D6B"
+    },
+    "G2": {
+      "state": "APPROVED",
+      "approval": {
+        "at": "2026-09-08T11:50:02.7598951+03:00",
+        "user_quote": "да",
+        "handoff_revision": "r002",
+        "handoff_sha256": "D590712589D423462EEE0FD629D529EEA8D8F27274930DD048EBDA47B86390F6",
+        "manifest_sha256": "102DD8D212E560EB4040F3C8B7E0906A2DBA06A92FF74126A3FC6B1F44309644"
+      },
+      "handoff_revision": "r002",
+      "handoff_sha256": "D590712589D423462EEE0FD629D529EEA8D8F27274930DD048EBDA47B86390F6",
+      "manifest_sha256": "102DD8D212E560EB4040F3C8B7E0906A2DBA06A92FF74126A3FC6B1F44309644"
+    },
+    "G3": { "state": "SUPERSEDED_BY_OWNER_DIRECTED_CORRECTIONS", "approval": null },
+    "G4": { "state": "NOT_APPLICABLE_ROLE_04_NOT_LAUNCHED", "approval": null },
+    "G5": {
+      "state": "AWAITING_USER_APPROVAL",
+      "approval": null,
+      "handoff_revision": "r004",
+      "handoff_sha256": "F1B27C82DA0365ADB004DFB2B6C89DD6DF15D42AA2D50E01B013681471E2F4CD",
+      "manifest_sha256": "3786783B5032399235109E57DD638072D8B833467A4F4FE9DF9A561687E4A704"
+    },
+    "G6": { "state": "NOT_REACHED", "approval": null }
+  },
+  "approvals": [
+    {
+      "gate": "G0",
+      "at": "2026-09-07T16:54:57.5991542+03:00",
+      "user_quote": "да",
+      "scope": "01 backup/delete/rebuild as recorded in 00-control-package.md",
+      "relevant_sha256": "209566B0CD0CD2D780DA76116BA8FF9B7FFB56DE37F0BBBF7BAB18355CB3DCAC"
+    },
+    {
+      "gate": "G1",
+      "at": "2026-09-07T17:40:50.4226381+03:00",
+      "user_quote": "да",
+      "scope": "02 feature continuity in the scope recorded in 00-control-package.md and HANDOFF r001",
+      "relevant_revision": "r001",
+      "relevant_sha256": "31DA694E24E0FCF023D2D14295A3C6E948447F5934EB95D0C5E6C529025F2E3A"
+    },
+    {
+      "gate": "G2",
+      "at": "2026-09-08T11:50:02.7598951+03:00",
+      "user_quote": "да",
+      "scope": "03 independent audit in RUN_DIR only",
+      "relevant_revision": "r002",
+      "relevant_sha256": "D590712589D423462EEE0FD629D529EEA8D8F27274930DD048EBDA47B86390F6"
+    }
+  ],
+  "handoff": {
+    "current_revision": "r004",
+    "path": "specReadinessPrompts/runs/20260907-165314-7f12/HANDOFF.md",
+    "sha256": "F1B27C82DA0365ADB004DFB2B6C89DD6DF15D42AA2D50E01B013681471E2F4CD"
+  },
+  "manifests": {
+    "source": "specReadinessPrompts/runs/20260907-165314-7f12/source-manifest.json",
+    "current_output": "specReadinessPrompts/runs/20260907-165314-7f12/manifests/r004.json",
+    "current_output_sha256": "3786783B5032399235109E57DD638072D8B833467A4F4FE9DF9A561687E4A704"
+  },
+  "journal": [
+    {
+      "at": "2026-09-07T16:53:14+03:00",
+      "event": "INITIALIZED",
+      "detail": "Project and host selected by exact saved local path; role launch awaits G0 approval."
+    },
+    {
+      "at": "2026-09-07T16:54:57.5991542+03:00",
+      "event": "G0_APPROVED",
+      "detail": "User quote: да; control package SHA-256: 209566B0CD0CD2D780DA76116BA8FF9B7FFB56DE37F0BBBF7BAB18355CB3DCAC. Usage gate passed with 34% remaining against 15% threshold."
+    },
+    {
+      "at": "2026-09-07T16:55:00+03:00",
+      "event": "ROLE_01_LAUNCHED",
+      "detail": "Thread 01a07c27-aace-7221-9b53-1bd9b4beda8a on host local; model gpt-5.6-sol, thinking high; shared local checkout."
+    },
+    {
+      "at": "2026-09-07T17:34:24.8689676+03:00",
+      "event": "G1_CHECKED",
+      "detail": "Role 01 completed with findings. r001 manifest (34 entries), backup (4 entries), source baseline (26 entries; aggregate tree hash) and HANDOFF snapshot were independently verified. G1 awaits explicit approval for role 02."
+    },
+    {
+      "at": "2026-09-07T17:40:50.4226381+03:00",
+      "event": "G1_APPROVED",
+      "detail": "User quote: да; HANDOFF r001 SHA-256: 31DA694E24E0FCF023D2D14295A3C6E948447F5934EB95D0C5E6C529025F2E3A; manifest SHA-256: 43E54EBE295EBC7BEBF8569AE367229A0F7FB0E4F4508E75FC529D8340D89D6B. Usage gate passed with 75% remaining against 15% threshold."
+    },
+    {
+      "at": "2026-09-07T17:41:00+03:00",
+      "event": "ROLE_02_LAUNCHED",
+      "detail": "Thread 01a07c52-a73d-78a3-b096-63e19730f015 on host local; model gpt-5.6-terra, thinking high; input r001; shared local checkout."
+    },
+    {
+      "at": "2026-09-07T17:51:00+03:00",
+      "event": "G2_CHECKED",
+      "detail": "Role 02 completed with findings. r002 manifest (27 entries) and HANDOFF snapshot were independently verified; source aggregate remains unchanged. G2 awaits explicit approval for role 03."
+    }
+  ]
+}
