@@ -1,0 +1,36 @@
+{
+  "fixtureId": "s02-full-object-model-v1",
+  "classification": "sanitized",
+  "workspaceResponse": {
+    "success": true,
+    "items": [
+      { "uId": "11111111-1111-1111-1111-111111111111", "name": "Account", "packageName": "Package Alpha", "type": 3 },
+      { "uId": "22222222-2222-2222-2222-222222222222", "name": "Account", "packageName": "Package Beta", "type": 3 },
+      { "uId": "33333333-3333-3333-3333-333333333333", "name": "Unreadable item", "packageName": "Package Gamma", "type": 9 }
+    ]
+  },
+  "schemas": [
+    {
+      "success": true,
+      "schema": {
+        "name": "Account", "uId": "11111111-1111-1111-1111-111111111111", "id": "12121212-1212-1212-1212-121212121212", "parentSchema": { "name": "BaseEntity", "uId": "13131313-1313-1313-1313-131313131313" }, "package": { "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "uId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "name": "Package Alpha" },
+        "columns": [
+          { "name": "Parent", "uId": "55555555-5555-5555-5555-555555555555", "type": 10, "requirementType": 0, "indexed": false, "referenceSchema": { "name": "Account", "uId": "11111111-1111-1111-1111-111111111111" } }
+        ],
+        "inheritedColumns": [ { "name": "Id", "uId": "44444444-4444-4444-4444-444444444444", "type": 0, "requirementType": 1, "indexed": true, "referenceSchema": null } ],
+        "indexes": [
+          { "uId": "66666666-6666-6666-6666-666666666666", "name": "IX_Account_Id_Parent", "isUnique": true, "isAutoName": false, "columns": [ { "columnUId": "55555555-5555-5555-5555-555555555555", "uId": "99999999-9999-9999-9999-999999999999" }, { "columnUId": "44444444-4444-4444-4444-444444444444", "uId": "88888888-8888-8888-8888-888888888888" } ] }
+        ],
+        "futureProperty": { "sanitizedScalar": "S02-RAW-CANARY" }
+      }
+    },
+    {
+      "success": true,
+      "schema": {
+        "name": "Account", "uId": "22222222-2222-2222-2222-222222222222", "id": "23232323-2323-2323-2323-232323232323", "package": { "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", "uId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", "name": "Package Beta" },
+        "columns": [], "inheritedColumns": [], "indexes": []
+      }
+    }
+  ],
+  "malformedSchemaResponse": { "success": true, "schema": { "name": "Broken", "uId": "11111111-1111-1111-1111-111111111111", "id": "12121212-1212-1212-1212-121212121212", "package": { "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "uId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "name": "Package Alpha" } } }
+}

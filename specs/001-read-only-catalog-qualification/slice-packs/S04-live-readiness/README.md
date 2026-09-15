@@ -9,7 +9,7 @@ evidence, permission for a live run, or a replacement for canonical
 
 ## Provenance and generator finding
 
-`preparation/docs/PROJECT_HANDOFF.md` identifies the intended `slice-generator` as an
+`docs/archive/handoffs/project-discovery/2026-09-06-project-discovery-handoff.md` identifies the intended `slice-generator` as an
 external course asset and names its expected materials: `project-specific-info.md`,
 `slice-budget-preflight.md`, `next-slice-prompt-pack-generator.md`,
 `all-slice-prompt-pack-runner.md`, `orchestration-task-template.md`, and

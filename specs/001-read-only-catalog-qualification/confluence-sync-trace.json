@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-14T00:23:45.5929640+03:00",
+  "timestamp": "2026-09-14T12:59:45.2831692+03:00",
   "hook": "before_plan",
   "spec_name": "001-read-only-catalog-qualification",
   "project_settings_path": ".specify/project.yml",
@@ -9,5 +9,5 @@
   "root_page_url": null,
   "mapping_path": "specs/001-read-only-catalog-qualification/confluence-mapping.json",
   "source_path": "specs/001-read-only-catalog-qualification/spec.md",
-  "source_hash": "5c859577a62bc1199490da3551ea85ddbb9e0fa46e77864c56210925bf9d64ba"
+  "source_hash": "b20d744e7dadd39e42482b690fb9740b6833fdb62f8f18b4ddd54f945d1f16e8"
 }

@@ -20,6 +20,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Adapters.BpmSof
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Cli.Tests", "tests\BpmSoftSync.Cli.Tests\BpmSoftSync.Cli.Tests.csproj", "{BD38772F-CC50-4BA1-931F-04A8D21B59E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Adapters.FileSystem.Tests", "tests\BpmSoftSync.Adapters.FileSystem.Tests\BpmSoftSync.Adapters.FileSystem.Tests.csproj", "{63BD0BDB-4013-4B18-B030-3A7B7D5C0B0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Application.Tests", "tests\BpmSoftSync.Application.Tests\BpmSoftSync.Application.Tests.csproj", "{4BC5D4FA-14CF-4AAD-A576-AEC2C4466EA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Adapters.Excel", "src\BpmSoftSync.Adapters.Excel\BpmSoftSync.Adapters.Excel.csproj", "{E5A5500E-9679-4D1D-992B-5B2513CC47A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpmSoftSync.Adapters.Excel.Tests", "tests\BpmSoftSync.Adapters.Excel.Tests\BpmSoftSync.Adapters.Excel.Tests.csproj", "{1E8941E0-41E0-4D2D-B147-A2608B17564E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,5 +70,21 @@ Global
 		{AEE366B4-62FC-4A25-93C6-907A38878102}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD38772F-CC50-4BA1-931F-04A8D21B59E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD38772F-CC50-4BA1-931F-04A8D21B59E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BD0BDB-4013-4B18-B030-3A7B7D5C0B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BD0BDB-4013-4B18-B030-3A7B7D5C0B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BD0BDB-4013-4B18-B030-3A7B7D5C0B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BD0BDB-4013-4B18-B030-3A7B7D5C0B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BC5D4FA-14CF-4AAD-A576-AEC2C4466EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC5D4FA-14CF-4AAD-A576-AEC2C4466EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BC5D4FA-14CF-4AAD-A576-AEC2C4466EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC5D4FA-14CF-4AAD-A576-AEC2C4466EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5A5500E-9679-4D1D-992B-5B2513CC47A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5A5500E-9679-4D1D-992B-5B2513CC47A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5A5500E-9679-4D1D-992B-5B2513CC47A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5A5500E-9679-4D1D-992B-5B2513CC47A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E8941E0-41E0-4D2D-B147-A2608B17564E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E8941E0-41E0-4D2D-B147-A2608B17564E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E8941E0-41E0-4D2D-B147-A2608B17564E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E8941E0-41E0-4D2D-B147-A2608B17564E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

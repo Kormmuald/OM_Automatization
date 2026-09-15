@@ -1,9 +1,9 @@
 {
   "fixtureId": "workspace-inventory-v1",
   "classification": "sanitized",
-  "workspaceItems": [
-    { "workspaceItemUId": "11111111-1111-1111-1111-111111111111", "packageId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "packageUId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "layerKind": "custom", "itemType": "EntitySchema", "displayName": "Shared label", "supportStatus": "Structured" },
-    { "workspaceItemUId": "22222222-2222-2222-2222-222222222222", "packageId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", "packageUId": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", "layerKind": "base", "itemType": "EntitySchema", "displayName": "Shared label", "supportStatus": "InventoryOnly" }
+  "items": [
+    { "uId": "11111111-1111-1111-1111-111111111111", "name": "Shared label", "packageName": "Package Alpha", "type": 3 },
+    { "uId": "22222222-2222-2222-2222-222222222222", "name": "Shared label", "packageName": "Package Beta", "type": 9 }
   ],
-  "schema": { "indexes": [ { "indexUId": "33333333-3333-3333-3333-333333333333", "columns": [ { "columnUId": "44444444-4444-4444-4444-444444444444", "uId": "55555555-5555-5555-5555-555555555555" } ] } ] }
+  "schema": { "indexes": [ { "uId": "33333333-3333-3333-3333-333333333333", "columns": [ { "columnUId": "44444444-4444-4444-4444-444444444444", "uId": "55555555-5555-5555-5555-555555555555" } ] } ] }
 }

@@ -1,0 +1,38 @@
+{
+  "fixtureId": "s06-full-cli-fake-v1",
+  "classification": "sanitized",
+  "targetAlias": "s06fixture",
+  "workspaceResponse": {
+    "success": true,
+    "items": [
+      { "uId": "11111111-1111-1111-1111-111111111111", "name": "FixtureLookup", "packageName": "Fixture Package", "type": 3 }
+    ]
+  },
+  "schemas": [
+    {
+      "success": true,
+      "schema": {
+        "name": "FixtureLookup",
+        "uId": "11111111-1111-1111-1111-111111111111",
+        "id": "12121212-1212-1212-1212-121212121212",
+        "package": { "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "uId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", "name": "Fixture Package" },
+        "columns": [
+          { "name": "Id", "uId": "44444444-4444-4444-4444-444444444444", "type": 0, "requirementType": 1, "indexed": true, "referenceSchema": null },
+          { "name": "Name", "uId": "55555555-5555-5555-5555-555555555555", "type": 1, "requirementType": 0, "indexed": false, "referenceSchema": null }
+        ],
+        "inheritedColumns": [],
+        "indexes": []
+      }
+    }
+  ],
+  "selectResponses": {
+    "Lookup": {
+      "0": { "success": true, "notFoundColumns": [], "rowsOffset": 0, "rows": [ { "Id": "66666666-6666-6666-6666-666666666666", "SysEntitySchemaUId": "11111111-1111-1111-1111-111111111111" } ] },
+      "1": { "success": true, "notFoundColumns": [], "rowsOffset": 1, "rows": [] }
+    },
+    "FixtureLookup": {
+      "0": { "success": true, "notFoundColumns": [], "rowsOffset": 0, "rows": [ { "Id": "77777777-7777-7777-7777-777777777777", "Name": "Sanitized fixture value" } ] },
+      "1": { "success": true, "notFoundColumns": [], "rowsOffset": 1, "rows": [] }
+    }
+  }
+}

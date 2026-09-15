@@ -13,7 +13,7 @@ Before generation read completely: `AGENTS.md`, `.specify/memory/constitution.md
 `.specify/project.yml`, `.specify/extensions.yml`, immutable common vision
 `preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md`, active `spec.md`
 (including Clarifications), approved `implementation-slices.md`,
-`handoff-slices-to-tasks.md`, `plan.md`, `research.md`, `data-model.md`, all files
+`HANDOFF.md`, `plan.md`, `research.md`, `data-model.md`, all files
 in `contracts/`, `quickstart.md`, `test-plan.md`, and factual code/tests if present.
 Also read the latest Critique artifact under `critiques/`, currently
 `critiques/critique-20260908-224121.md`, and retain its non-blocking recommendations.

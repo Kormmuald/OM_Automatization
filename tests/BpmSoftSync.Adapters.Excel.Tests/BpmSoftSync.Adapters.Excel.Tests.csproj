@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><OutputType>Exe</OutputType></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\BpmSoftSync.Adapters.Excel\BpmSoftSync.Adapters.Excel.csproj" />
+    <ProjectReference Include="..\..\src\BpmSoftSync.Adapters.FileSystem\BpmSoftSync.Adapters.FileSystem.csproj" />
+    <ProjectReference Include="..\..\src\BpmSoftSync.Application\BpmSoftSync.Application.csproj" />
+    <ProjectReference Include="..\..\src\BpmSoftSync.Domain\BpmSoftSync.Domain.csproj" />
+  </ItemGroup>
+</Project>

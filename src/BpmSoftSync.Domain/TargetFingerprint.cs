@@ -1,6 +1,6 @@
-using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace BpmSoftSync.Domain;
 
@@ -17,22 +17,47 @@ public sealed record TargetFingerprint(string Schema, string Digest, IReadOnlyLi
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(input.AllowlistVersion);
         ArgumentException.ThrowIfNullOrWhiteSpace(input.ScopeDescriptorHash);
-        var lines = new List<string>
-        {
-            "schema=" + SchemaVersion,
-            "allowlist=" + Normalize(input.AllowlistVersion),
-            "scope=" + Normalize(input.ScopeDescriptorHash)
-        };
-        Add(lines, "version", input.ObservedTargetVersionEvidence.DefaultIfEmpty("TARGET_VERSION_METADATA_UNAVAILABLE"));
-        Add(lines, "workspace", input.Workspace.Select(entry => $"{GuidText(entry.WorkspaceItemUId)}|{GuidText(entry.PackageLayerId)}|{Normalize(entry.ItemType)}|{entry.SupportStatus}"));
-        Add(lines, "schema", input.StructuredSchemas.Select(entry => $"{GuidText(entry.SchemaUId)}|{GuidText(entry.PackageLayerId)}|{Normalize(entry.CanonicalMetadataHash)}"));
-        Add(lines, "collection", input.Collections.Select(entry => $"{Normalize(entry.CollectionId)}|{Normalize(entry.OrderKeyId)}|{entry.Count.ToString(CultureInfo.InvariantCulture)}|{Normalize(entry.OrderedIdentityDigest)}|{Normalize(entry.PageManifestDigest)}"));
-        Add(lines, "unsupported", input.Unsupported.Select(entry => $"{Normalize(entry.StableIdentity)}|{Normalize(entry.TypeTag)}|{Normalize(entry.LosslessShapeDigest)}|{entry.SupportStatus}"));
-        var canonical = string.Join("\n", lines);
+        var canonical = CanonicalJson(input);
         return new TargetFingerprint(SchemaVersion, Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(canonical))).ToLowerInvariant(), input.ObservedTargetVersionEvidence.OrderBy(Normalize, StringComparer.Ordinal).ToArray());
     }
 
-    private static void Add(List<string> lines, string category, IEnumerable<string> values) => lines.AddRange(values.Select(Normalize).OrderBy(value => value, StringComparer.Ordinal).Select(value => category + "=" + value));
+    // Decision 2: a compact canonical JSON preimage.  It intentionally contains digests and
+    // typed identity only; no response bodies, lookup values, credentials, or session data.
+    private static string CanonicalJson(TargetFingerprintInput input)
+    {
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false }))
+        {
+            writer.WriteStartObject();
+            writer.WriteString("allowlistVersion", Normalize(input.AllowlistVersion));
+            writer.WriteStartArray("collections");
+            foreach (var item in input.Collections.OrderBy(item => Normalize(item.CollectionId), StringComparer.Ordinal).ThenBy(item => Normalize(item.OrderKeyId), StringComparer.Ordinal))
+            {
+                writer.WriteStartObject(); writer.WriteNumber("count", item.Count); writer.WriteString("collectionId", Normalize(item.CollectionId)); writer.WriteString("orderKeyId", Normalize(item.OrderKeyId)); writer.WriteString("orderedIdentityDigest", Normalize(item.OrderedIdentityDigest)); writer.WriteString("pageManifestDigest", Normalize(item.PageManifestDigest)); writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+            writer.WriteStartArray("observedTargetVersionEvidence");
+            foreach (var version in input.ObservedTargetVersionEvidence.DefaultIfEmpty("TARGET_VERSION_METADATA_UNAVAILABLE").Select(Normalize).OrderBy(value => value, StringComparer.Ordinal)) writer.WriteStringValue(version);
+            writer.WriteEndArray();
+            writer.WriteString("schema", SchemaVersion);
+            writer.WriteString("scopeDescriptorHash", Normalize(input.ScopeDescriptorHash));
+            writer.WriteStartArray("structuredSchemas");
+            foreach (var item in input.StructuredSchemas.OrderBy(item => GuidText(item.SchemaUId), StringComparer.Ordinal).ThenBy(item => GuidText(item.PackageLayerId), StringComparer.Ordinal))
+            { writer.WriteStartObject(); writer.WriteString("canonicalMetadataHash", Normalize(item.CanonicalMetadataHash)); writer.WriteString("packageLayerId", GuidText(item.PackageLayerId)); writer.WriteString("schemaUId", GuidText(item.SchemaUId)); writer.WriteEndObject(); }
+            writer.WriteEndArray();
+            writer.WriteStartArray("unsupported");
+            foreach (var item in input.Unsupported.OrderBy(item => Normalize(item.StableIdentity), StringComparer.Ordinal).ThenBy(item => Normalize(item.TypeTag), StringComparer.Ordinal))
+            { writer.WriteStartObject(); writer.WriteString("losslessShapeDigest", Normalize(item.LosslessShapeDigest)); writer.WriteString("stableIdentity", Normalize(item.StableIdentity)); writer.WriteString("supportStatus", item.SupportStatus.ToString()); writer.WriteString("typeTag", Normalize(item.TypeTag)); writer.WriteEndObject(); }
+            writer.WriteEndArray();
+            writer.WriteStartArray("workspace");
+            foreach (var item in input.Workspace.OrderBy(item => GuidText(item.WorkspaceItemUId), StringComparer.Ordinal).ThenBy(item => GuidText(item.PackageLayerId), StringComparer.Ordinal))
+            { writer.WriteStartObject(); writer.WriteString("itemType", Normalize(item.ItemType)); writer.WriteString("packageLayerId", GuidText(item.PackageLayerId)); writer.WriteString("supportStatus", item.SupportStatus.ToString()); writer.WriteString("workspaceItemUId", GuidText(item.WorkspaceItemUId)); writer.WriteEndObject(); }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+        }
+        return Encoding.UTF8.GetString(stream.ToArray());
+    }
+
     private static string GuidText(Guid value) => value.ToString("D").ToLowerInvariant();
     private static string Normalize(string value) => value.Normalize(NormalizationForm.FormC);
 }

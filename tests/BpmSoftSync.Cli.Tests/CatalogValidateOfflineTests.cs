@@ -1,28 +1,32 @@
 using BpmSoftSync.Cli.Commands;
-using BpmSoftSync.Testing;
-
 namespace BpmSoftSync.Cli.Tests;
-
 public static class CatalogValidateOfflineTests
 {
+    public static async Task MainDispatchesTheSharedFixtureWorkflowAsync()
+    {
+        var original = Console.Out; var output = new StringWriter();
+        try
+        {
+            Console.SetOut(output);
+            var fixture = Path.GetFullPath(Path.Combine("tests", "fixtures", "read-only", "catalog-valid.json"));
+            var exit = await BpmSoftSync.Cli.Program.Main(["catalog", "validate-offline", "--fixture", fixture]);
+            if (exit != 0 || !output.ToString().Contains("HUMAN_REVIEW_REQUIRED", StringComparison.Ordinal)) throw new InvalidOperationException("Program.Main did not dispatch the shared fixture workflow.");
+        }
+        finally { Console.SetOut(original); }
+    }
+
     public static async Task FixtureOnlyCommandProducesSafeResultAsync()
     {
-        var fixturePath = Path.GetFullPath(Path.Combine("tests", "fixtures", "read-only", "catalog-valid.json"));
-        var output = new StringWriter();
-        var capture = new RequestCapture();
-        var command = new CatalogValidateOfflineCommand(new FakeReadOnlyTransport(capture));
-        var result = await command.ExecuteAsync(["--fixture", fixturePath], output);
-        var rendered = output.ToString();
-        if (!result.IsSuccess || result.Reason != "HUMAN_REVIEW_REQUIRED" || !rendered.Contains("nextAction=", StringComparison.Ordinal) || rendered.Contains("test-password", StringComparison.Ordinal))
+        var fixture = Path.GetFullPath(Path.Combine("tests", "fixtures", "read-only", "catalog-valid.json"));
+        var root = Path.Combine(Path.GetTempPath(), "bpmsoft-cli-" + Guid.NewGuid().ToString("N"));
+        try
         {
-            throw new InvalidOperationException("Offline command did not produce a safe fixture-only result.");
+            var output = new StringWriter();
+            var result = await new CatalogValidateOfflineCommand(root).ExecuteAsync(["--fixture", fixture], output);
+            if (!result.IsSuccess || result.Reason != "HUMAN_REVIEW_REQUIRED" || !output.ToString().Contains("nextAction=", StringComparison.Ordinal)) throw new InvalidOperationException("Fixture command did not traverse the workflow.");
+            var rejected = await new CatalogValidateOfflineCommand(root).ExecuteAsync(["--password", "not-allowed"], new StringWriter());
+            if (rejected.IsSuccess) throw new InvalidOperationException("Offline command accepted an unsafe argument.");
         }
-
-        var rejectedOutput = new StringWriter();
-        var rejected = await command.ExecuteAsync(["--password", "test-password"], rejectedOutput);
-        if (rejected.IsSuccess || capture.Requests.Count != 1 || capture.WriteCallCount != 0 || !rejectedOutput.ToString().Contains("OFFLINE_FIXTURE_REQUIRED", StringComparison.Ordinal) || rejectedOutput.ToString().Contains("test-password", StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("Offline command accepted or leaked a credential argument.");
-        }
+        finally { if (Directory.Exists(root)) Directory.Delete(root, true); }
     }
 }

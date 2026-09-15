@@ -1,31 +1,27 @@
-# Data model: read-only catalog qualification
+# Data model: Feature 001 full catalog and output pair
 
-All IDs below are distinct value types. Display text is diagnostic only and never a reconciliation key.
-
-| Entity | Required fields | Rules / relations |
-|---|---|---|
-| `Run` | `RunId`, `RunType`, timestamps, `TargetAlias`, `InvocationSource`, `GateOutcomes[]` | Creates one immutable root. `InvocationSource` is only `ManualTerminal` or `DirectCurrentChatRequest`; it stores no chat content or credentials. No `AuthorizationReference` is required for live read-only qualification. |
-| `Session` | local target URI, in-memory cookie container, CSRF header | Ephemeral; not serializable and absent from audit/evidence. |
-| `EndpointClassification` | `EndpointId`, method, exact path, request-shape validator | Only `ReadEndpointAllowlist/v1`; reject before send. |
-| `PackageLayerIdentity` | `PackageId`, `PackageUId?`, `PackageName?`, `LayerKind?` | Part of all schema/workspace identities; no name-only merge. |
-| `WorkspaceInventoryItem` | stable workspace identity, `PackageLayerIdentity`, item type, `SupportStatus`, safe reason, `LosslessShapeEnvelope?` | Exactly one status: `Structured`, `InventoryOnly`, `Unreadable`, `Unsupported`. |
-| `LosslessShapeEnvelope` | stable identity, type tag, canonical structural tree, scalar class/length/hash, source shape digest | No raw lookup scalar values. Missing envelope for unknown shape is a blocker. |
-| `CollectionDefinition` | ID, order key, query builder ID, page policy, `MaxPages` | Registered/domain-defined; no arbitrary CLI query. |
-| `CatalogPass` | pass ordinal, collection manifests, inventory digest, target fingerprint, telemetry | Terminal only after explicit page completion. |
-| `PageManifest` | ordinal, progress-token hash, count, first/last identity, identity digest, size bucket | Validated for progress, duplicates, overlap, skips and terminal semantics. |
-| `CatalogQualification` | Pass A, Pass B, reconciliation result, `Blocker?` | Target mutation produces `TARGET_STATE_CHANGED_DURING_QUALIFICATION`; it never invokes pass C. |
-| `TargetFingerprint` | schema/version, digest, component digests, observed version evidence | Exact canonical preimage in `research.md`; version absence is explicit, never guessed. |
-| `AuditEvent` / `EvidenceEnvelope` | timestamp/version, stable key, safe payload, payload digest | Append-only, allow-by-schema and scanned before durable write. |
-| `Blocker` | code, scope, safe reason, recovery action, next permitted action | Includes `ENDPOINT_NOT_ALLOWLISTED`, `CATALOG_ORDER_OR_PAGING_UNQUALIFIED`, `TARGET_STATE_CHANGED_DURING_QUALIFICATION`, `FULL_CATALOG_NOT_QUALIFIED`, `INDEX_SYNC_UNRESOLVED`. |
+| Entity | Required fields / relations | Boundary |
+| --- | --- | --- |
+| `ScopeDescriptor` | target alias/origin policy, allowlist version, full collection registry, query/order/limits, snapshot/projection versions | sealed after Pass A; safe hash only in evidence |
+| `CatalogPass` | ordinal A/B, full workspace/schema/lookup content, manifests, telemetry, component/value digests, fingerprint, unsupported set | B reads again; it cannot use A as data input |
+| `WorkspaceInventoryItem` | typed workspace and `PackageLayerIdentity`, type, `Structured|InventoryOnly|Unreadable|Unsupported`, reason/envelope | no name-only merge |
+| `EntitySchema` | schema/package IDs, own/inherited columns, references, `Indexes[]` and ordinal members | index relation only from `columns[].columnUId` |
+| `LookupRecord` / `NormalizedLookupValue` | registry ID/schema package context; record/column IDs, state, kind, canonical value, reference ID, fingerprints | values are in-memory snapshot/output only |
+| `PageManifest` | ordinal, token hash, count, first/last identity, digest, size bucket | validates ordering and terminal sequence |
+| `TargetFingerprint` | versioned canonical digest and safe component evidence | no raw values or secrets |
+| `QualifiedCatalogSnapshot` | equal A/B scope and reconciliation, B materialized content, identities, diagnostics, scale, pair/run identity | domain/application has no adapter types |
+| `WorkbookPair` | `PairId`, `RunId`, two staged paths, manifests/hashes/projection summary | both validate before atomic publish |
+| `Run` / `EvidenceEnvelope` | unique date-root, safe metadata, gate outcomes, append-only journal/audit/evidence | scanner/schema before every durable write |
+| `Blocker` | code, scope, safe reason, recovery, next permitted action | never carries raw response/secret/cell value |
 
 ## State transitions
 
 ```text
 Created -> OfflineValidated
-Created -> ManualInvocation | DirectCurrentChatRequest -> SessionEstablished -> PassA -> PassB
-PassA/PassB -> PagingBlocked | InventoryBlocked | TargetChanged | QualifiedForHumanReview
-TargetChanged -> SealedBlocked (no automatic retry)
-QualifiedForHumanReview -> SealedEvidence (does not grant later Apply)
+ManualInvocation -> SessionEstablished -> PassA(seal scope) -> PassB -> Reconciled
+Reconciled(equal) -> QualifiedSnapshot -> PairStaged -> PairValidated -> PairPublished -> HumanReviewRequired
+PassA/PassB -> PagingOrShapeBlocked | TargetChanged -> SealedBlocked (no retry)
+S06 accepted + current user confirmation -> S07 LiveRunOnce -> HumanDecision
 ```
 
-`QualifiedForHumanReview` is evidence availability, not acceptance and not a permission grant.
+`HumanReviewRequired` and `HumanDecision` do not grant Apply or change unresolved index/write gates.

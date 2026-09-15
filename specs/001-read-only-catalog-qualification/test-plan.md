@@ -1,51 +1,22 @@
-# Test plan: read-only catalog qualification
+# Test plan: full-catalog qualification and Excel pair
 
-## Test environment and evidence rules
+## Evidence rules
 
-All automated tests use fake HTTP transport or sanitized captures. Each test saves command output, fixture ID/digest and scan/schema result; network tests save method/path/endpoint ID only. No test contains a live credential, raw lookup value, cookie/CSRF or login body. Human sign-off is evidence only for a separately authorized live run and is not simulated as PASS.
+S01–S06 use sanitized fixtures and fake `HttpMessageHandler` only. Evidence records command, exit code, fixture ID/SHA-256, run-tree/output hashes, counts/digests and scanner/schema result; it contains no credential, session material, raw response or lookup cell value. S07 is distinct, opt-in and records safe aggregates only.
 
-## Increment tests
+## Stage test matrix
 
-| Increment | User story / requirements | Test type and planned location | Expected evidence |
-|---|---|---|---|
-| Safe session + classifier | US1; FR-001, FR-002, FR-018; SC-001 | unit/contract: `BpmSoftSync.Adapters.BpmSoft.Tests/ReadEndpointAllowlistTests.cs` and `SessionTests.cs` | exact allowlist matrix; malformed path/method/body cases report `ENDPOINT_NOT_ALLOWLISTED`; capture records zero rejected sends and zero write calls |
-| Ordered reader | US1; FR-003, FR-004; SC-002, SC-004 | unit + fixture integration: `CatalogReaderPagingTests.cs`, `fixtures/read-only/paging-*` | canonical page manifests; duplicate, overlap, gap, empty-middle, nonempty-after-terminal, loop and max-page all terminate `CATALOG_ORDER_OR_PAGING_UNQUALIFIED` |
-| Double qualification | US1; FR-004, FR-010, FR-011; SC-002 | domain/process: `CatalogQualificationTests.cs`, `TargetFingerprintTests.cs`, `target-state-change.json` | two matching passes reconcile; golden hash vectors; a changed target yields `TARGET_STATE_CHANGED_DURING_QUALIFICATION`, exactly two passes and no auto retry |
-| Identity + inventory | US1; FR-005…FR-009; SC-003 | domain/adapter fixture: `WorkspaceInventoryTests.cs`, `UnknownShapeTests.cs` | same name/different package layer remains distinct; 100% source items statuses; lossless structural envelope/digest; missing envelope fails |
-| Run/evidence boundary | US2; FR-012…FR-014; SC-005, SC-006 | filesystem/security: `RunStoreTests.cs`, `EvidenceEnvelopeTests.cs`, `SecretValueScannerTests.cs` | distinct append-only roots; overwrite rejected; schema and secret/raw-value canaries 100% rejected; PASS seal impossible after failed scan |
-| CLI + skills boundary | US3; FR-015, FR-016, FR-018, FR-019; SC-007 | CLI process/architecture: `CliContractTests.cs`, `ArchitectureTests.cs`, skill dry-run fixture | safe reason/scope/recovery/next action; no forbidden project references; no credentials in args; clean fixture reaches human qualification decision point |
-| Legacy disposition | FR-017 | characterization review test/manifest: `tests/fixtures/read-only/legacy-disposition.json` | each adopted behaviour marked `reuse-semantics|rewrite|drop|defer`; no source-code copy claim |
+| Stage | Requirements | Mandatory proof |
+| --- | --- | --- |
+| S01 | FR-001, FR-002, FR-014; SC-001, SC-004 | exact endpoint/body/origin matrix, fake login/cookie/CSRF lifecycle, no secret persistence and zero rejected sends/writes |
+| S02 | FR-005, FR-014; SC-003, SC-004 | full workspace/schema fixtures, package-layer collision, own/inherited/reference/index ordinal and unknown-shape tests |
+| S03 | FR-003, FR-006; SC-003, SC-004 | registry plus multipage lookup collections, null/empty/value/reference/nonstandard column, paging/limits/terminal tests |
+| S04 | FR-004, FR-007, FR-009, FR-010; SC-002, SC-004, SC-006 | source-read counter exactly two; equality/mutation/no-Pass-C; snapshot gate; evidence/journal collision, schema and canary scans |
+| S05 | FR-008, FR-009; SC-005, SC-006 | 1:1 model/lookup projection, sheets/headers/order, pair/manifest, read-back/OOXML/formula/external/VBA guards, fault-injected atomic publication |
+| S06 | FR-011, FR-013, FR-014; SC-001–SC-007 | production `Program.Main` fixture/fake E2E, compatibility regression, Release build/all custom executables and fresh safe offline report |
+| S07 | FR-012; SC-001, SC-002, SC-005, SC-008 | explicit opt-in harness only: full live A/B, pair verification, capture zero writes or one terminal blocker/no retry |
+| S08 | FR-013; SC-007, SC-008 | docs/handoff facts, stage evidence references and user-decision prompt; no fabricated acceptance |
 
-## Final solution tests
+## Final exit criteria
 
-| Final check | Scope | Test type / artifact | Expected evidence |
-|---|---|---|---|
-| Offline end-to-end clean qualification | FR-001…FR-019, SC-001…SC-007 except manual live invocation | fake transport process test | exactly two reconciled passes, complete inventory, deterministic fingerprint, safe append-only evidence, `HUMAN_REVIEW_REQUIRED`, zero write calls |
-| Adversarial qualification suite | paging, mutation, unknown shape, endpoint and evidence failure modes | fixture matrix and process test | each fixture has named blocker and no false PASS/hang; target mutation is terminal `TARGET_STATE_CHANGED_DURING_QUALIFICATION` with no third pass |
-| Determinism/metamorphic regression | canonical ordering, fingerprints, evidence schema | repeat test with reordered JSON properties and runs | semantically identical inputs yield identical canonical hashes; changed identity/page/status/version changes digest; roots remain distinct |
-| Secret/value leakage regression | audit/evidence/CLI stderr/stdout | canary scan over produced run trees | all canaries rejected; scanner output contains only category/location/digest; no PASS artifact |
-| Граница ручного live invocation | FR-010, SC-002; offline/automatic paths и ручной `catalog qualify` | fixture/process test: `ManualLiveInvocationTests.cs` | offline and automatic paths have zero terminal credential prompts and zero HTTP sends; an interactive manual invocation can reach the terminal credential prompt without `AuthorizationReference`; no write calls |
-| Условная ручная verification на реальном стенде | real full catalog после успешных automated offline checks | operator manually runs the procedure from `quickstart.md`, or an agent acts on a direct current user request | safe evidence and human review decision; no automatic run and no write calls |
-
-## Requirement coverage
-
-| Requirement | Coverage |
-|---|---|
-| FR-001–002 | Safe session + classifier; offline E2E |
-| FR-003–004 | Ordered reader; double qualification; adversarial suite |
-| FR-005–009 | Identity + inventory; adversarial suite |
-| FR-010 | Double qualification; target-change process test; authorization-gate negative scenario; metamorphic regression |
-| FR-011 | Double qualification; target-change process test; metamorphic regression |
-| FR-012–014 | Run/evidence boundary; secret/value leakage regression |
-| FR-015–016 | CLI + skills boundary; offline E2E |
-| FR-017 | Legacy disposition manifest/review |
-| FR-018–019 | CLI + skills boundary; architecture test |
-| SC-001–SC-007 | Rows above; SC-007 uses clean offline machine/fixture path. Real live proof is conditional on successful offline checks and a manual operator invocation or direct current user request. |
-
-## Exit criteria before `/SpecKit Tasks`
-
-- Every listed planned test has a fixture, source location and expected safe evidence.
-- `TARGET_STATE_CHANGED_DURING_QUALIFICATION` remains terminal and explicitly testable; no task may introduce automatic retry.
-- Test setup contains no real target or credential.
-- `FULL_CATALOG_NOT_QUALIFIED`, `INDEX_SYNC_UNRESOLVED` and absent Write/Manage rights are represented as gates, not failing test data to be bypassed. `FULL_CATALOG_NOT_QUALIFIED` does not block a manual live invocation after offline checks.
-- Offline and automatic paths have a separate negative check: credential prompt and HTTP send are zero. A manually started interactive `catalog qualify` does not require `AuthorizationReference` and may request credentials only in its terminal prompt.
+No later stage begins without prior accepted reviewer evidence. A passing offline suite cannot close `FULL_CATALOG_NOT_QUALIFIED`. `WORKBOOK_SCALE_DECISION_REQUIRED` is fail-closed and `TARGET_STATE_CHANGED_DURING_QUALIFICATION` remains terminal with no partial pair.

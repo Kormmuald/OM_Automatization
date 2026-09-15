@@ -3,34 +3,19 @@ using BpmSoftSync.Domain;
 
 namespace BpmSoftSync.Testing;
 
-public sealed record CapturedRequest(string EndpointId, string Method, string Path);
-
 public sealed class RequestCapture
 {
-    private readonly List<CapturedRequest> _requests = [];
-
-    public IReadOnlyList<CapturedRequest> Requests => _requests;
-
-    public int RejectedSendCount { get; private set; }
-
-    public int WriteCallCount => _requests.Count(request => request.Method is not "POST" and not "GET");
-
-    public void Record(EndpointClassification endpoint) => _requests.Add(new(endpoint.EndpointId, endpoint.Method, endpoint.Path));
-
-    public void RecordRejected() => RejectedSendCount++;
+    public int ReadCount { get; private set; }
+    public int PromptCount { get; private set; }
+    public void RecordRead() => ReadCount++;
+    public void RecordPrompt() => PromptCount++;
 }
 
-public sealed class FakeReadOnlyTransport(RequestCapture capture) : IReadOnlyTransport
+public sealed class FakeCatalogSource(RequestCapture capture) : ICatalogSource
 {
-    public ValueTask<SafeResult> SendAsync(EndpointClassification endpoint, CancellationToken cancellationToken = default)
+    public ValueTask<CatalogPassInput> ReadPassAsync(string exactTargetAlias, string scopeDescriptorHash, int passNumber, CancellationToken cancellationToken = default)
     {
-        if (endpoint.AllowlistVersion != EndpointClassification.ExactAllowlistVersion)
-        {
-            capture.RecordRejected();
-            return ValueTask.FromResult(SafeResult.Blocked(new Blocker(BlockerCode.EndpointNotAllowlisted, "endpoint", "ENDPOINT_NOT_ALLOWLISTED", "Use an exact ReadEndpointAllowlist/v1 entry.", "Stop the offline run.")));
-        }
-
-        capture.Record(endpoint);
-        return ValueTask.FromResult(SafeResult.SuccessForHumanReview("offline fixture"));
+        capture.RecordRead();
+        return ValueTask.FromResult(new CatalogPassInput("fake", exactTargetAlias, scopeDescriptorHash, ["fake-version"], new CollectionDefinition("fake", "id", 4), [new CatalogPage("0", ["one"], true)], [], [], [], 1));
     }
 }

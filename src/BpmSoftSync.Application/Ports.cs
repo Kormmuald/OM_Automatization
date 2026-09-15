@@ -2,27 +2,29 @@ using BpmSoftSync.Domain;
 
 namespace BpmSoftSync.Application;
 
-public interface IReadOnlyTransport
-{
-    ValueTask<SafeResult> SendAsync(EndpointClassification endpoint, CancellationToken cancellationToken = default);
-}
-
 public interface ICatalogSource
 {
-    ValueTask<SafeResult> ValidateOfflineFixtureAsync(string fixturePath, CancellationToken cancellationToken = default);
+    ValueTask<CatalogPassInput> ReadPassAsync(string exactTargetAlias, string scopeDescriptorHash, int passNumber, CancellationToken cancellationToken = default);
 }
 
-public interface IRunStore
+public interface IFullCatalogSource
 {
-    ValueTask StoreAsync(EvidenceEnvelope envelope, CancellationToken cancellationToken = default);
+    ValueTask<FullCatalogRead> ReadFullAsync(CatalogReadRequest request, CancellationToken cancellationToken = default);
+}
+
+public interface IRunEvidenceStore
+{
+    ValueTask<Guid> BeginRunAsync(string targetAlias, CancellationToken cancellationToken = default);
+    ValueTask<SafeResult> AppendAsync(Guid runId, QualificationEvidenceEnvelope envelope, CancellationToken cancellationToken = default);
+    ValueTask<SafeResult> SealAsync(Guid runId, SafeResult outcome, CancellationToken cancellationToken = default);
 }
 
 public interface ICatalogQualificationService
 {
-    ValueTask<SafeResult> QualifyAsync(CancellationToken cancellationToken = default);
+    ValueTask<CatalogQualification> QualifyAsync(CancellationToken cancellationToken = default);
 }
 
-public interface IAuthorizationGate
+public interface IInvocationPolicy
 {
-    SafeResult RefuseWithoutAuthorization(string scope);
+    SafeResult Check(InvocationSource? source, bool interactive);
 }

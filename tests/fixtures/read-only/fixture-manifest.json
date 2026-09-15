@@ -2,7 +2,9 @@
   "schema": "SanitizedFixtureManifest/v1",
   "fixtures": [
     { "id": "catalog-valid-v1", "file": "catalog-valid.json", "classification": "sanitized", "sha256": "2babf9f0a77e6456fa926829409761a325514a0a768ac4bc312bdbf0ec048501" },
+    { "id": "legacy-disposition-v1", "file": "legacy-disposition.json", "classification": "sanitized", "sha256": "5f7f9a210703be2600063406dfbca502ef26cc32a67b103c768f8e9b1f3a93b2" },
     { "id": "paging-valid-v1", "file": "paging-valid.json", "classification": "sanitized", "sha256": "cac0a23e20c25ab8e0504dfa769756e033d244ab7e6a3c2018c3b1da43fc9ca4" },
+    { "id": "target-state-change-v1", "file": "target-state-change.json", "classification": "sanitized", "sha256": "0de78840d79060dc15f99dceaf94e822282a68b7b6202f2ab3a307e8dbc577a4" },
     { "id": "paging-duplicate-v1", "file": "paging-duplicate.json", "classification": "sanitized", "sha256": "87a46d90fdcf0cbdd7b73d8c92c5aff74f0649be1055acbbc05679d0e2ee0b22" },
     { "id": "paging-overlap-v1", "file": "paging-overlap.json", "classification": "sanitized", "sha256": "a367c203a05c906624c565bfcc1ac1b2dc01ebd40d3d4a7988ecbf6adf0bd344" },
     { "id": "paging-gap-v1", "file": "paging-gap.json", "classification": "sanitized", "sha256": "7741fcc1f806688a2dfd812fa9e23b6c9cba94eb9d7b16c958a41f978d00ae27" },
@@ -10,8 +12,11 @@
     { "id": "paging-nonempty-after-terminal-v1", "file": "paging-nonempty-after-terminal.json", "classification": "sanitized", "sha256": "ee573a9e5dd1dcffc068e1f323e59ff3558dee4dd52d7002083d6bad5790254d" },
     { "id": "paging-loop-v1", "file": "paging-loop.json", "classification": "sanitized", "sha256": "4d290768ab441eed45def628eed1696f836d2ff851b6e16e7f9e777d4e5460ba" },
     { "id": "paging-max-page-v1", "file": "paging-max-page.json", "classification": "sanitized", "sha256": "ae0178dd476f78f6f1a4517b0c870bc31255bd7be7ef29b091359f554b122987" },
-    { "id": "workspace-inventory-v1", "file": "workspace-inventory.json", "classification": "sanitized", "sha256": "5f2674b64c14e9e4ca4bcd0d1b84b531c3bb5f562b36b47a27ef63059acc4fe3" },
+    { "id": "workspace-inventory-v1", "file": "workspace-inventory.json", "classification": "sanitized", "sha256": "aed2ea9d061d4d339938c2d60b257f523df9b4674941bb64abde450c820b5595" },
     { "id": "unknown-shape-safe-v1", "file": "unknown-shape-safe.json", "classification": "sanitized", "sha256": "0197363eabb31728dcb38ca970de45134c2dec453441ceb20194b06ae7ebb44c" },
-    { "id": "unknown-shape-missing-v1", "file": "unknown-shape-missing.json", "classification": "sanitized", "sha256": "7498eec6b36dfd5f2131e65eac9bc288ebbb40fd2011ad9cc274a7fa2a400d02" }
+    { "id": "unknown-shape-missing-v1", "file": "unknown-shape-missing.json", "classification": "sanitized", "sha256": "7498eec6b36dfd5f2131e65eac9bc288ebbb40fd2011ad9cc274a7fa2a400d02" },
+    { "id": "s02-full-object-model-v1", "file": "s02-full-object-model.json", "classification": "sanitized", "sha256": "6f03db3f929b9fc905f89a5d5d30e3fbf5ab298fda50d3277d96d9706147759d" },
+    { "id": "lookup-full-catalog-v1", "file": "lookup-full-catalog.json", "classification": "sanitized", "sha256": "08089b636124c201be52666bcf540409b633e4d12fb5ad9ae26d087d0e7428c3" },
+    { "id": "s06-full-cli-fake-v1", "file": "s06-full-cli-fake.json", "classification": "sanitized", "sha256": "7e21b3443732ba4f9b6b58af764b93c81f6b59efa02b05b0f777be943ec5746d" }
   ]
 }

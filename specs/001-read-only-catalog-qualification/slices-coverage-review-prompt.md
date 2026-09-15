@@ -22,7 +22,7 @@
 - active `spec.md`, включая `## Clarifications`;
 - `checklists/requirements.md`, `plan.md`, `research.md`, `data-model.md`,
   каждый файл в `contracts/`, `quickstart.md`, `test-plan.md`;
-- `implementation-slices.md`, `handoff-slices-to-tasks.md` и
+- `implementation-slices.md`, `HANDOFF.md` и
   `tasks-generation-prompt.md`;
 - фактические код и tests, если существуют.
 

@@ -1,0 +1,6 @@
+{
+  "fixtureId": "target-state-change-v1",
+  "classification": "sanitized",
+  "passA": "fingerprint-a",
+  "passB": "fingerprint-b"
+}

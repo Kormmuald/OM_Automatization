@@ -18,7 +18,7 @@
 `spec.md` вместе с `## Clarifications`, `checklists/requirements.md`,
 `plan.md`, `research.md`, `data-model.md`, все файлы из `contracts/`,
 `quickstart.md`, `test-plan.md`, `implementation-slices.md`,
-`handoff-slices-to-tasks.md`, `tasks-generation-prompt.md`, а также
+`HANDOFF.md`, `tasks-generation-prompt.md`, а также
 фактический код и tests, если они существуют.
 
 Считай весь `preparation/docs/product-specs/` неизменяемым. Не читай этапные source

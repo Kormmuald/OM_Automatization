@@ -14,6 +14,8 @@ public static class FixtureManifestTests
         Assert(entries.Length > 0, "Fixture manifest has no approved fixtures.");
         Assert(entries.Select(entry => entry.GetProperty("id").GetString()).Distinct(StringComparer.Ordinal).Count() == entries.Length, "Fixture manifest contains duplicate identifiers.");
         Assert(entries.Select(entry => entry.GetProperty("file").GetString()).Distinct(StringComparer.Ordinal).Count() == entries.Length, "Fixture manifest contains duplicate file entries.");
+        var allFixtureFiles = Directory.EnumerateFiles(fixtureDirectory, "*.json").Select(Path.GetFileName).Where(name => name != "fixture-manifest.json").OrderBy(name => name, StringComparer.Ordinal).ToArray();
+        Assert(entries.Select(entry => entry.GetProperty("file").GetString()).OrderBy(name => name, StringComparer.Ordinal).SequenceEqual(allFixtureFiles, StringComparer.Ordinal), "Fixture manifest omits or does not register a JSON fixture.");
 
         foreach (var entry in entries)
         {

@@ -432,3 +432,58 @@ dirty changes. Перед commit cached diff был проверен, а `git di
 синхронизирует эту запись handoff; его hash не добавляется сюда, чтобы не создавать бесконечную
 цепочку self-referential commits. В финальном отчёте он обозначается как latest handoff
 synchronization commit.
+
+### Реализация S04 — частичный текущий проход (2026-09-14)
+
+**Выполнено в коде и тестах.** В рабочей копии начата реализация corrective slice без
+обращения к real BPMSoft или credential prompt. Runtime allowlist больше не содержит
+`GET_PACKAGES`; он принимает только четыре документированных endpoint ID и отклоняет
+method/path/body/query/fragment/traversal/alternate-origin обходы. Добавлены typed
+`ICatalogSource`/`CatalogPassInput`, canonical-JSON `TargetFingerprint/v1`, единый
+exact-two-pass `CatalogQualificationService`, `FixtureCatalogSource`, loopback-only
+`HttpCatalogSource` для injected fake `HttpMessageHandler`, `ManualInvocationPolicy`,
+composition-root dispatch для `catalog validate-offline`, `catalog qualify` и
+`catalog diagnose --run`.
+
+`AppendOnlyRunStore` теперь создаёт один dated root на `RunId`, связывает validated/scanned
+envelopes с append-only journal и умеет читать bounded validated diagnosis. Старые
+`AuthorizationReference`/authorization-gate production contracts и capture-only transport
+удалены из `src/`. Обновлены fixture-manifest coverage, offline/manual runbook и regression
+tests для two-pass, target mutation, paging, allowlist, fake HTTP, manual prompt boundary,
+per-run evidence и diagnosis.
+
+**Проверено.** Успешно выполнены `dotnet build BpmSoftSync.sln --no-restore --configuration
+Release` и четыре custom test executables: Domain, Adapters.BpmSoft, Adapters.FileSystem и
+CLI tests. Fake handler и local fixtures — единственные использованные transports/data;
+credentials не запрашивались и не сохранялись. Не выполнялись real HTTP/BPMSoft, browser,
+Excel, compare, Apply, Write/Manage, live invocation, T046 или Git mutation/staging/commit.
+
+**Честный completion status.** Это не закрывает S04 и не даёт основания для Converge, Verify
+или Archive. Все canonical `S04-001…S04-023` и T025–T046 остаются unchecked. Не выполнены
+S04-022 individual acceptance review, S04-023 control checkpoint, fresh T043/T044 reruns и
+T045 package; поэтому исторические evidence не были переиспользованы и T046 не запускался.
+Следующий исполнитель должен продолжать только от current source/tests, завершить
+task-level evidence по каждому S04 ID и лишь затем следовать последовательности
+`S04-022 → S04-023 → T043 + T044 → T045`.
+
+### Подтверждённое владельцем целевое расширение Feature 001 (2026-09-14)
+
+Владелец подтвердил новую целевую возможность: вручную запускаемая CLI-выгрузка
+полного текущего состояния объектной модели и справочников из локального BPMSoft.
+Каждый успешный read-only pull должен создавать новую датированную пару Excel-книг
+в отдельной output-папке и никогда не перезаписывать canonical
+`BPMSoft.ModelCatalog.xlsx` и `BPMSoft.LookupCatalog.xlsx`.
+
+Исторический `preparation/WorkbookDeliveryTool` остаётся только техническим
+предшественником: его `capture → generate` цепочка доказывает возможность
+read-only capture и Excel generation, но его scope ограничен bounded baseline и
+не является full-catalog implementation. Legacy `SyncOM` не является допустимой
+основой: это Google Sheets/browser workflow со старыми write-сценариями.
+
+Это решение не является свидетельством готовой реализации, разрешением на
+немедленный real HTTP run или отменой Write/Manage gates. До code/live execution
+нужно обновить mutable Feature 001 artifacts через class-aware
+`/SpecKit Clarify → /SpecKit Plan → /SpecKit Tasks`: зафиксировать declared full
+scope, endpoint/request matrix, paging/scale/completeness stop conditions,
+safe evidence protocol, отдельный ручной G-2 и точный output contract. Immutable
+`preparation/docs/product-specs/` не изменяется.

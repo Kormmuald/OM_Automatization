@@ -17,7 +17,7 @@ scope 2026-09-13: к автономной verification добавлен усло
    preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md, active spec.md
    с Clarifications, checklists/requirements.md, plan.md, research.md, data-model.md,
    все contracts/, quickstart.md, test-plan.md, implementation-slices.md,
-   handoff-slices-to-tasks.md, tasks-generation-prompt.md, critique-prompt.md,
+   HANDOFF.md, tasks-generation-prompt.md, critique-prompt.md,
    предыдущий Critique critiques/critique-20260908-224121.md, а также фактические
    код/tests, если они существуют.
 3. Не читай этапные source drafts из preparation/docs/product-specs/, кроме

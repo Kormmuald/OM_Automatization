@@ -1,88 +1,35 @@
-# Phase 0 Research: read-only catalog qualification
+# Research decisions: Feature 001 full catalog MVP
 
-## Контекст и метод
+Immutable inputs are the common vision, monolithic MVP and workbook contract. This is planning only, not live research.
 
-Источники: immutable common vision `preparation/docs/product-specs/local-bpmsoft-synchronizer/spec.md`, active `spec.md`, constitution и статическое чтение legacy prototypes. Этапные source drafts не использовались. Это не live research: endpoint paths ниже выводятся из статических prototypes и должны подтверждаться fixtures/capture tests до использования. Никакой пункт не разрешает автоматический live run.
+## Decision 1 — `ReadEndpointAllowlist/v1`
 
-## Decision 1 — Exact `ReadEndpointAllowlist/v1`
-
-**Decision**: classifier разрешает только следующие canonical `POST` requests, после validation normalized relative path (no query, fragment, path traversal or alternate host):
-
-| ID | Method + exact path | Назначение | Разрешённый request shape |
-|---|---|---|---|
-| `AUTH_LOGIN` | `POST /ServiceModel/AuthService.svc/Login` | interactive session handshake | username, in-memory password, local time-zone offset |
-| `WORKSPACE_ITEMS` | `POST /ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems` | workspace inventory | empty JSON object |
-| `SCHEMA_GET` | `POST /ServiceModel/EntitySchemaDesignerService.svc/GetSchema` | schema detail | exactly one validated `schemaUId` |
-| `SELECT_QUERY` | `POST /DataService/json/SyncReply/SelectQuery` | ordered collection pages | canonical reader-generated select query only |
-
-`AUTH_LOGIN` is separately classified as session establishment, not catalog read; it remains in the narrow transport allowlist because the authenticated read scope cannot start otherwise. Every other method, canonical path, query, redirect target, request body shape or request generated outside adapter is `ENDPOINT_NOT_ALLOWLISTED` before network I/O. Redirects are disabled; only an explicitly supplied local loopback HTTP origin is accepted by the initial implementation.
-
-**Verifiable criteria**: parameterized contract tests enumerate every allowed pair/shape; capture handler records zero sends for reject cases; allowed fixtures prove all four IDs; static/IL or request-factory tests demonstrate no secondary HTTP entry point.
-
-**Rationale**: legacy prototypes use these four paths while declaring a read-only probe. An exact small set is reviewable and supports SC-001.
-
-**Alternatives considered**: verb/name heuristics (rejected: endpoint names are not an authorization model); broad `/ServiceModel/*` prefix (rejected: cannot prove absence of write/manage calls); allowlisting a future version endpoint (rejected: not evidenced and would expand scope).
+Only these canonical POST requests are valid after normalized relative-path/origin/body validation: `AUTH_LOGIN` `/ServiceModel/AuthService.svc/Login`; `WORKSPACE_ITEMS` `/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems`; `SCHEMA_GET` `/ServiceModel/EntitySchemaDesignerService.svc/GetSchema` with exactly one validated `schemaUId`; `SELECT_QUERY` `/DataService/json/SyncReply/SelectQuery` with reader-generated payload. Redirects, query/fragment/traversal/alternate host, heuristic paths and `GET_PACKAGES` fail before send.
 
 ## Decision 2 — `TargetFingerprint/v1`
 
-**Decision**: fingerprint value is lowercase SHA-256 over UTF-8 canonical JSON with schema tag `TargetFingerprint/v1`. Canonicalization uses NFC strings, lowercase dashed GUIDs, invariant numbers, lexicographically ordered object keys and list order only when defined by the domain contract. The preimage contains no credentials or raw lookup values:
+Lowercase SHA-256 of UTF-8 canonical JSON binds schema tag, allowlist version, scope hash, observed safe target version evidence, sorted workspace/package-layer identity/status, structured schema metadata hashes, ordered-collection manifests and unsupported-shape digests. It never contains raw lookup values, URL credentials or secrets. NFC text, lower dashed GUIDs, invariant numbers, sorted object keys and domain-defined list order are testable vectors.
 
-```text
-{ schema, allowlistVersion, scopeDescriptorHash,
-  observedTargetVersionEvidence[],
-  workspace: sorted[(WorkspaceItemUId, PackageLayerId, itemType, supportStatus)],
-  structuredSchemas: sorted[(SchemaUId, PackageLayerId, canonicalMetadataHash)],
-  collections: sorted[(collectionId, orderKeyId, count, orderedIdentityDigest, pageManifestDigest)],
-  unsupported: sorted[(stableIdentity, typeTag, losslessShapeDigest, supportStatus)] }
-```
+## Decision 3 — full ordered reader and exact two passes
 
-`observedTargetVersionEvidence` may contain only version/build metadata actually present in an allowlisted response or a versioned local assembly file independently verified for the selected local target. It must contain source, observation timestamp and SHA-256 of its canonical safe representation. Missing target version evidence is recorded as `TARGET_VERSION_METADATA_UNAVAILABLE`; it is never invented. `scopeDescriptorHash` binds declared scope and reader rules without storing sensitive config.
+Every registry/lookup collection declares order key, canonical query and limits. Its manifest has ordinal, progress-token hash, count, first/last identity, identity digest and response-size bucket. It detects duplicate, overlap, gap, loop, empty-middle, nonempty-after-terminal and limits. Pass A seals full scope; B freshly repeats it without cache reuse. Equality covers all scope/manifests/content hashes/statuses/fingerprint components. Mismatch is `TARGET_STATE_CHANGED_DURING_QUALIFICATION`, `RetryCount=0`; no Pass C/retry.
 
-**Verifiable criteria**: golden-vector tests exercise key ordering, GUID normalization and Unicode; metamorphic tests vary response property ordering without changing a hash; a single identity/page/support-status/version change changes it; canary scans prove no raw `Name`/`Description`/lookup value and no secret input influence the stored preimage/evidence. Collision resistance and staleness remain documented assumptions, not proof of production equivalence.
+## Decision 4 — full but lossless data model
 
-**Rationale**: it binds target-observed inventory, package layer and deterministic page results without treating display names or bounded evidence as full-catalog proof.
+All workspace items retain typed identity, package layer and one support status. Supported EntitySchema retains own/inherited columns, references and indexes from `indexes[].columns[].columnUId`. Lookup scope is registry plus each discovered lookup schema, with normalized values preserving `Null|EmptyString|Value`, value kind and reference ID. Unknown shapes are structural envelopes (names, JSON kinds, structure, scalar class/length/hash) or named blocker, never default/drop.
 
-**Alternatives considered**: URL plus timestamp (rejected: not state proof); raw response hash (rejected: secret/value leakage); one aggregate count (rejected: misses permutation/identity changes).
+## Decision 5 — snapshot and Excel boundary
 
-## Decision 3 — deterministic reader and double qualification
+`QualifiedCatalogSnapshot/v1` is created only after equality and carries B values in memory to one Excel adapter. It has no HTTP/console/OOXML types. The adapter projects the required Model sheets (`Readme`, `Manifest`, `WorkspaceInventory`, `Schemas`, `Columns`, `Indexes`, `ValidationLists`, `PullConflicts`) and Lookup sheets (`Readme`, `Manifest`, `LookupRegistry`, `LookupValues`, `ValidationLists`, `PullConflicts`), then validates pair binding, 1:1 source rows, headers/order, OOXML closure and forbidden external/VBA/formula parts before atomic pair publication.
 
-**Decision**: each registered collection declares a stable `orderKeyId`, query builder and `MaxPages`. Reader emits a page manifest `(pageOrdinal, cursor/offset token hash, count, firstIdentity, lastIdentity, pageIdentityDigest, response-size bucket)` and checks: nonempty intermediate termination, duplicate identity, overlap, cursor/offset progress, gap according to declared contract, max pages and explicit terminal condition. It returns `CATALOG_ORDER_OR_PAGING_UNQUALIFIED` on any violation.
+## Decision 6 — output is not evidence
 
-Qualification seals a scope at Pass A, runs Pass B once, then compares scope/fingerprint components, ordered identity digests, counts, page manifests and unsupported set. A difference attributable to target state emits `TARGET_STATE_CHANGED_DURING_QUALIFICATION`; a paging contract violation emits `CATALOG_ORDER_OR_PAGING_UNQUALIFIED`. Both are terminal run outcomes. Automatic new double pass, retry loop or silent downgrade is prohibited; a new run needs a new manual invocation or a new direct current user request.
+Only local `output/*.xlsx` may contain lookup values. Journal, audit, evidence, CLI and diagnostics use allow-by-schema safe metadata: IDs, aliases, counts, hashes, status, blocker, duration/size buckets, versions and relative paths. Scanner/validator run before every durable write and seal. Each fresh `RunId` root is append-only and collision is terminal.
 
-**Verifiable criteria**: adversarial fixtures cover duplicate, overlap, skip, empty-middle, nonempty-after-terminal, loop, max-page and target-change cases; process test proves no third pass after either terminal blocker.
+## Decision 7 — staged proof and live admission
 
-**Alternatives considered**: retry until equal (rejected: masks target change and violates clarification); unordered set comparison (rejected: misses paging/order defect); treating target change as PASS-with-warning (rejected: fails closed).
+S01–S06 use fixtures/fake `HttpMessageHandler`; S06 proves the production root and emits fresh safe offline report. S07 is an isolated opt-in `--live --manual` harness only after accepted S06 and the user's current «стенд запущен». Credentials are terminal-only. One real run either produces reviewed safe output or one blocker; no automatic retry. S08 documents facts and leaves final acceptance to the human.
 
-## Decision 4 — lossless inventory and package-layer identity
+## Preserved gates
 
-**Decision**: inventory starts from every returned workspace item. Each has `Structured`, `InventoryOnly`, `Unreadable` or `Unsupported`, a typed package-layer identity and a safe reason. For unknown property/type/shape, `LosslessShapeEnvelope` preserves the canonical structural tree (property names, JSON kinds, array/object structure, safe scalar class/length/hash) and an original-response SHA-256 when safe; it never replaces data by defaults or joins by display name. Raw lookup scalar strings are neither written nor exposed.
-
-**Verifiable criteria**: exhaustive inventory count equals source count; same display names in different layers remain separate; unknown-shape fixtures produce envelopes or a named blocker; no envelope has raw-value canary.
-
-**Alternatives considered**: dropping unknown fields (rejected: lossy); arbitrary JSON persistence (rejected: may store secrets/values); `Name`/`Code` fallback join (rejected: identity ambiguity).
-
-## Decision 5 — evidence redaction and run storage
-
-**Decision**: `EvidenceEnvelope/v1` is allow-by-type/schema, not redact-after-write. Permitted values are typed run IDs, timestamps, enum status/blocker IDs, endpoint IDs/methods, relative evidence paths, validated version strings, GUID identities, counts/durations/size buckets and SHA-256 digests. Envelope subtypes have explicit fields; unrecognized fields fail schema validation. Scanner runs before every durable write and before success seal; case-insensitive forbidden key/value detectors include password, secret, token, cookie, CSRF, authorization, `Set-Cookie`, `UserPassword`, login response/body and raw lookup value canaries. Scanner reports only location/category/digest, never matched value.
-
-Run directory creation uses date hierarchy plus fresh `RunId`; pre-existing root is a hard failure. Journal/audit/evidence writes are append-only and named with timestamp + stable kind. Failure evidence is subject to the same scan.
-
-**Verifiable criteria**: schema negative tests and injected key/value canaries reject 100%; two same-time runs create distinct roots; overwrite attempt fails; PASS seal impossible after scanner/schema failure; artifacts enumerate hashes and relative paths only.
-
-**Alternatives considered**: generic JSON plus regex cleanup (rejected: bypassable and loses auditability); log-first/redact-later (rejected: secret already durable); timestamp-only roots (rejected: collision risk).
-
-## Decision 6 — CLI/domain/adapter boundary
-
-**Decision**: `Domain` owns identity, canonicalization, reader state validation, qualification, blocker and evidence models. `Application` owns use cases and ports. BPMSoft/FileSystem adapters implement ports; CLI only prompts, invokes an application command and maps safe result to exit code. Skills only orchestrate documented CLI commands and explain declared blocker recovery.
-
-**Verifiable criteria**: domain references no HTTP/Excel/browser/Git assemblies; architecture test prevents forbidden project references; a fake adapter runs every qualification fixture; skill contract test verifies no business-rule implementation or secret argument.
-
-**Alternatives considered**: one console program modelled on the prototype (rejected: coupled, untestable and duplicates rules); moving checks into skills (rejected: violates constitution and creates divergent logic).
-
-## Preserved human gates and unresolved risks
-
-- `FULL_CATALOG_NOT_QUALIFIED` remains until a live double pass yields reviewable evidence. Development/offline tests do not close it, but it is not a preflight block for a manual live invocation.
-- No persisted authorization reference exists for a live read-only run. An operator starts `catalog qualify` manually, or an agent acts only on a direct current user request; neither path permits automatic execution.
-- `INDEX_SYNC_UNRESOLVED` remains; index data may be inventory/read-only evidence only. No index plan/load/apply exists.
-- Write/Manage rights are neither requested nor used. `WRITE_ALLOWLIST_UNAPPROVED` and `WRITE_SEMANTICS_UNPROVEN` remain out of scope.
+`FULL_CATALOG_NOT_QUALIFIED` remains until successful S07 plus human decision. `INDEX_SYNC_UNRESOLVED` remains. No write/manage/compare/apply/browser/Git scope is inferred from any decision.

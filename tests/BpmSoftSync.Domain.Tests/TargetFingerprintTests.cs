@@ -26,6 +26,24 @@ public static class TargetFingerprintTests
         Assert(TargetFingerprint.Create(InputFromJson(firstSource)).Digest == TargetFingerprint.Create(InputFromJson(reorderedProperties)).Digest, "Equivalent named JSON properties produced different TargetFingerprint/v1 digests.");
     }
 
+    public static void StructuredSchemaIdentityAndMetadataDigestAreCanonicalAndSensitive()
+    {
+        var firstSchemas = new[]
+        {
+            new FingerprintSchemaEntry(Guid.Parse("11111111-1111-1111-1111-111111111111"), Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "metadata-digest-a"),
+            new FingerprintSchemaEntry(Guid.Parse("22222222-2222-2222-2222-222222222222"), Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "metadata-digest-b")
+        };
+        var reorderedSchemas = firstSchemas.Reverse().ToArray();
+        var changedSchemas = new[] { firstSchemas[0] with { CanonicalMetadataHash = "metadata-digest-changed" }, firstSchemas[1] };
+        var baseline = Input("v1", SupportStatus.Structured, "identity-a");
+        var first = baseline with { StructuredSchemas = firstSchemas };
+        var reordered = baseline with { StructuredSchemas = reorderedSchemas };
+        var changed = baseline with { StructuredSchemas = changedSchemas };
+
+        Assert(TargetFingerprint.Create(first).Digest == TargetFingerprint.Create(reordered).Digest, "Structured-schema fingerprint depends on response enumeration order.");
+        Assert(TargetFingerprint.Create(first).Digest != TargetFingerprint.Create(changed).Digest, "Structured-schema metadata change did not alter TargetFingerprint/v1.");
+    }
+
     private static TargetFingerprintInput Input(string version, SupportStatus status, string identity, bool reverse = false, string pageDigest = "page-digest")
     {
         var workspace = new[] { new FingerprintWorkspaceEntry(Guid.Parse("11111111-1111-1111-1111-111111111111"), Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "EntitySchema", status), new FingerprintWorkspaceEntry(Guid.Parse("22222222-2222-2222-2222-222222222222"), Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "EntitySchema", SupportStatus.InventoryOnly) };

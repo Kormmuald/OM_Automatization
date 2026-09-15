@@ -8,6 +8,20 @@ public sealed record CollectionDefinition(string CollectionId, string OrderKeyId
 
 public sealed record CatalogPage(string CursorToken, IReadOnlyList<string> Identities, bool IsTerminal);
 
+// This is the classified, transport-neutral input consumed by the application use case.
+// It is deliberately composed of safe typed metadata and page identities only.
+public sealed record CatalogPassInput(
+    string FixtureId,
+    string TargetAlias,
+    string ScopeDescriptorHash,
+    IReadOnlyList<string> ObservedTargetVersionEvidence,
+    CollectionDefinition Collection,
+    IReadOnlyList<CatalogPage> Pages,
+    IReadOnlyList<FingerprintWorkspaceEntry> Workspace,
+    IReadOnlyList<FingerprintSchemaEntry> StructuredSchemas,
+    IReadOnlyList<FingerprintUnsupportedEntry> Unsupported,
+    int? DeclaredWorkbookLimit);
+
 public sealed record CatalogReadResult(bool IsQualified, IReadOnlyList<PageManifest> Manifests, Blocker? Blocker)
 {
     public static CatalogReadResult Blocked(IReadOnlyList<PageManifest> manifests, string reason) => new(false, manifests, new Blocker(BlockerCode.CatalogOrderOrPagingUnqualified, "catalog", reason, "Inspect the declared order and sanitized paging fixture.", "Stop this qualification run; do not retry."));

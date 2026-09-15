@@ -1,0 +1,33 @@
+{
+  "fixtureId": "lookup-full-catalog-v1",
+  "classification": "sanitized",
+  "responses": {
+    "Lookup": [
+      { "success": true, "notFoundColumns": [], "rowsOffset": 0, "rows": [
+        { "Id": "10000000-0000-0000-0000-000000000001", "SysEntitySchemaUId": "aaaaaaaa-1111-1111-1111-111111111111" },
+        { "Id": "10000000-0000-0000-0000-000000000002", "SysEntitySchemaUId": { "value": "bbbbbbbb-2222-2222-2222-222222222222", "displayValue": "LookupBeta_Ext" } }
+      ] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 2, "rows": [] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 2, "rows": [] }
+    ],
+    "LookupAlpha": [
+      { "success": true, "notFoundColumns": [], "rowsOffset": 0, "rows": [
+        { "Id": "20000000-0000-0000-0000-000000000001", "Name": "Cafe\u0301", "Description": "", "SortOrder": 1, "Weight": 1.2300, "IsActive": true, "ChangedOn": "2026-09-14T12:34:56+03:00", "EffectiveDate": "2026-09-14", "LocalTime": "12:34:56.1200000", "Owner": { "value": "90000000-0000-0000-0000-000000000001", "displayValue": "Sanitized Owner" }, "ExternalGuid": "80000000-0000-0000-0000-000000000001" },
+        { "Id": "20000000-0000-0000-0000-000000000002", "Name": null, "Description": "Safe description", "SortOrder": -2, "Weight": 0.10, "IsActive": false, "ChangedOn": "2026-09-14T00:00:00Z", "EffectiveDate": null, "LocalTime": "01:02:03", "Owner": null, "ExternalGuid": "80000000-0000-0000-0000-000000000002" }
+      ] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 2, "rows": [
+        { "Id": "20000000-0000-0000-0000-000000000003", "Name": "Gamma", "Description": "", "SortOrder": 3, "Weight": -42.500, "IsActive": true, "ChangedOn": "2026-09-14T09:34:56Z", "EffectiveDate": "2026-09-15", "LocalTime": null, "Owner": "90000000-0000-0000-0000-000000000003", "ExternalGuid": "80000000-0000-0000-0000-000000000003" }
+      ] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 3, "rows": [] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 3, "rows": [] }
+    ],
+    "LookupBeta_Ext": [
+      { "success": true, "notFoundColumns": [], "rowsOffset": 0, "rows": [
+        { "Id": "30000000-0000-0000-0000-000000000001", "Usr_MixedCase42": "Safe beta", "Amount": 100.00, "OptionalReference": "90000000-0000-0000-0000-000000000004" },
+        { "Id": "30000000-0000-0000-0000-000000000002", "Usr_MixedCase42": "", "Amount": null, "OptionalReference": null }
+      ] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 2, "rows": [] },
+      { "success": true, "notFoundColumns": [], "rowsOffset": 2, "rows": [] }
+    ]
+  }
+}

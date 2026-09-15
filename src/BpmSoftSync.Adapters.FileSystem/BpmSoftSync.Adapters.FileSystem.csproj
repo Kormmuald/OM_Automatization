@@ -1,1 +1,1 @@
-<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="..\BpmSoftSync.Domain\BpmSoftSync.Domain.csproj" /><ProjectReference Include="..\BpmSoftSync.Application\BpmSoftSync.Application.csproj" /></ItemGroup></Project>
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="..\BpmSoftSync.Domain\BpmSoftSync.Domain.csproj" /><ProjectReference Include="..\BpmSoftSync.Application\BpmSoftSync.Application.csproj" /><ProjectReference Include="..\BpmSoftSync.Adapters.Excel\BpmSoftSync.Adapters.Excel.csproj" /></ItemGroup></Project>
