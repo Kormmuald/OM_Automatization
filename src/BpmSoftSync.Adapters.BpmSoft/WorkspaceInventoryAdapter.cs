@@ -90,65 +90,154 @@ public static class WorkspaceInventoryAdapter
         return WorkspaceInventory.Create(items);
     }
 
-    private static bool TryAdaptSchema(JsonElement responseRoot, out EntitySchemaModel? schema, out Blocker? blocker)
+    // This parser is shared by the full traversal and the separate one-schema
+    // diagnostic. It parses only an already obtained response; it never sends or
+    // schedules another request.
+    internal static bool TryAdaptSchema(JsonElement responseRoot, out EntitySchemaModel? schema, out Blocker? blocker)
     {
-        if (responseRoot.TryGetProperty("schema", out var observedCandidate) && observedCandidate.ValueKind == JsonValueKind.Object && observedCandidate.TryGetProperty("name", out _)) return TryAdaptObservedSchema(observedCandidate, out schema, out blocker);
+        if (responseRoot.ValueKind == JsonValueKind.Object && responseRoot.TryGetProperty("schema", out var observedCandidate) && observedCandidate.ValueKind == JsonValueKind.Object)
+            return TryAdaptObservedSchema(observedCandidate, out schema, out blocker);
         schema = null;
-        blocker = UnknownBlocker("schema", "SCHEMA_INVENTORY_UNQUALIFIED");
+        blocker = UnknownBlocker("schema", "SCHEMA_INVENTORY_UNQUALIFIED", Failure(FailedShapePath.SchemaRoot, ExpectedShapeCategory.Object, responseRoot.ValueKind == JsonValueKind.Object && responseRoot.TryGetProperty("schema", out var candidate) ? candidate : null));
         return false;
     }
 
     private static bool TryAdaptObservedSchema(JsonElement source, out EntitySchemaModel? schema, out Blocker? blocker)
     {
         schema = null; blocker = null;
-        if (!TryRequiredString(source, "name", out var schemaName) || !TryGuid(source, "uId", out var schemaUId) || !TryGuid(source, "id", out var schemaId) || !source.TryGetProperty("package", out var package) || package.ValueKind != JsonValueKind.Object || !TryGuid(package, "id", out var packageId) || !TryGuid(package, "uId", out var packageUId) || !TryRequiredString(package, "name", out var packageName) || !source.TryGetProperty("columns", out var ownColumns) || ownColumns.ValueKind != JsonValueKind.Array || !source.TryGetProperty("inheritedColumns", out var inheritedColumns) || inheritedColumns.ValueKind != JsonValueKind.Array || !source.TryGetProperty("indexes", out var indexes) || indexes.ValueKind != JsonValueKind.Array)
-        { blocker = UnknownBlocker("schema", "SCHEMA_INVENTORY_UNQUALIFIED"); return false; }
+        var package = default(JsonElement);
+        if (!TryRequiredString(source, "name", FailedShapePath.SchemaName, out var schemaName, out var failure) ||
+            !TryGuid(source, "uId", FailedShapePath.SchemaUId, out var schemaUId, out failure) ||
+            !TryGuid(source, "id", FailedShapePath.SchemaId, out var schemaId, out failure) ||
+            !TryObject(source, "package", FailedShapePath.SchemaPackage, out package, out failure) ||
+            !TryGuid(package, "id", FailedShapePath.SchemaPackageId, out var packageId, out failure) ||
+            !TryGuid(package, "uId", FailedShapePath.SchemaPackageUId, out var packageUId, out failure) ||
+            !TryRequiredString(package, "name", FailedShapePath.SchemaPackageName, out var packageName, out failure) ||
+            !TryArray(source, "columns", FailedShapePath.SchemaColumns, out var ownColumns, out failure) ||
+            !TryArray(source, "inheritedColumns", FailedShapePath.SchemaInheritedColumns, out var inheritedColumns, out failure) ||
+            !TryArray(source, "indexes", FailedShapePath.SchemaIndexes, out var indexes, out failure))
+        {
+            // H-005 diagnostic-only discriminator: when the primary package-id
+            // predicate is the first failure, classify the already loaded
+            // companion uId locally. No scalar is retained, and normal strict
+            // acceptance remains unchanged.
+            if (failure?.Path == FailedShapePath.SchemaPackageId)
+                failure = failure with { CompanionGuidStringStatus = GuidStringStatus(package, "uId") };
+            blocker = UnknownBlocker("schema", "SCHEMA_INVENTORY_UNQUALIFIED", failure);
+            return false;
+        }
         string? parentName = null; Guid? parentUId = null;
         if (source.TryGetProperty("parentSchema", out var parent) && parent.ValueKind != JsonValueKind.Null)
         {
-            if (parent.ValueKind != JsonValueKind.Object || !TryRequiredString(parent, "name", out parentName) || !TryGuid(parent, "uId", out var parsedParentUId)) { blocker = UnknownBlocker("schema-parent", "SCHEMA_INVENTORY_UNQUALIFIED"); return false; }
+            if (parent.ValueKind != JsonValueKind.Object) { blocker = UnknownBlocker("schema-parent", "SCHEMA_INVENTORY_UNQUALIFIED", Failure(FailedShapePath.SchemaParent, ExpectedShapeCategory.OptionalObject, parent)); return false; }
+            if (!TryRequiredString(parent, "name", FailedShapePath.SchemaParentName, out parentName, out failure) || !TryGuid(parent, "uId", FailedShapePath.SchemaParentUId, out var parsedParentUId, out failure)) { blocker = UnknownBlocker("schema-parent", "SCHEMA_INVENTORY_UNQUALIFIED", failure); return false; }
             parentUId = parsedParentUId;
         }
-        if (!TryReadObservedColumns(ownColumns, ColumnOwnership.Own, 0, out var own) || !TryReadObservedColumns(inheritedColumns, ColumnOwnership.Inherited, own.Count, out var inherited) || !TryReadObservedIndexes(indexes, out var typedIndexes))
-        { blocker = UnknownBlocker("schema-members", "SCHEMA_INVENTORY_UNQUALIFIED"); return false; }
+        if (!TryReadObservedColumns(ownColumns, ColumnOwnership.Own, 0, out var own, out failure) || !TryReadObservedColumns(inheritedColumns, ColumnOwnership.Inherited, own.Count, out var inherited, out failure) || !TryReadObservedIndexes(indexes, out var typedIndexes, out failure))
+        { blocker = UnknownBlocker("schema-members", "SCHEMA_INVENTORY_UNQUALIFIED", failure); return false; }
         schema = new EntitySchemaModel(new SchemaIdentity(schemaName, schemaUId, schemaId, parentName, parentUId, new PackageLayerIdentity(packageId, packageUId, "schema-package", packageName)), own.Concat(inherited).ToArray(), typedIndexes, UnknownProperties(source, ObservedSchemaProperties, "schema-property"));
         return true;
     }
 
-    private static bool TryReadObservedColumns(JsonElement source, ColumnOwnership ownership, int initialOrdinal, out IReadOnlyList<EntityColumnModel> columns)
+    private static bool TryReadObservedColumns(JsonElement source, ColumnOwnership ownership, int initialOrdinal, out IReadOnlyList<EntityColumnModel> columns, out FailedShapeDiagnostic? failure)
     {
+        failure = null;
         var result = new List<EntityColumnModel>();
-        foreach (var column in source.EnumerateArray())
+        var cardinality = Cardinality(source.GetArrayLength());
+        foreach (var (column, ordinal) in source.EnumerateArray().Select((value, index) => (value, index)))
         {
-            if (column.ValueKind != JsonValueKind.Object || !TryRequiredString(column, "name", out var name) || !TryGuid(column, "uId", out var uId) || !column.TryGetProperty("type", out var type) || !type.TryGetInt32(out var typeCode) || !column.TryGetProperty("requirementType", out var requirement) || !requirement.TryGetInt32(out var requirementType) || !column.TryGetProperty("indexed", out var indexed) || indexed.ValueKind is not (JsonValueKind.True or JsonValueKind.False)) { columns = []; return false; }
+            if (column.ValueKind != JsonValueKind.Object) { columns = []; failure = Failure(FailedShapePath.SchemaColumnMember, ExpectedShapeCategory.Object, column, cardinality, ordinal); return false; }
+            if (!TryRequiredString(column, "name", FailedShapePath.SchemaColumnName, out var name, out failure, cardinality, ordinal) ||
+                !TryGuid(column, "uId", FailedShapePath.SchemaColumnUId, out var uId, out failure, cardinality, ordinal) ||
+                !TryInteger(column, "type", FailedShapePath.SchemaColumnType, out var typeCode, out failure, cardinality, ordinal) ||
+                !TryInteger(column, "requirementType", FailedShapePath.SchemaColumnRequirementType, out var requirementType, out failure, cardinality, ordinal) ||
+                !TryBoolean(column, "indexed", FailedShapePath.SchemaColumnIndexed, out var indexed, out failure, cardinality, ordinal)) { columns = []; return false; }
             SchemaReference? reference = null;
             if (column.TryGetProperty("referenceSchema", out var referenceSource) && referenceSource.ValueKind != JsonValueKind.Null)
             {
-                if (referenceSource.ValueKind != JsonValueKind.Object || !TryRequiredString(referenceSource, "name", out var referenceName) || !TryGuid(referenceSource, "uId", out var referenceUId)) { columns = []; return false; }
+                if (referenceSource.ValueKind != JsonValueKind.Object || !TryRequiredString(referenceSource, "name", out var referenceName) || !TryGuid(referenceSource, "uId", out var referenceUId)) { columns = []; failure = Failure(FailedShapePath.SchemaColumnMember, ExpectedShapeCategory.OptionalObject, referenceSource, cardinality, ordinal); return false; }
                 reference = new SchemaReference(referenceName, referenceUId);
             }
-            result.Add(new EntityColumnModel(name, uId, initialOrdinal + result.Count, ownership, typeCode, requirementType, indexed.GetBoolean(), reference, UnknownProperties(column, ObservedColumnProperties, "column-property")));
+            result.Add(new EntityColumnModel(name, uId, initialOrdinal + result.Count, ownership, typeCode, requirementType, indexed, reference, UnknownProperties(column, ObservedColumnProperties, "column-property")));
         }
         columns = result; return true;
     }
 
-    private static bool TryReadObservedIndexes(JsonElement source, out IReadOnlyList<EntityIndexModel> indexes)
+    private static bool TryReadObservedIndexes(JsonElement source, out IReadOnlyList<EntityIndexModel> indexes, out FailedShapeDiagnostic? failure)
     {
+        failure = null;
         var result = new List<EntityIndexModel>();
-        foreach (var index in source.EnumerateArray())
+        var cardinality = Cardinality(source.GetArrayLength());
+        foreach (var (index, ordinal) in source.EnumerateArray().Select((value, index) => (value, index)))
         {
-            if (index.ValueKind != JsonValueKind.Object || !TryGuid(index, "uId", out var indexUId) || !TryRequiredString(index, "name", out var name) || !index.TryGetProperty("isUnique", out var unique) || unique.ValueKind is not (JsonValueKind.True or JsonValueKind.False) || !index.TryGetProperty("columns", out var members) || members.ValueKind != JsonValueKind.Array) { indexes = []; return false; }
+            if (index.ValueKind != JsonValueKind.Object) { indexes = []; failure = Failure(FailedShapePath.SchemaIndexMember, ExpectedShapeCategory.Object, index, cardinality, ordinal); return false; }
+            if (!TryGuid(index, "uId", FailedShapePath.SchemaIndexUId, out var indexUId, out failure, cardinality, ordinal) ||
+                !TryRequiredString(index, "name", FailedShapePath.SchemaIndexName, out var name, out failure, cardinality, ordinal) ||
+                !TryBoolean(index, "isUnique", FailedShapePath.SchemaIndexIsUnique, out var unique, out failure, cardinality, ordinal) ||
+                !TryArray(index, "columns", FailedShapePath.SchemaIndexColumns, out var members, out failure, cardinality, ordinal)) { indexes = []; return false; }
             bool? autoName = null;
-            if (index.TryGetProperty("isAutoName", out var observedAuto) || index.TryGetProperty("autoName", out observedAuto)) { if (observedAuto.ValueKind is not (JsonValueKind.True or JsonValueKind.False)) { indexes = []; return false; } autoName = observedAuto.GetBoolean(); }
+            if (index.TryGetProperty("isAutoName", out var observedAuto) || index.TryGetProperty("autoName", out observedAuto)) { if (observedAuto.ValueKind is not (JsonValueKind.True or JsonValueKind.False)) { indexes = []; failure = Failure(FailedShapePath.SchemaIndexMember, ExpectedShapeCategory.Boolean, observedAuto, cardinality, ordinal); return false; } autoName = observedAuto.GetBoolean(); }
             var typedMembers = new List<IndexMember>();
-            foreach (var member in members.EnumerateArray()) { if (member.ValueKind != JsonValueKind.Object || !TryGuid(member, "columnUId", out var columnUId)) { indexes = []; return false; } typedMembers.Add(new IndexMember(columnUId, typedMembers.Count, UnknownProperties(member, IndexMemberProperties, "index-member-property"))); }
-            result.Add(new EntityIndexModel(indexUId, name, unique.GetBoolean(), autoName, typedMembers, UnknownProperties(index, ObservedIndexProperties, "index-property")));
+            var memberCardinality = Cardinality(members.GetArrayLength());
+            foreach (var (member, memberOrdinal) in members.EnumerateArray().Select((value, index) => (value, index))) { if (member.ValueKind != JsonValueKind.Object) { indexes = []; failure = Failure(FailedShapePath.SchemaIndexColumnMember, ExpectedShapeCategory.Object, member, memberCardinality, memberOrdinal); return false; } if (!TryGuid(member, "columnUId", FailedShapePath.SchemaIndexColumnUId, out var columnUId, out failure, memberCardinality, memberOrdinal)) { indexes = []; return false; } typedMembers.Add(new IndexMember(columnUId, typedMembers.Count, UnknownProperties(member, IndexMemberProperties, "index-member-property"))); }
+            result.Add(new EntityIndexModel(indexUId, name, unique, autoName, typedMembers, UnknownProperties(index, ObservedIndexProperties, "index-property")));
         }
         indexes = result; return true;
     }
 
     private static WorkspaceInventory InvalidInventory(IReadOnlyList<WorkspaceInventoryItem> items) => new(false, items, UnknownBlocker("workspace-inventory", "INVENTORY_UNQUALIFIED"));
-    private static Blocker UnknownBlocker(string scope, string reason) => new(BlockerCode.UnknownShapeUnqualified, scope, reason, "Capture a safe structural envelope or resolve the typed source contract.", "Stop this qualification run.");
+    private static Blocker UnknownBlocker(string scope, string reason, FailedShapeDiagnostic? failure = null) => new(BlockerCode.UnknownShapeUnqualified, scope, reason, "Capture a safe structural envelope or resolve the typed source contract.", "Stop this qualification run.", failure);
+    private static FailedShapeDiagnostic Failure(FailedShapePath path, ExpectedShapeCategory expected, JsonElement? observed, ArrayCardinalityBucket cardinality = ArrayCardinalityBucket.NotApplicable, int? ordinal = null) =>
+        new(path, expected, observed is null ? ObservedJsonKind.Missing : Kind(observed.Value), cardinality, ordinal);
+    private static ObservedJsonKind Kind(JsonElement value) => value.ValueKind switch
+    {
+        JsonValueKind.Null => ObservedJsonKind.Null,
+        JsonValueKind.Object => ObservedJsonKind.Object,
+        JsonValueKind.Array => ObservedJsonKind.Array,
+        JsonValueKind.String => ObservedJsonKind.String,
+        JsonValueKind.Number => ObservedJsonKind.Number,
+        JsonValueKind.True or JsonValueKind.False => ObservedJsonKind.Boolean,
+        _ => ObservedJsonKind.Other
+    };
+    private static ArrayCardinalityBucket Cardinality(int length) => length switch { 0 => ArrayCardinalityBucket.Zero, 1 => ArrayCardinalityBucket.One, <= 10 => ArrayCardinalityBucket.TwoToTen, _ => ArrayCardinalityBucket.ElevenOrMore };
+    private static bool TryObject(JsonElement source, string property, FailedShapePath path, out JsonElement value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality = ArrayCardinalityBucket.NotApplicable, int? ordinal = null)
+    {
+        if (!source.TryGetProperty(property, out value) || value.ValueKind != JsonValueKind.Object) { failure = Failure(path, ExpectedShapeCategory.Object, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        failure = null; return true;
+    }
+    private static bool TryArray(JsonElement source, string property, FailedShapePath path, out JsonElement value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality = ArrayCardinalityBucket.NotApplicable, int? ordinal = null)
+    {
+        if (!source.TryGetProperty(property, out value) || value.ValueKind != JsonValueKind.Array) { failure = Failure(path, ExpectedShapeCategory.Array, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        failure = null; return true;
+    }
+    private static bool TryGuid(JsonElement source, string property, FailedShapePath path, out Guid value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality = ArrayCardinalityBucket.NotApplicable, int? ordinal = null)
+    {
+        value = default;
+        if (!source.TryGetProperty(property, out var candidate) || candidate.ValueKind != JsonValueKind.String || !Guid.TryParse(candidate.GetString(), out value) || value == Guid.Empty) { failure = Failure(path, ExpectedShapeCategory.GuidString, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        failure = null; return true;
+    }
+    private static GuidStringPredicateStatus GuidStringStatus(JsonElement source, string property) =>
+        source.TryGetProperty(property, out var candidate) && candidate.ValueKind == JsonValueKind.String && Guid.TryParse(candidate.GetString(), out var value) && value != Guid.Empty
+            ? GuidStringPredicateStatus.Passed
+            : GuidStringPredicateStatus.Failed;
+    private static bool TryRequiredString(JsonElement source, string property, FailedShapePath path, out string value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality = ArrayCardinalityBucket.NotApplicable, int? ordinal = null)
+    {
+        value = string.Empty;
+        if (!source.TryGetProperty(property, out var candidate) || candidate.ValueKind != JsonValueKind.String || candidate.GetString() is not { } text || string.IsNullOrWhiteSpace(text)) { failure = Failure(path, ExpectedShapeCategory.RequiredString, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        value = text; failure = null; return true;
+    }
+    private static bool TryInteger(JsonElement source, string property, FailedShapePath path, out int value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality, int ordinal)
+    {
+        value = default;
+        if (!source.TryGetProperty(property, out var candidate) || !candidate.TryGetInt32(out value)) { failure = Failure(path, ExpectedShapeCategory.Integer, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        failure = null; return true;
+    }
+    private static bool TryBoolean(JsonElement source, string property, FailedShapePath path, out bool value, out FailedShapeDiagnostic? failure, ArrayCardinalityBucket cardinality, int ordinal)
+    {
+        value = default;
+        if (!source.TryGetProperty(property, out var candidate) || candidate.ValueKind is not (JsonValueKind.True or JsonValueKind.False)) { failure = Failure(path, ExpectedShapeCategory.Boolean, source.TryGetProperty(property, out var observed) ? observed : null, cardinality, ordinal); return false; }
+        value = candidate.GetBoolean(); failure = null; return true;
+    }
     private static IReadOnlyList<LosslessShapeEnvelope> UnknownProperties(JsonElement source, HashSet<string> known, string typePrefix) => source.EnumerateObject().Where(property => !known.Contains(property.Name)).OrderBy(property => property.Name, StringComparer.Ordinal).Select(property => BuildEnvelope(typePrefix + ":" + property.Name, property.Value)).ToArray();
     private static LosslessShapeEnvelope BuildEnvelope(string typeTag, JsonElement payload) { var hashes = new List<string>(); var structure = Describe(payload, hashes); return new LosslessShapeEnvelope(typeTag, structure, Digest(string.Join("|", hashes)), hashes.Count, Digest(structure)); }
     private static string Describe(JsonElement value, List<string> hashes) => value.ValueKind switch { JsonValueKind.Object => "object{" + string.Join(",", value.EnumerateObject().OrderBy(property => property.Name, StringComparer.Ordinal).Select(property => property.Name + ":" + Describe(property.Value, hashes))) + "}", JsonValueKind.Array => "array[" + string.Join(",", value.EnumerateArray().Select(element => Describe(element, hashes))) + "]", JsonValueKind.String => Scalar("string", value.GetString()?.Length ?? 0, value.GetRawText(), hashes), JsonValueKind.Number => Scalar("number", value.GetRawText().Length, value.GetRawText(), hashes), JsonValueKind.True or JsonValueKind.False => Scalar("boolean", 1, value.GetRawText(), hashes), JsonValueKind.Null => "null", _ => Scalar("unknown", value.GetRawText().Length, value.GetRawText(), hashes) };

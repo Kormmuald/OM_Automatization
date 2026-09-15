@@ -6,7 +6,7 @@ namespace BpmSoftSync.Adapters.FileSystem;
 public sealed class EvidenceEnvelopeValidator
 {
     private static readonly HashSet<string> AllowedEnvelope = new(StringComparer.Ordinal) { "schema", "stableKey", "payloadDigest", "metadata" };
-    private static readonly HashSet<string> AllowedMetadata = new(StringComparer.Ordinal) { "runId", "targetAlias", "phase", "outcome", "retryCount", "counts", "digests", "durationBucket", "scaleBucket", "responseSizeBuckets", "scopeContracts", "gateOutcomes" };
+    private static readonly HashSet<string> AllowedMetadata = new(StringComparer.Ordinal) { "runId", "targetAlias", "phase", "outcome", "retryCount", "counts", "digests", "durationBucket", "scaleBucket", "responseSizeBuckets", "scopeContracts", "gateOutcomes", "failedShape" };
     private static readonly HashSet<string> AllowedStableKeys = new(StringComparer.Ordinal) { "pass-a", "pass-b", "reconciliation", "qualified-snapshot", "qualification-summary", "downstream-stage-probe", "workbook-pair", "blocked-terminal", "review-only-seal" };
     private static readonly HashSet<string> AllowedOutcomes = new(StringComparer.Ordinal) { "SAFE", "PASS_CAPTURED", "HUMAN_REVIEW_REQUIRED", "ENDPOINT_NOT_ALLOWLISTED", "CATALOG_ORDER_OR_PAGING_UNQUALIFIED", "UNKNOWN_SHAPE_UNQUALIFIED", "LEGACY_DISPOSITION_INVALID", "FULL_CATALOG_NOT_QUALIFIED", "TARGET_STATE_CHANGED_DURING_QUALIFICATION", "WORKBOOK_SCALE_DECISION_REQUIRED", "EVIDENCE_SCHEMA_INVALID", "EVIDENCE_SCAN_FAILED", "INDEX_SYNC_UNRESOLVED", "OFFLINE_FIXTURE_INVALID" };
     private static readonly HashSet<string> AllowedCountKeys = new(StringComparer.Ordinal) { "inventory", "workspaceItems", "schemas", "columns", "indexes", "indexMembers", "lookupRegistry", "lookupCollections", "lookupRows", "lookupValues", "pages" };
@@ -36,7 +36,9 @@ public sealed class EvidenceEnvelopeValidator
     }
     private static bool ValidateQualificationMetadata(JsonElement metadata, string stableKey)
     {
-        if (metadata.EnumerateObject().Count() != AllowedMetadata.Count) return false;
+        // `failedShape` is optional so accepted EvidenceEnvelope/v1 records from
+        // before this bounded diagnostic contract remain readable.
+        if (metadata.EnumerateObject().Any(item => !AllowedMetadata.Contains(item.Name))) return false;
         if (!metadata.TryGetProperty("runId", out var runId) || runId.ValueKind != JsonValueKind.String || !Guid.TryParse(runId.GetString(), out var parsed) || parsed == Guid.Empty) return false;
         if (!metadata.TryGetProperty("targetAlias", out var aliasElement) || aliasElement.ValueKind != JsonValueKind.String || !IsTargetAlias(aliasElement.GetString())) return false;
         if (!metadata.TryGetProperty("phase", out var phase) || phase.ValueKind != JsonValueKind.String || !string.Equals(phase.GetString(), stableKey, StringComparison.Ordinal)) return false;
@@ -48,7 +50,24 @@ public sealed class EvidenceEnvelopeValidator
         if (!metadata.TryGetProperty("scaleBucket", out var scale) || scale.ValueKind != JsonValueKind.String || !AllowedScaleBuckets.Contains(scale.GetString()!)) return false;
         if (!metadata.TryGetProperty("responseSizeBuckets", out var sizes) || sizes.ValueKind != JsonValueKind.Array || sizes.EnumerateArray().Any(item => item.ValueKind != JsonValueKind.String || !AllowedResponseBuckets.Contains(item.GetString()!))) return false;
         if (!metadata.TryGetProperty("scopeContracts", out var contracts) || contracts.ValueKind != JsonValueKind.Array || !ValidateScopeContracts(contracts)) return false;
-        return metadata.TryGetProperty("gateOutcomes", out var gates) && gates.ValueKind == JsonValueKind.Array && gates.EnumerateArray().All(item => item.ValueKind == JsonValueKind.String && AllowedGates.Contains(item.GetString()!));
+        if (!metadata.TryGetProperty("gateOutcomes", out var gates) || gates.ValueKind != JsonValueKind.Array || gates.EnumerateArray().Any(item => item.ValueKind != JsonValueKind.String || !AllowedGates.Contains(item.GetString()!))) return false;
+        return !metadata.TryGetProperty("failedShape", out var failedShape) || ValidateFailedShape(failedShape);
+    }
+    private static bool ValidateFailedShape(JsonElement failedShape)
+    {
+        if (failedShape.ValueKind == JsonValueKind.Null) return true;
+        string[] expected = ["path", "expected", "observed", "arrayCardinality", "ordinal"];
+        var expectedWithCompanion = expected.Append("companionGuidStringStatus");
+        if (failedShape.ValueKind != JsonValueKind.Object || !failedShape.EnumerateObject().Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal).SequenceEqual(expected.OrderBy(name => name, StringComparer.Ordinal), StringComparer.Ordinal) && !failedShape.EnumerateObject().Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal).SequenceEqual(expectedWithCompanion.OrderBy(name => name, StringComparer.Ordinal), StringComparer.Ordinal)) return false;
+        if (!failedShape.TryGetProperty("path", out var path) || !path.TryGetInt32(out var pathValue) || !Enum.IsDefined(typeof(FailedShapePath), pathValue)) return false;
+        if (!failedShape.TryGetProperty("expected", out var expectedKind) || !expectedKind.TryGetInt32(out var expectedValue) || !Enum.IsDefined(typeof(ExpectedShapeCategory), expectedValue)) return false;
+        if (!failedShape.TryGetProperty("observed", out var observed) || !observed.TryGetInt32(out var observedValue) || !Enum.IsDefined(typeof(ObservedJsonKind), observedValue)) return false;
+        if (!failedShape.TryGetProperty("arrayCardinality", out var cardinality) || !cardinality.TryGetInt32(out var cardinalityValue) || !Enum.IsDefined(typeof(ArrayCardinalityBucket), cardinalityValue)) return false;
+        // This generic qualification envelope is deliberately not the bounded
+        // schema-diagnostic terminal record. It may retain the compatibility
+        // null property, but cannot carry the H-005 companion discriminator.
+        return failedShape.TryGetProperty("ordinal", out var ordinal) && (ordinal.ValueKind == JsonValueKind.Null || ordinal.ValueKind == JsonValueKind.Number && ordinal.TryGetInt32(out var ordinalValue) && ordinalValue is >= 0 and <= 9_999_999) &&
+            (!failedShape.TryGetProperty("companionGuidStringStatus", out var companion) || companion.ValueKind == JsonValueKind.Null);
     }
     private static bool ValidateScopeContracts(JsonElement contracts)
     {

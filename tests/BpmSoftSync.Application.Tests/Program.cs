@@ -6,6 +6,8 @@ try
     await BpmSoftSync.Application.Tests.CatalogQualificationServiceTests.SecondPassBlockerStopsWithoutRetryAsync();
     await BpmSoftSync.Application.Tests.CatalogQualificationServiceTests.WorkbookScaleDecisionBlocksSnapshotAsync();
     await BpmSoftSync.Application.Tests.CatalogQualificationServiceTests.SealedCollectionContractTamperingIsTerminalAsync();
+    await BpmSoftSync.Application.Tests.BoundedSchemaDiagnosticWorkflowTests.ReadsOnceAndReturnsTheFirstSafeBlockerAsync();
+    await BpmSoftSync.Application.Tests.BoundedSchemaDiagnosticWorkflowTests.CompletedSchemaPhaseIsAlwaysNonQualifyingAsync();
     Console.WriteLine("PASS CatalogQualificationServiceTests");
     return 0;
 }

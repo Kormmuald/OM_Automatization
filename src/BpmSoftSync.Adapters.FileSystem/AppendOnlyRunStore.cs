@@ -288,7 +288,7 @@ public sealed class AppendOnlyRunStore(string basePath) : IRunEvidenceStore
     {
         var stableKey = outcome.IsSuccess ? "review-only-seal" : "blocked-terminal";
         var safeOutcome = OutcomeToken(outcome);
-        return new QualificationEvidenceEnvelope(QualificationEvidenceEnvelope.SchemaVersion, stableKey, Digest(safeOutcome), new QualificationEvidenceMetadata(runId, ReadTargetAlias(root), stableKey, safeOutcome, 0, new Dictionary<string, int>(), new Dictionary<string, string>(), "not-recorded", "not-recorded", [], [], [safeOutcome]));
+        return new QualificationEvidenceEnvelope(QualificationEvidenceEnvelope.SchemaVersion, stableKey, Digest(safeOutcome), new QualificationEvidenceMetadata(runId, ReadTargetAlias(root), stableKey, safeOutcome, 0, new Dictionary<string, int>(), new Dictionary<string, string>(), "not-recorded", "not-recorded", [], [], [safeOutcome], outcome.Blocker?.FailedShape));
     }
 
     private static void WriteDurableNew(string path, string text)

@@ -11,6 +11,11 @@ try
     await BpmSoftSync.Adapters.FileSystem.Tests.EvidenceEnvelopeTests.SchemaFailurePreventsDurableWriteAsync(root);
     await BpmSoftSync.Adapters.FileSystem.Tests.EvidenceEnvelopeTests.TypedCanaryAndSealScanPreventEveryDurableWriteAsync(root);
     BpmSoftSync.Adapters.FileSystem.Tests.EvidenceEnvelopeTests.OrdinaryUnmarkedLookupValueIsRejectedInEveryStringBucket();
+    BpmSoftSync.Adapters.FileSystem.Tests.EvidenceEnvelopeTests.FailedShapeEvidenceAcceptsOnlyClosedEnums();
+    await BpmSoftSync.Adapters.FileSystem.Tests.SchemaDiagnosticEvidenceTests.TerminalRecordUsesOnlyTheClosedContractAndReadBackSealAsync(root);
+    await BpmSoftSync.Adapters.FileSystem.Tests.SchemaDiagnosticEvidenceTests.UniqueRootsAndClosedSchemaRejectCanariesAsync(root);
+    await BpmSoftSync.Adapters.FileSystem.Tests.SchemaDiagnosticEvidenceTests.FailedOrCancelledStagingNeverPublishesAnUnsealedTerminalAsync(root);
+    await BpmSoftSync.Adapters.FileSystem.Tests.SchemaDiagnosticEvidenceTests.CompanionGuidStatusIsClosedAndRestrictedToSchemaPackageIdAsync(root);
     BpmSoftSync.Adapters.FileSystem.Tests.RunStoreTests.SameRunIdCannotBeClaimedOnAnotherDateByAnotherStore(root);
     BpmSoftSync.Adapters.FileSystem.Tests.SecretValueScannerTests.CanaryReportsOnlyCategoryLocationAndDigest();
     BpmSoftSync.Adapters.FileSystem.Tests.AuditMetadataTests.AllowlistAcceptsOnlyDeclaredMetadata();

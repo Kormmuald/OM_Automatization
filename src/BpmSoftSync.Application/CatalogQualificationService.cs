@@ -94,7 +94,7 @@ public sealed class CatalogQualificationService : ICatalogQualificationService
         var safeOutcome = EvidenceOutcome(qualification.Result);
         var scopeContracts = ScopeEvidence(qualification.PassB?.Scope ?? qualification.PassA?.Scope);
         if (qualification.Snapshot is not null) { terminalDigests["pullWindow"] = PullWindowDigest(qualification.Snapshot); terminalDigests["snapshot"] = SnapshotBindingDigest(qualification.Snapshot, qualification.PassB!); }
-        yield return Envelope(qualification.RunId, qualification.PassA?.Scope.TargetAlias ?? qualification.PassB?.Scope.TargetAlias ?? targetAlias, "reconciliation", Digest(qualification.Result.Reason), safeOutcome, qualification.RetryCount, terminalCounts, terminalDigests, "not-recorded", "not-recorded", [], scopeContracts, [safeOutcome]);
+        yield return Envelope(qualification.RunId, qualification.PassA?.Scope.TargetAlias ?? qualification.PassB?.Scope.TargetAlias ?? targetAlias, "reconciliation", Digest(qualification.Result.Reason), safeOutcome, qualification.RetryCount, terminalCounts, terminalDigests, "not-recorded", "not-recorded", [], scopeContracts, [safeOutcome], qualification.Result.Blocker?.FailedShape);
         if (qualification.Snapshot is not null)
             yield return Envelope(qualification.RunId, qualification.Snapshot.Scope.TargetAlias, "qualified-snapshot", qualification.Snapshot.PassBDigest, "HUMAN_REVIEW_REQUIRED", qualification.RetryCount, qualification.Snapshot.Counts, new Dictionary<string, string> { ["passA"] = qualification.Snapshot.PassADigest, ["passB"] = qualification.Snapshot.PassBDigest, ["targetFingerprint"] = qualification.Snapshot.TargetFingerprint.Digest, ["scope"] = qualification.Snapshot.Scope.Digest, ["scopeContracts"] = qualification.PassB!.AppliedCollectionContractsDigest, ["pullWindow"] = PullWindowDigest(qualification.Snapshot), ["snapshot"] = SnapshotBindingDigest(qualification.Snapshot, qualification.PassB) }, DurationBucket(qualification.PassB.Duration), qualification.Snapshot.Scale.RowBucket, [], ScopeEvidence(qualification.Snapshot.Scope), ["HUMAN_REVIEW_REQUIRED", qualification.Snapshot.Scale.Reason]);
     }
@@ -114,8 +114,13 @@ public sealed class CatalogQualificationService : ICatalogQualificationService
         ScopeEvidence(pass.Scope),
         ["FULL_READ_COMPLETE"]);
 
-    private static QualificationEvidenceEnvelope Envelope(Guid runId, string targetAlias, string stableKey, string payloadDigest, string outcome, int retryCount, IReadOnlyDictionary<string, int> counts, IReadOnlyDictionary<string, string> digests, string durationBucket, string scaleBucket, IReadOnlyList<string> responseSizeBuckets, IReadOnlyList<EvidenceScopeContract> scopeContracts, IReadOnlyList<string> gateOutcomes) =>
-        new(QualificationEvidenceEnvelope.SchemaVersion, stableKey, payloadDigest, new QualificationEvidenceMetadata(runId, targetAlias, stableKey, outcome, retryCount, counts, digests, durationBucket, scaleBucket, responseSizeBuckets, scopeContracts, gateOutcomes));
+    private static QualificationEvidenceEnvelope Envelope(Guid runId, string targetAlias, string stableKey, string payloadDigest, string outcome, int retryCount, IReadOnlyDictionary<string, int> counts, IReadOnlyDictionary<string, string> digests, string durationBucket, string scaleBucket, IReadOnlyList<string> responseSizeBuckets, IReadOnlyList<EvidenceScopeContract> scopeContracts, IReadOnlyList<string> gateOutcomes, FailedShapeDiagnostic? failedShape = null) =>
+        new(QualificationEvidenceEnvelope.SchemaVersion, stableKey, payloadDigest, new QualificationEvidenceMetadata(runId, targetAlias, stableKey, outcome, retryCount, counts, digests, durationBucket, scaleBucket, responseSizeBuckets, scopeContracts, gateOutcomes, WithoutBoundedDiagnosticCompanion(failedShape)));
+
+    // The H-005 discriminator is safe only in SchemaDiagnosticTerminalEvidence.
+    // Full qualification evidence must remain independent of this bounded route.
+    private static FailedShapeDiagnostic? WithoutBoundedDiagnosticCompanion(FailedShapeDiagnostic? failedShape) =>
+        failedShape is null ? null : failedShape with { CompanionGuidStringStatus = null };
 
     private static IReadOnlyList<EvidenceScopeContract> ScopeEvidence(ScopeDescriptor? scope) => scope?.Collections.Select(item => new EvidenceScopeContract(SafeCollectionId(item.CollectionId), item.OrderKeyId, item.QueryContractId, item.Limits.PageSize, item.Limits.MaxPages, item.Limits.MaxRows, item.Limits.MaxResponseBytes)).ToArray() ?? [];
 

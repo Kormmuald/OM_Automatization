@@ -1,7 +1,9 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using BpmSoftSync.Adapters.BpmSoft;
+using BpmSoftSync.Application;
 using BpmSoftSync.Domain;
 
 namespace BpmSoftSync.Adapters.BpmSoft.Tests;
@@ -44,10 +46,100 @@ public static class WorkspaceInventoryAdapterTests
         using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
         await transport.LoginAsync(credentials);
 
-        var result = await WorkspaceInventoryAdapter.ReadFullAsync(transport);
+        var result = await new BpmSoftSchemaDiagnosticSource(transport).ReadUntilFirstBlockerAsync();
 
-        Assert(!result.IsQualified && result.Blocker?.Code == BlockerCode.UnknownShapeUnqualified && result.Blocker.Reason == "SCHEMA_INVENTORY_UNQUALIFIED", "Malformed schema did not stop with a scoped named blocker.");
-        Assert(handler.Paths.Count == 3, "Traversal continued after the first malformed schema.");
+        Assert(result?.Code == BlockerCode.UnknownShapeUnqualified && result.Reason == "SCHEMA_INVENTORY_UNQUALIFIED", "Bounded diagnostic did not stop with the first scoped named blocker.");
+        Assert(handler.Paths.SequenceEqual(new[] { "/ServiceModel/AuthService.svc/Login", "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems", "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema" }, StringComparer.Ordinal), "Bounded diagnostic did not use exactly AUTH_LOGIN, WORKSPACE_ITEMS and one SCHEMA_GET before the blocker.");
+    }
+
+    public static async Task BoundedDiagnosticStopsAfterOneDeterministicSuccessfulSchemaAsync()
+    {
+        using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "s02-full-object-model.json")));
+        var workspace = JsonNode.Parse(fixture.RootElement.GetProperty("workspaceResponse").GetRawText())!.AsObject();
+        var items = workspace["items"]!.AsArray();
+        var reversed = new JsonArray(items.Reverse().Select(item => item!.DeepClone()).ToArray());
+        workspace["items"] = reversed;
+        var handler = new FixtureHandler(
+            "{\"Code\":0}",
+            workspace.ToJsonString(),
+            fixture.RootElement.GetProperty("schemas")[0].GetRawText());
+        using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
+        using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
+        await transport.LoginAsync(credentials);
+
+        var result = await new BoundedSchemaDiagnosticWorkflow(new BpmSoftSchemaDiagnosticSource(transport)).ExecuteAsync();
+
+        Assert(!result.IsSuccess && result.Reason == "SCHEMA_DIAGNOSTIC_COMPLETED_WITHOUT_BLOCKER", "A strictly valid first deterministic schema response was not converted to the explicit non-qualifying terminal.");
+        Assert(handler.Paths.SequenceEqual(new[] { "/ServiceModel/AuthService.svc/Login", "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems", "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema" }, StringComparer.Ordinal), "A successful first schema response triggered a second schema request or another endpoint.");
+        Assert(handler.Bodies.Count == 3 && handler.Bodies[2] == "{\"schemaUId\":\"11111111-1111-1111-1111-111111111111\"}", "The bounded diagnostic did not select the stable lowest typed schema candidate.");
+    }
+
+    public static async Task BoundedDiagnosticWithoutSchemaCandidateStopsBeforeSchemaGetAsync()
+    {
+        using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "s02-full-object-model.json")));
+        var workspace = JsonNode.Parse(fixture.RootElement.GetProperty("workspaceResponse").GetRawText())!.AsObject();
+        foreach (var item in workspace["items"]!.AsArray()) item!["type"] = 9;
+        var handler = new FixtureHandler("{\"Code\":0}", workspace.ToJsonString());
+        using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
+        using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
+        await transport.LoginAsync(credentials);
+
+        var blocker = await new BpmSoftSchemaDiagnosticSource(transport).ReadUntilFirstBlockerAsync();
+
+        Assert(blocker?.Reason == "SCHEMA_DIAGNOSTIC_NO_SCHEMA_CANDIDATE" && blocker.Code == BlockerCode.FullCatalogNotQualified, "A workspace without a typed schema candidate did not fail closed with the dedicated terminal blocker.");
+        Assert(handler.Paths.SequenceEqual(new[] { "/ServiceModel/AuthService.svc/Login", "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems" }, StringComparer.Ordinal), "A workspace without a schema candidate attempted SCHEMA_GET or another endpoint.");
+    }
+
+    public static async Task FailedRequiredSchemaPathsProduceOnlyClosedStructuralDiagnosticsAsync()
+    {
+        using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "s02-full-object-model.json")));
+        var cases = new (string Name, string Response, FailedShapePath Path, ExpectedShapeCategory Expected, ObservedJsonKind Observed, ArrayCardinalityBucket Cardinality, int? Ordinal)[]
+        {
+            ("root", "{\"success\":true}", FailedShapePath.SchemaRoot, ExpectedShapeCategory.Object, ObservedJsonKind.Missing, ArrayCardinalityBucket.NotApplicable, null),
+            ("schema-id", MutateSchema(fixture, schema => schema["id"] = null), FailedShapePath.SchemaId, ExpectedShapeCategory.GuidString, ObservedJsonKind.Null, ArrayCardinalityBucket.NotApplicable, null),
+            ("package", MutateSchema(fixture, schema => schema["package"] = false), FailedShapePath.SchemaPackage, ExpectedShapeCategory.Object, ObservedJsonKind.Boolean, ArrayCardinalityBucket.NotApplicable, null),
+            ("columns", MutateSchema(fixture, schema => schema["columns"] = null), FailedShapePath.SchemaColumns, ExpectedShapeCategory.Array, ObservedJsonKind.Null, ArrayCardinalityBucket.NotApplicable, null),
+            ("inherited-columns", MutateSchema(fixture, schema => schema["inheritedColumns"] = false), FailedShapePath.SchemaInheritedColumns, ExpectedShapeCategory.Array, ObservedJsonKind.Boolean, ArrayCardinalityBucket.NotApplicable, null),
+            ("parent", MutateSchema(fixture, schema => schema["parentSchema"] = false), FailedShapePath.SchemaParent, ExpectedShapeCategory.OptionalObject, ObservedJsonKind.Boolean, ArrayCardinalityBucket.NotApplicable, null),
+            ("index-member", MutateSchema(fixture, schema => schema["indexes"] = new JsonArray(false)), FailedShapePath.SchemaIndexMember, ExpectedShapeCategory.Object, ObservedJsonKind.Boolean, ArrayCardinalityBucket.One, 0),
+            ("index-column-member", MutateSchema(fixture, schema => schema["indexes"]![0]!["columns"] = new JsonArray(new JsonObject())), FailedShapePath.SchemaIndexColumnUId, ExpectedShapeCategory.GuidString, ObservedJsonKind.Missing, ArrayCardinalityBucket.One, 0)
+        };
+
+        foreach (var testCase in cases)
+        {
+            var result = await ReadSingleSchemaAsync(fixture, testCase.Response);
+            var diagnostic = result.Blocker?.FailedShape;
+            Assert(!result.IsQualified && result.Blocker?.Reason == "SCHEMA_INVENTORY_UNQUALIFIED" && diagnostic is not null, testCase.Name + " did not fail closed with a diagnostic.");
+            Assert(diagnostic!.Path == testCase.Path && diagnostic.Expected == testCase.Expected && diagnostic.Observed == testCase.Observed && diagnostic.ArrayCardinality == testCase.Cardinality && diagnostic.Ordinal == testCase.Ordinal, testCase.Name + " diagnostic was not the expected closed structural classification.");
+            Assert(!diagnostic.ToString().Contains("Account", StringComparison.Ordinal) && !diagnostic.ToString().Contains("S02-RAW-CANARY", StringComparison.Ordinal), testCase.Name + " diagnostic leaked a scalar or display name.");
+        }
+    }
+
+    public static async Task SchemaPackageIdCompanionStatusUsesTheSameBoundedSchemaResponseAsync()
+    {
+        using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine("tests", "fixtures", "read-only", "s02-full-object-model.json")));
+        var cases = new (string Name, string Response, GuidStringPredicateStatus ExpectedStatus)[]
+        {
+            ("guid-companion", MutateSchema(fixture, schema => schema["package"]!["id"] = "opaque-package-key"), GuidStringPredicateStatus.Passed),
+            ("invalid-companion", MutateSchema(fixture, schema => { schema["package"]!["id"] = "opaque-package-key"; schema["package"]!["uId"] = "not-a-guid"; }), GuidStringPredicateStatus.Failed)
+        };
+
+        foreach (var testCase in cases)
+        {
+            var handler = new FixtureHandler("{\"Code\":0}", fixture.RootElement.GetProperty("workspaceResponse").GetRawText(), testCase.Response);
+            using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
+            using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
+            await transport.LoginAsync(credentials);
+
+            var blocker = await new BpmSoftSchemaDiagnosticSource(transport).ReadUntilFirstBlockerAsync();
+            var diagnostic = blocker?.FailedShape;
+            Assert(blocker?.Reason == "SCHEMA_INVENTORY_UNQUALIFIED" && diagnostic?.Path == FailedShapePath.SchemaPackageId && diagnostic.CompanionGuidStringStatus == testCase.ExpectedStatus, testCase.Name + " did not report only the closed companion predicate result.");
+            Assert(handler.Paths.SequenceEqual(new[] { "/ServiceModel/AuthService.svc/Login", "/ServiceModel/WorkspaceExplorerService.svc/GetWorkspaceItems", "/ServiceModel/EntitySchemaDesignerService.svc/GetSchema" }, StringComparer.Ordinal), testCase.Name + " performed an additional source request.");
+            Assert(!diagnostic!.ToString().Contains("opaque-package-key", StringComparison.Ordinal) && !diagnostic.ToString().Contains("not-a-guid", StringComparison.Ordinal), testCase.Name + " leaked a companion scalar.");
+        }
+
+        var unrelated = await ReadSingleSchemaAsync(fixture, MutateSchema(fixture, schema => schema["id"] = null));
+        Assert(unrelated.Blocker?.FailedShape?.Path == FailedShapePath.SchemaId && unrelated.Blocker.FailedShape.CompanionGuidStringStatus is null, "A companion predicate status appeared outside SchemaPackageId.");
     }
 
     public static async Task SchemaIdentityMismatchFailsClosedBeforeAnotherTraversalAsync()
@@ -85,15 +177,32 @@ public static class WorkspaceInventoryAdapterTests
         if (!condition) throw new InvalidOperationException(message);
     }
 
+    private static string MutateSchema(JsonDocument fixture, Action<JsonObject> mutate)
+    {
+        var root = JsonNode.Parse(fixture.RootElement.GetProperty("schemas")[0].GetRawText())!.AsObject();
+        mutate(root["schema"]!.AsObject());
+        return root.ToJsonString();
+    }
+
+    private static async Task<WorkspaceObjectModel> ReadSingleSchemaAsync(JsonDocument fixture, string schemaResponse)
+    {
+        var handler = new FixtureHandler("{\"Code\":0}", fixture.RootElement.GetProperty("workspaceResponse").GetRawText(), schemaResponse);
+        using var transport = new BpmSoftReadTransport(BpmSoftTargetOrigin.ParseInteractive("https://bpm.example.test"), handler);
+        using var credentials = InteractiveCredentials.CreateForTesting("https://bpm.example.test", "s02-user", "s02-password".AsSpan());
+        await transport.LoginAsync(credentials);
+        return await WorkspaceInventoryAdapter.ReadFullAsync(transport);
+    }
+
     private sealed class FixtureHandler(params string[] bodies) : HttpMessageHandler
     {
         private readonly Queue<string> _bodies = new(bodies);
         public List<string> Paths { get; } = new();
+        public List<string> Bodies { get; } = new();
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Paths.Add(request.RequestUri?.AbsolutePath ?? string.Empty);
-            _ = request.Content is null ? string.Empty : await request.Content.ReadAsStringAsync(cancellationToken);
+            Bodies.Add(request.Content is null ? string.Empty : await request.Content.ReadAsStringAsync(cancellationToken));
             var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(_bodies.Dequeue(), Encoding.UTF8, "application/json") };
             if (Paths.Count == 1) response.Headers.TryAddWithoutValidation("Set-Cookie", "BPMCSRF=s02-csrf; Path=/; Secure; HttpOnly");
             return response;

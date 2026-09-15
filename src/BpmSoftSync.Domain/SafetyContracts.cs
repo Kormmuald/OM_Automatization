@@ -15,7 +15,90 @@ public enum BlockerCode
     OfflineFixtureInvalid
 }
 
-public sealed record Blocker(BlockerCode Code, string Scope, string Reason, string Recovery, string NextPermittedAction);
+// These categories are deliberately closed. A failed-shape diagnostic must never carry
+// a server property value, display name, identifier, URL or response fragment.
+public enum FailedShapePath
+{
+    SchemaRoot,
+    SchemaName,
+    SchemaUId,
+    SchemaId,
+    SchemaPackage,
+    SchemaPackageId,
+    SchemaPackageUId,
+    SchemaPackageName,
+    SchemaColumns,
+    SchemaInheritedColumns,
+    SchemaParent,
+    SchemaParentName,
+    SchemaParentUId,
+    SchemaColumnMember,
+    SchemaColumnName,
+    SchemaColumnUId,
+    SchemaColumnType,
+    SchemaColumnRequirementType,
+    SchemaColumnIndexed,
+    SchemaIndexes,
+    SchemaIndexMember,
+    SchemaIndexUId,
+    SchemaIndexName,
+    SchemaIndexIsUnique,
+    SchemaIndexColumns,
+    SchemaIndexColumnMember,
+    SchemaIndexColumnUId
+}
+
+public enum ExpectedShapeCategory { Object, OptionalObject, RequiredString, GuidString, Array, Integer, Boolean }
+public enum ObservedJsonKind { Missing, Null, Object, Array, String, Number, Boolean, Other }
+public enum ArrayCardinalityBucket { NotApplicable, Zero, One, TwoToTen, ElevenOrMore }
+// This is a predicate result, not an identifier. It may be emitted only as the
+// companion of a SchemaPackageId failure in the bounded diagnostic contract.
+public enum GuidStringPredicateStatus { Passed, Failed }
+
+public sealed record FailedShapeDiagnostic(
+    FailedShapePath Path,
+    ExpectedShapeCategory Expected,
+    ObservedJsonKind Observed,
+    ArrayCardinalityBucket ArrayCardinality,
+    int? Ordinal,
+    GuidStringPredicateStatus? CompanionGuidStringStatus = null);
+
+/// <summary>
+/// Closed terminal categories for the one-pass schema diagnostic. These labels
+/// deliberately carry no server-provided text or identities.
+/// </summary>
+public enum SchemaDiagnosticTerminalOutcome
+{
+    UnknownShapeUnqualified,
+    SchemaReadUnavailable,
+    EndpointNotAllowlisted,
+    NoSchemaCandidate,
+    CompletedWithoutBlocker
+}
+
+/// <summary>
+/// The complete durable contract for a bounded schema diagnostic. It is not a
+/// qualification journal and intentionally has no catalog, output, URL, or
+/// session fields.
+/// </summary>
+public sealed record SchemaDiagnosticTerminalEvidence(
+    string Schema,
+    string TargetAlias,
+    string Route,
+    SchemaDiagnosticTerminalOutcome Outcome,
+    FailedShapeDiagnostic? FailedShape)
+{
+    public const string SchemaVersion = "SchemaDiagnosticTerminalEvidence/v1";
+    public const string RouteVersion = "bounded-schema/v1";
+}
+
+public sealed record Blocker(
+    BlockerCode Code,
+    string Scope,
+    string Reason,
+    string Recovery,
+    string NextPermittedAction,
+    FailedShapeDiagnostic? FailedShape = null);
 
 public enum InvocationSource { ManualTerminal, DirectCurrentChatRequest }
 
@@ -39,7 +122,8 @@ public sealed record QualificationEvidenceMetadata(
     string ScaleBucket,
     IReadOnlyList<string> ResponseSizeBuckets,
     IReadOnlyList<EvidenceScopeContract> ScopeContracts,
-    IReadOnlyList<string> GateOutcomes);
+    IReadOnlyList<string> GateOutcomes,
+    FailedShapeDiagnostic? FailedShape = null);
 
 public sealed record QualificationEvidenceEnvelope(
     string Schema,

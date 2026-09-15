@@ -12,6 +12,15 @@ public static class CliContractTests
         var text = output.ToString();
         if (!text.Contains("reason=") || !text.Contains("scope=") || !text.Contains("recovery=") || !text.Contains("nextAction=") || text.Contains("not-allowed", StringComparison.Ordinal)) throw new InvalidOperationException("CLI diagnostics leaked unsafe input.");
     }
+    public static void FailedShapeDiagnosticRendersOnlyClosedCategories()
+    {
+        var diagnostic = new FailedShapeDiagnostic(FailedShapePath.SchemaPackageId, ExpectedShapeCategory.GuidString, ObservedJsonKind.String, ArrayCardinalityBucket.NotApplicable, null, GuidStringPredicateStatus.Passed);
+        var result = SafeResult.Blocked(new Blocker(BlockerCode.UnknownShapeUnqualified, "schema", "SCHEMA_INVENTORY_UNQUALIFIED", "Capture safe structure.", "Stop.", diagnostic));
+        var text = BpmSoftSync.Cli.Diagnostics.SafeDiagnosticRenderer.Render(result);
+        var invalid = diagnostic with { Path = FailedShapePath.SchemaId };
+        var invalidText = BpmSoftSync.Cli.Diagnostics.SafeDiagnosticRenderer.Render(SafeResult.Blocked(new Blocker(BlockerCode.UnknownShapeUnqualified, "schema", "SCHEMA_INVENTORY_UNQUALIFIED", "Capture safe structure.", "Stop.", invalid)));
+        if (!text.Contains("failedShape=path:SchemaPackageId;expected:GuidString;observed:String;array:NotApplicable;ordinal:none;companionGuidString:Passed", StringComparison.Ordinal) || text.Contains("SchemaPackageId=", StringComparison.Ordinal) || text.Contains("raw", StringComparison.OrdinalIgnoreCase) || invalidText.Contains("companionGuidString", StringComparison.Ordinal)) throw new InvalidOperationException("Failed-shape renderer exposed more than the closed, scoped companion category.");
+    }
     public static async Task DiagnoseReadsOnlyValidatedBoundedRecordsAsync()
     {
         var root = Path.Combine(Path.GetTempPath(), "bpmsoft-diagnose-" + Guid.NewGuid().ToString("N"));

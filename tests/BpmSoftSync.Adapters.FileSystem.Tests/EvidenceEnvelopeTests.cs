@@ -65,4 +65,21 @@ public static class EvidenceEnvelopeTests
             if (validator.Validate(json).IsSuccess) throw new InvalidOperationException("An unmarked ordinary lookup value crossed strict field-level validation.");
         }
     }
+
+    public static void FailedShapeEvidenceAcceptsOnlyClosedEnums()
+    {
+        var diagnostic = new FailedShapeDiagnostic(FailedShapePath.SchemaIndexColumnUId, ExpectedShapeCategory.GuidString, ObservedJsonKind.Missing, ArrayCardinalityBucket.One, 0);
+        var runId = Guid.NewGuid();
+        var envelope = Envelope(runId, "reconciliation");
+        envelope = envelope with { Metadata = envelope.Metadata with { FailedShape = diagnostic } };
+        var json = JsonSerializer.Serialize(envelope, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        if (!new EvidenceEnvelopeValidator().Validate(json).IsSuccess || json.Contains("S02-RAW-CANARY", StringComparison.Ordinal) || json.Contains("Account", StringComparison.Ordinal)) throw new InvalidOperationException("Closed failed-shape evidence was rejected or leaked a raw value.");
+        var unsafeJson = json.Replace($"\"path\":{(int)diagnostic.Path}", "\"path\":999", StringComparison.Ordinal);
+        if (new EvidenceEnvelopeValidator().Validate(unsafeJson).IsSuccess) throw new InvalidOperationException("Unrecognized failed-shape path crossed evidence validation.");
+
+        var packageDiagnostic = new FailedShapeDiagnostic(FailedShapePath.SchemaPackageId, ExpectedShapeCategory.GuidString, ObservedJsonKind.String, ArrayCardinalityBucket.NotApplicable, null, GuidStringPredicateStatus.Passed);
+        var packageJson = JsonSerializer.Serialize(envelope with { Metadata = envelope.Metadata with { FailedShape = packageDiagnostic } }, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        var outsidePackageJson = JsonSerializer.Serialize(envelope with { Metadata = envelope.Metadata with { FailedShape = packageDiagnostic with { Path = FailedShapePath.SchemaId } } }, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        if (new EvidenceEnvelopeValidator().Validate(packageJson).IsSuccess || new EvidenceEnvelopeValidator().Validate(outsidePackageJson).IsSuccess) throw new InvalidOperationException("The bounded companion status crossed the generic qualification evidence validator.");
+    }
 }

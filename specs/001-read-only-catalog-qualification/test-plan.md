@@ -20,3 +20,18 @@ S01–S06 use sanitized fixtures and fake `HttpMessageHandler` only. Evidence re
 ## Final exit criteria
 
 No later stage begins without prior accepted reviewer evidence. A passing offline suite cannot close `FULL_CATALOG_NOT_QUALIFIED`. `WORKBOOK_SCALE_DECISION_REQUIRED` is fail-closed and `TARGET_STATE_CHANGED_DURING_QUALIFICATION` remains terminal with no partial pair.
+
+## Remediation diagnostic boundary — Cycle 1
+
+До отдельной live diagnostic attempt offline validation должна доказать, что
+`catalog diagnose-schema` создаёт только уникальный sealed
+`SchemaDiagnosticTerminalEvidence/v1`: exact field allowlist, closed terminal
+category/failed-shape enums, scan-before-write, read-back и seal hash. Negative
+tests обязаны отклонять raw/data/secret canaries и relative/workspace/temp/system
+evidence roots до runner. Проверяется отсутствие `audit/`, `output/`, Excel,
+lookup/`SELECT_QUERY`, Pass B/Pass C, reconciliation, snapshot, retry/rerun и
+normal run publication. Для typed workspace candidate проверяется ровно
+`AUTH_LOGIN` → `WORKSPACE_ITEMS` → один deterministic `SCHEMA_GET`, включая
+успешный первый schema response и несколько workspace items; второй schema read
+запрещён. При отсутствии typed candidate маршрут завершает fail-closed terminal
+до `SCHEMA_GET`. Даже no-blocker terminal result остаётся non-success.

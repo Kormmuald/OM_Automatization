@@ -7,9 +7,16 @@ try
     Console.WriteLine("PASS AuthorizationGateTests.MissingAuthorizationNeverPromptsOrSendsAsync");
     await BpmSoftSync.Cli.Tests.AuthorizationGateTests.OnlyManualInvocationMayReachTerminalPromptAsync();
     await BpmSoftSync.Cli.Tests.CliContractTests.OutputContainsOnlySafeDiagnosticFieldsAsync();
+    BpmSoftSync.Cli.Tests.CliContractTests.FailedShapeDiagnosticRendersOnlyClosedCategories();
     await BpmSoftSync.Cli.Tests.CliContractTests.DiagnoseReadsOnlyValidatedBoundedRecordsAsync();
+    await BpmSoftSync.Cli.Tests.SchemaDiagnosticCommandTests.CliRequiresTheExactInteractiveContractAndRejectsSecretsOrRetryAsync();
+    await BpmSoftSync.Cli.Tests.SchemaDiagnosticCommandTests.CliHasNoOutputOrPublicationParameterAndReturnsSafeTerminalResultAsync();
+    await BpmSoftSync.Cli.Tests.SchemaDiagnosticCommandTests.CliRejectsRelativeWorkspaceAndTemporaryEvidenceRootsBeforeRunnerAsync();
+    await BpmSoftSync.Cli.Tests.SchemaDiagnosticCommandTests.CliUsesOnlyUserLocalEvidenceRootsAndRejectsOutputPublicationAsync();
+    await BpmSoftSync.Cli.Tests.SchemaDiagnosticCommandTests.CliRejectsUserLocalReparsePointEscapeBeforeRunnerAsync();
     BpmSoftSync.Cli.Tests.ArchitectureTests.DomainAndApplicationDoNotDependOnForbiddenAdapters();
     BpmSoftSync.Cli.Tests.ArchitectureTests.ExactlyOneHttpSendBoundaryAndNoGetPackagesAllowance();
+    BpmSoftSync.Cli.Tests.ArchitectureTests.BoundedSchemaDiagnosticCannotReachLookupQualificationOrPublication();
     Console.WriteLine("PASS ArchitectureTests.ExactlyOneHttpSendBoundaryAndNoGetPackagesAllowance");
     BpmSoftSync.Cli.Tests.HandoffPackageTests.HandoffIsFixtureOnlyAndSecretFree();
     await BpmSoftSync.Cli.Tests.ReadOnlyQualificationE2ETests.FakeTwoPassRunReachesHumanReviewAsync();

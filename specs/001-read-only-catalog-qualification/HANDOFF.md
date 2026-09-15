@@ -1,59 +1,69 @@
 # Актуальный handoff — Feature 001: read-only catalog qualification
 
-**Дата обновления:** 2026-09-15  
-**Исторический predecessor:** `docs/archive/handoffs/feature-001/2026-09-14-s02-current-handoff-archived-by-s08.md`
-— snapshot состояния после S02, не непосредственный pre-S08 handoff.
+**Дата:** 2026-09-15
+**Active feature:** `001-read-only-catalog-qualification` (подтверждён
+`.specify/feature.json`).
 
-## Фактическое состояние
+## Статус
 
-- Active feature: `specs/001-read-only-catalog-qualification` (`.specify/feature.json`).
-- S00–S06 имеют independently accepted stage evidence; S01–S06 были offline/fake-only.
-- S07 выполнен ровно один раз после `стенд запущен`. Reviewer принял stage evidence,
-  но target **not qualified**.
-- S08 обновил documentation, task-status index и этот handoff; независимый S08 review
-  pending. Это не self-acceptance.
+Два последовательных remediation cycle исчерпаны. Feature 001 **не принята и
+не квалифицирована**. Историческая полная live-попытка S07 завершилась
+fail-closed: `SCHEMA_INVENTORY_UNQUALIFIED` /
+`UNKNOWN_SHAPE_UNQUALIFIED`, exit `2`, `RetryCount=0`; Pass A не завершился,
+Pass B, reconciliation, snapshot и Excel-пара не выполнялись.
 
-## Live result и Excel status
+Baseline commit: `e7babcb2a6d5be243e860d8f6089543dec7bc752`
+(`codex: baseline before live schema remediation`). Последующий remediation
+commit должен содержать только Feature 001 production/tests/docs changes;
+user-local evidence, output, `bin/`, `obj/`, temporary data, credentials и
+несвязанные dirty paths в него не входят.
 
-- `exit 2`, `SCHEMA_INVENTORY_UNQUALIFIED` / `UNKNOWN_SHAPE_UNQUALIFIED`,
-  `RetryCount=0`; RunId `007b6fd7-e66b-471a-b262-7a24d32832bc`.
-- Pass A не завершился; Pass B, equality/reconciliation и workbook publication не
-  достигнуты. Не было retry, Pass C или rerun.
-- `output/` пуст, `.xlsx=0`, Excel pair paths отсутствуют, `review-only-seal.json`
-  отсутствует. `HUMAN_REVIEW_REQUIRED` не достигнут, human approval отсутствует.
+## Что доказано ограниченно
 
-## Evidence и task status
+- Cycle 1 создал отдельный bounded read-only diagnostic route с sealed safe
+  structural evidence; strict full-qualification contract не ослаблялся.
+- Cycle 2 добавил closed companion discriminator для H-005 и исправил bounded
+  source так, чтобы после `AUTH_LOGIN` → `WORKSPACE_ITEMS` выполнялась не более
+  чем одна детерминированная `SCHEMA_GET`. Offline build и шесть suites в
+  cycle reports завершились `exit 0`; это не live qualification.
+- Bounded live-attempt Cycle 2 сохранила only safe sealed artifact:
+  `%LOCALAPPDATA%/BpmSoftSync/diagnostic-evidence/diagnostic-runs/2026/09/15/c18fb82f1ab83de5a644beba1b442eaf6ae70b6a/`
+  (token `c18fb82f1ab83de5a644beba1b442eaf6ae70b6a`; только
+  `.sealed` и `diagnostic-terminal.json`). Содержимое не копируется в repo.
+- Результат поддерживает H-005 — возможное разделение opaque `package.id` и
+  GUID `package.uId` — но не доказывает её. Ни identity rewrite, ни acceptance
+  unknown shape не разрешены.
 
-- Accepted S00–S07 evidence и final reviews перечислены в
-  `verification/mvp-slices/S08/safe-evidence-index.md`.
-- S08 worker evidence: `verification/mvp-slices/S08/worker-evidence.md`; review
-  pending. Task status index below is factual; it does not mean Feature acceptance.
+## Не доказано и запрещено
 
-| Task set | Status |
-| --- | --- |
-| S01–S06 | worker tasks implemented; stage evidence accepted offline |
-| S07 | live task executed once; stage evidence accepted, target unqualified |
-| S08 | documentation worker work complete; independent review pending |
+- `FULL_CATALOG_NOT_QUALIFIED` и `INDEX_SYNC_UNRESOLVED` остаются открытыми.
+- Нет qualified snapshot, canonical Model/Lookup Excel pair, Excel paths/hashes,
+  pair/read-back/OOXML checks или human approval.
+- Никакие последующие live attempts, retry/rerun, `SELECT_QUERY`, lookup,
+  Pass B/C, Excel publication, Write/Manage/Compare/Apply, browser write, SQL
+  mutation или Git push не выполняются без нового явного решения человека.
 
-## Открытые blockers и границы
+## Safety/process note
 
-- `FULL_CATALOG_NOT_QUALIFIED` открыт. `INDEX_SYNC_UNRESOLVED` не изменён.
-- Only `AUTH_LOGIN`, `WORKSPACE_ITEMS`, `SCHEMA_GET`, `SELECT_QUERY` are allowed.
-  Write, Manage, Compare, Apply, browser write, Git и index mutation запрещены.
-- Credentials terminal-only/ephemeral; raw lookup values допустимы только в успешной
-  local output workbook, не в evidence/journal/diagnostics.
-- На blocker: stop, no retry, no Pass C, no automatic rerun и no partial Excel output.
+Во время Cycle 2 raw-like diagnostic material было выведено только transient
+tool output вне approved safe-evidence route. Оно не внесено в repo-документы
+и не считается evidence. Последующая работа обязана опираться только на closed
+safe categories и sealed user-local artifacts; credentials и raw values не
+записываются в repo, prompts или reports.
 
-## Точный следующий шаг и решение человека
+## Evidence и документы
 
-1. Независимый reviewer проверяет S08 documentation/index/handoff against accepted
-   S00–S07 evidence; лишь после `Pass` создаётся S08 acceptance report.
-2. Человек рассматривает safe S07 blocker evidence и решает remediation/diagnosis
-   typed schema contract.
-3. Новый live run допустим только после такого решения и нового explicit manual/current
-   user admission; он не является retry и не допускает Write/Manage/Compare/Apply.
+- Mutable журнал: `verification/live-remediation/README.md`.
+- Register гипотез: `verification/live-remediation/hypotheses.md`.
+- Cycle reports: `verification/live-remediation/cycle-01-*.md` и
+  `verification/live-remediation/cycle-02-*.md`.
+- Исторический S07/S08 evidence: `verification/mvp-slices/S07/` и `S08/`.
 
-## Рабочее дерево
+## Допустимые дальнейшие решения человека
 
-Worktree remains dirty with pre-existing/other-owner changes. S08 changed only its
-documentation/tracker/evidence paths and did not change production/test code.
+1. Отдельный contract-design/remediation cycle для H-005: доказать collision-safe
+   identity semantics и two-pass equality до любой production rewrite.
+2. Независимый security/process review bounded diagnostic observability, затем
+   новый явный decision о строго ограниченном следующем действии.
+3. Остановить Feature 001 как unqualified и сохранить commits/evidence без
+   дополнительного live доступа.

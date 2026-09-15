@@ -36,4 +36,26 @@ public static class ArchitectureTests
         if (!transport.Contains("AllowAutoRedirect = false", StringComparison.Ordinal))
             throw new InvalidOperationException("Production HTTP handler does not disable redirects.");
     }
+
+    public static void BoundedSchemaDiagnosticCannotReachLookupQualificationOrPublication()
+    {
+        var files = new[]
+        {
+            Path.Combine("src", "BpmSoftSync.Application", "BoundedSchemaDiagnosticWorkflow.cs"),
+            Path.Combine("src", "BpmSoftSync.Adapters.BpmSoft", "BpmSoftSchemaDiagnosticSource.cs"),
+            Path.Combine("src", "BpmSoftSync.Cli", "Commands", "LiveSchemaDiagnosticRunner.cs"),
+            Path.Combine("src", "BpmSoftSync.Cli", "Commands", "CatalogSchemaDiagnoseCommand.cs")
+        };
+        var forbidden = new[]
+        {
+            "LookupCatalogSource", "SelectQuery", "CatalogQualificationService", "CatalogQualificationWorkflow",
+            "QualifiedCatalogSnapshot", "Workbook", "AppendOnlyRunStore", "AtomicWorkbookPairPublisher", "--output-root"
+        };
+        foreach (var file in files)
+        {
+            var text = File.ReadAllText(file);
+            if (forbidden.Any(token => text.Contains(token, StringComparison.Ordinal)))
+                throw new InvalidOperationException("Bounded schema diagnostic can reach a forbidden path: " + Path.GetFileName(file));
+        }
+    }
 }
