@@ -54,8 +54,9 @@ public static class WorkbookPairReader
             var columnText = new string(sqref.TakeWhile(char.IsLetter).ToArray());
             var column = ColumnNumber(columnText);
             var formula = validation.Element(Main + "formula1")?.Value ?? throw new InvalidDataException("WORKBOOK_VALIDATION_FORMULA_MISSING");
-            if (column < 1 || column > headers.Count || !WorkbookContract.ValidationHeaders.Contains(formula, StringComparer.Ordinal)) throw new InvalidDataException("WORKBOOK_VALIDATION_EXTERNAL_OR_INVALID");
-            result.Add(headers[column - 1]!, formula);
+            var name = formula.StartsWith('=') ? formula[1..] : formula;
+            if (column < 1 || column > headers.Count || !WorkbookContract.ValidationHeaders.Contains(name, StringComparer.Ordinal)) throw new InvalidDataException("WORKBOOK_VALIDATION_EXTERNAL_OR_INVALID");
+            result.Add(headers[column - 1]!, name);
         }
         return result;
     }

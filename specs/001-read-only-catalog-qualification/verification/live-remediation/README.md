@@ -1,9 +1,49 @@
 # Журнал remediation live qualification — Feature 001
 
-**Актуализирован:** 2026-09-15
+**Актуализирован:** 2026-09-16
 **Статус:** Cycle 3 controlled full live run завершился fail-closed. Feature 001
 **не квалифицирована**; новая попытка не запускалась и credentials повторно не
 использовались.
+
+## Отдельный best-effort export после strict remediation
+
+По явному решению пользователя создан отдельный ручной режим
+`catalog export-best-effort`. Он не изменяет strict `catalog qualify` и не
+является remediation cycle: его назначение — получить наблюдаемую Excel-пару
+до завершения инструмента.
+
+Последняя успешная user-local пара:
+`%LOCALAPPDATA%/BpmSoftSync/best-effort-1455f0b565e745c1b25df435e5aea92a/`.
+Model SHA-256:
+`82e0f5569ca499f8f7e989d01d23b363d5b4230e0a452d250876864816db0b1a`.
+Lookup SHA-256:
+`2c0828c409552718f6b6dc0130164bda480514ff5210fe0a9ccb2a776cde0f27`.
+Пользователь подтвердил, что выгрузка завершилась без ошибок.
+
+Зафиксированные временные допущения до завершающего улучшения инструмента:
+
+1. One-shot legacy `SelectQuery`; pagination/offset и проверка полноты не
+   используются.
+2. Нет Pass A/B, reconciliation и strict qualified snapshot.
+3. Неизвестные типы и type/value mismatch сохраняются только как text/canonical
+   JSON в Lookup workbook.
+4. Lookup с `success != true` пропускается; output может быть неполным.
+5. Allowlist включает только `AccountType`, `ActivityCategory`,
+   `ActivityPriority`, `ActivityResult`, `ActivityStatus`, `AddressType`.
+   Он получен пересечением historical Google Sheets list и current local
+   `LookupRegistry`; все другие registry entries, в том числе templates,
+   profiles и служебные объекты, не экспортируются и не входят в future update
+   scope.
+6. Значение длиннее Excel cell limit 32 767 заменяется префиксом и
+   `TRUNCATED_FOR_EXCEL` marker с длиной и SHA-256.
+7. Pair/read-back equality сознательно ограничен OOXML, sheet/header и
+   pair-binding проверками; полное canonical projection equality не требуется
+   для best-effort.
+
+После завершения полного инструмента эти допущения должны быть отдельно
+пересмотрены: восстановить доказуемую pagination/completeness qualification,
+типовые contracts, полное read-back equality и управляемую конфигурацию
+allowlist. До этого результат нельзя использовать для Compare/Apply.
 
 ## Итог Cycle 3 — controlled full run
 

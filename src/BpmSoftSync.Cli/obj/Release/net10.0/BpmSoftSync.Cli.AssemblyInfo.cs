@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BpmSoftSync.Cli")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55ce75c48cb423222e91d07f0c87900dfbc3cbb9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a26cebf5e15aca4369e489d1cc6794940b72cb71")]
 [assembly: System.Reflection.AssemblyProductAttribute("BpmSoftSync.Cli")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BpmSoftSync.Cli")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

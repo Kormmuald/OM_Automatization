@@ -14,8 +14,8 @@ internal static class CatalogQualificationPolicyFactory
         return CatalogScopePolicy.Create(targetAlias, originPolicy, "ReadEndpointAllowlist/v1",
             new("workspace", "workspaceItemUId", "GetWorkspaceItems/v1", new(64, 10_000, bytes)),
             new("schemas", "schemaUId/packageLayer", "GetSchema/v1", new(1, 10_000, bytes)),
-            new("lookup-registry", "Id", "SelectQuery/lookup-registry/v1", new(500, 5_000_000, bytes)),
-            new("Id", "SelectQuery/lookup-values/v1", new(500, 5_000_000, bytes)),
+            new("lookup-registry", "Id", "SelectQuery/lookup-registry-legacy-single/v1", new(3000, 5_000_000, bytes)),
+            new("Id", "SelectQuery/lookup-values-legacy-single/v1", new(3000, 5_000_000, bytes)),
             QualifiedCatalogSnapshot.SchemaVersion, "WorkbookProjection/v1");
     }
 

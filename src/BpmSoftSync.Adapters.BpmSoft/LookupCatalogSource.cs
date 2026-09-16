@@ -14,12 +14,16 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
     private readonly BpmSoftReadTransport _transport = transport ?? throw new ArgumentNullException(nameof(transport));
 
     public ValueTask<LookupCatalog> ReadFullAsync(WorkspaceObjectModel objectModel, LookupReadLimits limits, CancellationToken cancellationToken = default) =>
-        new(ReadCoreAsync(objectModel, limits, cancellationToken));
+        new(ReadCoreAsync(objectModel, limits, bestEffort: false, cancellationToken));
+
+    /// <summary>Single-read export mode: unknown lookup types are retained as text rather than rejected.</summary>
+    public ValueTask<LookupCatalog> ReadBestEffortAsync(WorkspaceObjectModel objectModel, LookupReadLimits limits, CancellationToken cancellationToken = default) =>
+        new(ReadCoreAsync(objectModel, limits, bestEffort: true, cancellationToken));
 
     public static Task<LookupCatalog> ReadFullAsync(BpmSoftReadTransport transport, WorkspaceObjectModel objectModel, LookupReadLimits limits, CancellationToken cancellationToken = default) =>
-        new LookupCatalogSource(transport).ReadCoreAsync(objectModel, limits, cancellationToken);
+        new LookupCatalogSource(transport).ReadCoreAsync(objectModel, limits, bestEffort: false, cancellationToken);
 
-    private async Task<LookupCatalog> ReadCoreAsync(WorkspaceObjectModel objectModel, LookupReadLimits limits, CancellationToken cancellationToken)
+    private async Task<LookupCatalog> ReadCoreAsync(WorkspaceObjectModel objectModel, LookupReadLimits limits, bool bestEffort, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(objectModel);
         ArgumentNullException.ThrowIfNull(limits);
@@ -37,7 +41,10 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         if (!registryRead.IsQualified)
             return LookupCatalog.Blocked(registryRead.Rows, registryRead.Manifest, [], registryRead.Blocker!);
 
-        var registry = registryRead.Rows;
+        // The system Lookup registry also contains templates, profiles and other operational
+        // entities. Export only the approved classical business lookups; do not infer scope
+        // from a schema's shape or from a value's size.
+        var registry = registryRead.Rows.Where(record => ClassicLookupAllowlist.Contains(record.SchemaIdentity.SchemaName)).ToArray();
         var duplicateSchema = registry.GroupBy(item => item.SysEntitySchemaUId).FirstOrDefault(group => group.Count() != 1);
         if (duplicateSchema is not null)
             return LookupCatalog.Blocked(registry, registryRead.Manifest, [], ShapeBlocker($"lookup-registry/schema:{duplicateSchema.Key:D}", "LOOKUP_SCHEMA_BINDING_AMBIGUOUS"));
@@ -56,7 +63,7 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
 
             foreach (var column in columns)
             {
-                if (!TryKind(column, out _))
+                if (!TryKind(column, bestEffort, out _))
                     return LookupCatalog.Blocked(registry, registryRead.Manifest, collections, ShapeBlocker($"lookup-schema:{schema.Identity.SchemaUId:D}/column:{column.ColumnUId:D}", $"LOOKUP_COLUMN_TYPE_UNSUPPORTED:{column.TypeCode.ToString(CultureInfo.InvariantCulture)}"));
             }
 
@@ -65,10 +72,15 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
                 schema.Identity.SchemaName,
                 orderedNames,
                 limits,
-                row => ParseLookupRow(row, schema, columns),
+                row => ParseLookupRow(row, schema, columns, bestEffort),
                 cancellationToken);
             if (!collectionRead.IsQualified)
+            {
+                // A server-side SelectQuery refusal has no rows to recover. Best-effort output
+                // retains every other successfully read lookup instead of discarding the whole pull.
+                if (bestEffort) continue;
                 return LookupCatalog.Blocked(registry, registryRead.Manifest, collections, collectionRead.Blocker!);
+            }
 
             var collectionFingerprint = Digest(string.Join("\n", collectionRead.Rows.Select(row => row.SourceFingerprint)));
             collections.Add(new LookupCollection(registryRecord, schema, collectionRead.Rows, collectionRead.Manifest!, collectionFingerprint));
@@ -77,7 +89,59 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         return new LookupCatalog(true, registry, registryRead.Manifest, collections, null);
     }
 
+    // TEMPORARY LEGACY MODE: the single SelectQuery request mirrors SyncOM behaviour.
+    // It deliberately does not prove that the server returned every row; the disabled
+    // paging implementation below is retained for restoration after BPMSoft paging is qualified.
     private async Task<OrderedReadResult<T>> ReadOrderedAsync<T>(
+        string schemaName,
+        IReadOnlyList<string> columns,
+        LookupReadLimits limits,
+        Func<JsonElement, ParseResult<T>> parse,
+        CancellationToken cancellationToken)
+        where T : notnull
+    {
+        var started = Stopwatch.StartNew();
+        JsonElement root;
+        int responseBytes;
+        try
+        {
+            using var body = CreateLegacySingleSelectBody(schemaName, columns, limits.MaxRows);
+            using var response = await _transport.SelectQueryAsync(body, cancellationToken);
+            root = response.Root.Clone();
+            responseBytes = response.ResponseBytes;
+        }
+        catch (BpmSoftTransportException error)
+        {
+            return OrderedReadResult<T>.Blocked([], CreateManifest(schemaName, [], [], 0, started.Elapsed), PagingBlocker($"lookup-collection:{SafeIdentity(schemaName)}", "LOOKUP_READ_UNAVAILABLE:" + error.Code));
+        }
+
+        if (responseBytes > limits.MaxResponseBytes)
+            return OrderedReadResult<T>.Blocked([], CreateManifest(schemaName, [], [], responseBytes, started.Elapsed), PagingBlocker($"lookup-collection:{SafeIdentity(schemaName)}", "LOOKUP_MAX_RESPONSE_BYTES_EXCEEDED"));
+        if (!TryGetLegacyRows(root, columns, out var sourceRows, out var shapeReason))
+            return OrderedReadResult<T>.Blocked([], CreateManifest(schemaName, [], [], responseBytes, started.Elapsed), ShapeBlocker($"lookup-collection:{SafeIdentity(schemaName)}", shapeReason));
+        if (sourceRows.Count > limits.MaxRows)
+            return OrderedReadResult<T>.Blocked([], CreateManifest(schemaName, [], [], responseBytes, started.Elapsed), PagingBlocker($"lookup-collection:{SafeIdentity(schemaName)}", "LOOKUP_MAX_ROWS_EXCEEDED"));
+
+        var rows = new List<T>(sourceRows.Count);
+        var identities = new List<string>(sourceRows.Count);
+        foreach (var row in sourceRows)
+        {
+            var parsed = parse(row);
+            if (!parsed.IsQualified)
+                return OrderedReadResult<T>.Blocked(rows, CreateManifest(schemaName, [], identities, responseBytes, started.Elapsed), parsed.Blocker!);
+            rows.Add(parsed.Value!);
+            identities.Add(parsed.RecordId!.Value.ToString("D").ToLowerInvariant());
+        }
+        if (identities.Distinct(StringComparer.Ordinal).Count() != identities.Count)
+            return OrderedReadResult<T>.Blocked(rows, CreateManifest(schemaName, [], identities, responseBytes, started.Elapsed), PagingBlocker($"lookup-collection:{SafeIdentity(schemaName)}", "LOOKUP_DUPLICATE_IDENTITY"));
+
+        var pages = new[] { PageManifest.Create(0, "legacy-single-query", identities, responseBytes) };
+        return OrderedReadResult<T>.Qualified(rows, CreateManifest(schemaName, pages, identities, responseBytes, started.Elapsed));
+    }
+
+#if false
+    // Retained paging implementation. Re-enable only after rowsOffset semantics are qualified.
+    private async Task<OrderedReadResult<T>> ReadPagedAsync<T>(
         string schemaName,
         IReadOnlyList<string> columns,
         LookupReadLimits limits,
@@ -171,6 +235,7 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
 
         return OrderedReadResult<T>.Blocked(rows, CreateManifest(schemaName, manifests, identities, responseBytes, started.Elapsed), PagingBlocker($"lookup-collection:{SafeIdentity(schemaName)}", "LOOKUP_MAX_PAGES_EXCEEDED"));
     }
+#endif
 
     private static ParseResult<LookupRegistryRecord> ParseRegistryRow(JsonElement row, WorkspaceObjectModel objectModel)
     {
@@ -187,14 +252,14 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         return ParseResult<LookupRegistryRecord>.Qualified(lookupRecordId, new LookupRegistryRecord(lookupRecordId, schemaUId, schema.Identity, baseIdentity, fingerprint));
     }
 
-    private static ParseResult<LookupRow> ParseLookupRow(JsonElement row, EntitySchemaModel schema, IReadOnlyList<EntityColumnModel> columns)
+    private static ParseResult<LookupRow> ParseLookupRow(JsonElement row, EntitySchemaModel schema, IReadOnlyList<EntityColumnModel> columns, bool bestEffort)
     {
         if (!TryGuid(row.GetProperty("Id"), out var recordId))
             return ParseResult<LookupRow>.Blocked(ShapeBlocker($"lookup-schema:{schema.Identity.SchemaUId:D}", "LOOKUP_RECORD_ID_UNQUALIFIED"));
         var values = new List<NormalizedLookupValue>();
         foreach (var column in columns.Where(column => !string.Equals(column.ColumnName, "Id", StringComparison.Ordinal)))
         {
-            var parsed = ParseValue(schema, recordId, column, row.GetProperty(column.ColumnName));
+            var parsed = ParseValue(schema, recordId, column, row.GetProperty(column.ColumnName), bestEffort);
             if (!parsed.IsQualified) return ParseResult<LookupRow>.Blocked(parsed.Blocker!);
             values.Add(parsed.Value!);
         }
@@ -203,9 +268,9 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         return ParseResult<LookupRow>.Qualified(recordId, new LookupRow(recordId, values, rowFingerprint, sourceFingerprint));
     }
 
-    private static ParseResult<NormalizedLookupValue> ParseValue(EntitySchemaModel schema, Guid recordId, EntityColumnModel column, JsonElement value)
+    private static ParseResult<NormalizedLookupValue> ParseValue(EntitySchemaModel schema, Guid recordId, EntityColumnModel column, JsonElement value, bool bestEffort)
     {
-        if (!TryKind(column, out var kind))
+        if (!TryKind(column, bestEffort, out var kind))
             return ParseResult<NormalizedLookupValue>.Blocked(ShapeBlocker($"lookup-schema:{schema.Identity.SchemaUId:D}/column:{column.ColumnUId:D}", $"LOOKUP_COLUMN_TYPE_UNSUPPORTED:{column.TypeCode.ToString(CultureInfo.InvariantCulture)}"));
 
         LookupValueState state;
@@ -215,6 +280,14 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         if (value.ValueKind == JsonValueKind.Null)
         {
             state = LookupValueState.Null;
+        }
+        else if (bestEffort && !TryKind(column, false, out _))
+        {
+            // The raw JSON value remains in the Lookup workbook only. It has no typed semantic
+            // meaning in this mode and must never be used by Compare or Apply.
+            state = LookupValueState.Value;
+            canonical = CanonicalJson(value);
+            typed = new LookupTextValue(canonical);
         }
         else
         {
@@ -261,6 +334,15 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
                     typed = new LookupReferenceValue(reference, display?.Normalize(NormalizationForm.FormC));
                     break;
                 default:
+                    if (bestEffort)
+                    {
+                        // A declared BPMSoft type and its actual JSON value disagree. Preserve the
+                        // value verbatim-as-canonical-JSON and make its loss of type semantics visible.
+                        kind = LookupValueKind.Text;
+                        canonical = CanonicalJson(value);
+                        typed = new LookupTextValue(canonical);
+                        break;
+                    }
                     return ParseResult<NormalizedLookupValue>.Blocked(ShapeBlocker($"lookup-schema:{schema.Identity.SchemaUId:D}/record:{recordId:D}/column:{column.ColumnUId:D}", "LOOKUP_VALUE_UNQUALIFIED"));
             }
         }
@@ -297,6 +379,26 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         return true;
     }
 
+    private static bool TryGetLegacyRows(JsonElement root, IReadOnlyList<string> columns, out IReadOnlyList<JsonElement> rows, out string reason)
+    {
+        rows = [];
+        reason = "SELECT_QUERY_SHAPE_UNQUALIFIED";
+        if (root.ValueKind != JsonValueKind.Object ||
+            !root.TryGetProperty("success", out var success) || success.ValueKind != JsonValueKind.True ||
+            !root.TryGetProperty("notFoundColumns", out var notFound) || notFound.ValueKind != JsonValueKind.Array || notFound.GetArrayLength() != 0 ||
+            !root.TryGetProperty("rows", out var sourceRows) || sourceRows.ValueKind != JsonValueKind.Array)
+            return false;
+        var required = columns.ToHashSet(StringComparer.Ordinal);
+        var result = new List<JsonElement>();
+        foreach (var row in sourceRows.EnumerateArray())
+        {
+            if (row.ValueKind != JsonValueKind.Object || !required.All(column => row.TryGetProperty(column, out _))) return false;
+            result.Add(row.Clone());
+        }
+        rows = result;
+        return true;
+    }
+
     private static CanonicalSelectQueryBody CreateSelectBody(string schemaName, IReadOnlyList<string> columns, int pageSize, int offset)
     {
         if (string.IsNullOrWhiteSpace(schemaName) || columns.Count == 0 || columns.Any(string.IsNullOrWhiteSpace) || columns.Distinct(StringComparer.Ordinal).Count() != columns.Count || !columns.Contains("Id", StringComparer.Ordinal))
@@ -317,7 +419,15 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         return CanonicalSelectQueryBody.Parse(json);
     }
 
-    private static bool TryKind(EntityColumnModel column, out LookupValueKind kind)
+    private static CanonicalSelectQueryBody CreateLegacySingleSelectBody(string schemaName, IReadOnlyList<string> columns, int maxRows)
+    {
+        if (string.IsNullOrWhiteSpace(schemaName) || columns.Count == 0 || maxRows <= 0) throw new InvalidOperationException("LOOKUP_QUERY_CONTRACT_INVALID");
+        // 3,000 is the historical SyncOM request size. MaxRows remains the local hard ceiling.
+        var json = JsonSerializer.Serialize(new { rootSchemaName = schemaName, rowCount = Math.Min(maxRows, 3000), allColumns = true, useLocalization = true });
+        return CanonicalSelectQueryBody.Parse(json);
+    }
+
+    private static bool TryKind(EntityColumnModel column, bool bestEffort, out LookupValueKind kind)
     {
         if (column.Reference is not null || column.TypeCode == 10)
         {
@@ -336,7 +446,9 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
             12 => LookupValueKind.Boolean,
             _ => default
         };
-        return column.TypeCode is 0 or 1 or 4 or 5 or 6 or 7 or 8 or 9 or 12 or 26 or 29 or 30 or 31 or 32 or 33;
+        if (column.TypeCode is 0 or 1 or 4 or 5 or 6 or 7 or 8 or 9 or 12 or 26 or 29 or 30 or 31 or 32 or 33) return true;
+        if (bestEffort) { kind = LookupValueKind.Text; return true; }
+        return false;
     }
 
     private static bool TryGuid(JsonElement value, out Guid guid)

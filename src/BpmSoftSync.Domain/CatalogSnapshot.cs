@@ -174,13 +174,31 @@ public sealed record QualifiedCatalogSnapshot(
     IReadOnlyDictionary<string, int> Counts,
     WorkbookScaleForecast Scale,
     DateTimeOffset PullStartedUtc,
-    DateTimeOffset PullCompletedUtc)
+    DateTimeOffset PullCompletedUtc,
+    string ExportNotice = "QUALIFIED_TWO_PASS")
 {
     public const string SchemaVersion = "QualifiedCatalogSnapshot/v1";
 }
 
 public static class CatalogPassBuilder
 {
+    /// <summary>
+    /// Creates a presentational snapshot from one successfully parsed read.  This is intentionally
+    /// not a qualification result: callers must label the resulting output as unverified.
+    /// </summary>
+    public static QualifiedCatalogSnapshot CreateBestEffortSnapshot(CatalogPass pass, Guid runId, Guid pairId, DateTimeOffset pullStartedUtc, DateTimeOffset pullCompletedUtc)
+    {
+        ArgumentNullException.ThrowIfNull(pass);
+        if (runId == Guid.Empty || pairId == Guid.Empty || pullStartedUtc == default || pullCompletedUtc < pullStartedUtc)
+            throw new ArgumentException("Best-effort snapshot identity or pull window is invalid.");
+        var scale = WorkbookScaleForecast.CreateForCatalogPair(pass.Counts, pass.ComponentDigests.Count, pass.DeclaredWorkbookRowLimit);
+        return new QualifiedCatalogSnapshot(
+            QualifiedCatalogSnapshot.SchemaVersion, runId, pairId, pass.Scope, pass.SourceIdentity,
+            pass.Content.Workspace, pass.Content.Lookups, "NOT_CAPTURED", pass.ReconciliationDigest,
+            pass.Fingerprint, pass.OrderedIdentities, pass.ComponentDigests, pass.Unsupported, pass.Counts,
+            scale, pullStartedUtc, pullCompletedUtc, "UNVERIFIED_SINGLE_READ; LOOKUP_COLLECTIONS_MAY_BE_SKIPPED");
+    }
+
     public static bool IsCurrentContentBindingValid(CatalogPass pass)
     {
         ArgumentNullException.ThrowIfNull(pass);

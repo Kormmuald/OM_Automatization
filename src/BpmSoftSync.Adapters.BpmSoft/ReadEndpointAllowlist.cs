@@ -69,7 +69,9 @@ public static class ReadEndpointAllowlist
                 RequestBodyShape.EmptyObject => IsObjectWithExactProperties(root, Array.Empty<string>()),
                 RequestBodyShape.AuthenticationHandshake => HasLoginBody(root),
                 RequestBodyShape.SchemaUIdOnly => HasSchemaBody(root),
-                RequestBodyShape.CanonicalSelectQuery => HasSelectQueryBody(root),
+                // Temporary legacy mode: retain the strict paged form and admit only the
+                // fixed historical one-shot form used by LookupCatalogSource.
+                RequestBodyShape.CanonicalSelectQuery => HasSelectQueryBody(root) || HasLegacySingleSelectQueryBody(root),
                 _ => false
             };
         }
@@ -129,6 +131,14 @@ public static class ReadEndpointAllowlist
         }
         return hasStableIdOrder;
     }
+
+    private static bool HasLegacySingleSelectQueryBody(JsonElement root) =>
+        IsObjectWithExactProperties(root, ["rootSchemaName", "rowCount", "allColumns", "useLocalization"]) &&
+        root.GetProperty("rootSchemaName").ValueKind == JsonValueKind.String &&
+        !string.IsNullOrWhiteSpace(root.GetProperty("rootSchemaName").GetString()) &&
+        root.GetProperty("rowCount").TryGetInt32(out var rowCount) && rowCount == 3000 &&
+        root.GetProperty("allColumns").ValueKind == JsonValueKind.True &&
+        root.GetProperty("useLocalization").ValueKind is JsonValueKind.True or JsonValueKind.False;
 
     private static bool IsObjectWithExactProperties(JsonElement element, IReadOnlyCollection<string> names)
     {

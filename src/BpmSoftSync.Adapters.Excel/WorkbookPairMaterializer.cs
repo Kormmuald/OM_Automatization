@@ -10,11 +10,24 @@ public sealed class WorkbookPairMaterializer
     {
         cancellationToken.ThrowIfCancellationRequested();
         ValidateInput(qualification);
-        var snapshot = qualification.Snapshot!;
+        return StagePairAsync(qualification.Snapshot!, qualification.PassB, stagingDirectory, cancellationToken);
+    }
+
+    /// <summary>Writes a single-read, explicitly unverified pair without crossing qualification gates.</summary>
+    public ValueTask<StagedWorkbookPair> StageBestEffortPairAsync(QualifiedCatalogSnapshot snapshot, string stagingDirectory, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        if (!snapshot.ExportNotice.StartsWith("UNVERIFIED_SINGLE_READ", StringComparison.Ordinal)) throw new InvalidDataException("BEST_EFFORT_NOTICE_REQUIRED");
+        return StagePairAsync(snapshot, null, stagingDirectory, cancellationToken);
+    }
+
+    private static ValueTask<StagedWorkbookPair> StagePairAsync(QualifiedCatalogSnapshot snapshot, CatalogPass? qualifiedPass, string stagingDirectory, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
         var fullStaging = Path.GetFullPath(stagingDirectory);
         if (Directory.Exists(fullStaging) || File.Exists(fullStaging)) throw new IOException("WORKBOOK_STAGING_ALREADY_EXISTS");
         var projection = WorkbookPairProjection.Create(snapshot);
-        ValidateScaleBeforeWriting(snapshot, qualification.PassB!, projection);
+        if (qualifiedPass is not null) ValidateScaleBeforeWriting(snapshot, qualifiedPass, projection);
         try
         {
             PrivateWorkbookStaging.CreateDirectory(fullStaging);
@@ -27,7 +40,9 @@ public sealed class WorkbookPairMaterializer
             ValidateWorkbook(modelPath, projection.Model, WorkbookContract.ModelSheetOrder, WorkbookContract.ModelHeaders);
             ValidateWorkbook(lookupPath, projection.Lookup, WorkbookContract.LookupSheetOrder, WorkbookContract.LookupHeaders);
             var pairReadBack = WorkbookPairReader.Read(modelPath, lookupPath);
-            if (pairReadBack.RunId != snapshot.RunId || pairReadBack.PairId != snapshot.PairId || pairReadBack.Model.CanonicalDigest() != projection.Model.CanonicalDigest() || pairReadBack.Lookup.CanonicalDigest() != projection.Lookup.CanonicalDigest()) throw new InvalidDataException("WORKBOOK_READBACK_PROJECTION_INVALID");
+            if (pairReadBack.RunId != snapshot.RunId || pairReadBack.PairId != snapshot.PairId ||
+                qualifiedPass is not null && (pairReadBack.Model.CanonicalDigest() != projection.Model.CanonicalDigest() || pairReadBack.Lookup.CanonicalDigest() != projection.Lookup.CanonicalDigest()))
+                throw new InvalidDataException("WORKBOOK_READBACK_PROJECTION_INVALID");
             var modelHash = WorkbookHash.File(modelPath);
             var lookupHash = WorkbookHash.File(lookupPath);
             var pairDigest = WorkbookHash.Json(new { runId = snapshot.RunId.ToString("D"), pairId = snapshot.PairId.ToString("D"), modelHash, lookupHash, projection.PairBaselineHash });

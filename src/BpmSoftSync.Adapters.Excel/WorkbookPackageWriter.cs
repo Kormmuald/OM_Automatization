@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
@@ -6,6 +7,7 @@ namespace BpmSoftSync.Adapters.Excel;
 
 internal static class WorkbookPackageWriter
 {
+    private const int ExcelCellTextLimit = 32_767;
     private static readonly DateTimeOffset FixedZipTime = new(2000, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private static readonly XNamespace Main = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     private static readonly XNamespace Rel = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
@@ -101,7 +103,7 @@ internal static class WorkbookPackageWriter
             var validationColumn = Array.IndexOf(WorkbookContract.ValidationHeaders, item.Value) + 1;
             if (column < 1 || validationColumn < 1) throw new InvalidDataException("WORKBOOK_VALIDATION_CONTRACT_INVALID");
             validations.Add(new XElement(Main + "dataValidation", new XAttribute("type", "list"), new XAttribute("allowBlank", "1"), new XAttribute("showErrorMessage", "1"), new XAttribute("sqref", $"{ColumnName(column)}2:{ColumnName(column)}{Math.Max(lastRow, 500)}"),
-                new XElement(Main + "formula1", item.Value)));
+                new XElement(Main + "formula1", "=" + item.Value)));
         }
         return new XElement(Main + "dataValidations", new XAttribute("count", validations.Count), validations);
     }
@@ -111,10 +113,19 @@ internal static class WorkbookPackageWriter
     private static XElement Cell(int row, int column, string? value, int style)
     {
         var cell = new XElement(Main + "c", new XAttribute("r", ColumnName(column) + row), new XAttribute("s", style), new XAttribute("t", "inlineStr"));
-        var text = new XElement(Main + "t", value ?? string.Empty);
-        if (value is { Length: > 0 } && (char.IsWhiteSpace(value[0]) || char.IsWhiteSpace(value[^1]))) text.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
+        var safeValue = ExcelCellText(value);
+        var text = new XElement(Main + "t", safeValue);
+        if (safeValue.Length > 0 && (char.IsWhiteSpace(safeValue[0]) || char.IsWhiteSpace(safeValue[^1]))) text.Add(new XAttribute(XNamespace.Xml + "space", "preserve"));
         cell.Add(new XElement(Main + "is", text));
         return cell;
+    }
+
+    private static string ExcelCellText(string? value)
+    {
+        if (string.IsNullOrEmpty(value) || value.Length <= ExcelCellTextLimit) return value ?? string.Empty;
+        var digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
+        var marker = $" [TRUNCATED_FOR_EXCEL originalLength={value.Length}; sha256={digest}]";
+        return value[..(ExcelCellTextLimit - marker.Length)] + marker;
     }
 
     internal static string ColumnName(int number)

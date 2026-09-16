@@ -13,6 +13,12 @@ public sealed class BpmSoftFullCatalogSource(BpmSoftReadTransport transport, Bpm
     private readonly BpmSoftTargetOrigin _origin = origin ?? throw new ArgumentNullException(nameof(origin));
 
     public async ValueTask<FullCatalogRead> ReadFullAsync(CatalogReadRequest request, CancellationToken cancellationToken = default)
+        => await ReadCoreAsync(request, bestEffort: false, cancellationToken);
+
+    public async ValueTask<FullCatalogRead> ReadBestEffortAsync(CatalogReadRequest request, CancellationToken cancellationToken = default)
+        => await ReadCoreAsync(request, bestEffort: true, cancellationToken);
+
+    private async ValueTask<FullCatalogRead> ReadCoreAsync(CatalogReadRequest request, bool bestEffort, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
         var watch = Stopwatch.StartNew();
@@ -22,7 +28,10 @@ public sealed class BpmSoftFullCatalogSource(BpmSoftReadTransport transport, Bpm
         var lookupReadId = Guid.NewGuid();
         var limits = request.Policy.LookupTemplate.Limits;
         var lookupLimits = new LookupReadLimits(limits.PageSize, limits.MaxPages, limits.MaxRows, limits.MaxResponseBytes);
-        var readLookups = await new LookupCatalogSource(_transport).ReadFullAsync(workspace, lookupLimits, cancellationToken);
+        var lookupSource = new LookupCatalogSource(_transport);
+        var readLookups = bestEffort
+            ? await lookupSource.ReadBestEffortAsync(workspace, lookupLimits, cancellationToken)
+            : await lookupSource.ReadFullAsync(workspace, lookupLimits, cancellationToken);
         // The SelectQuery schema name is transport detail. The sealed scope exposes the canonical registry contract only.
         var lookups = readLookups.RegistryManifest is null
             ? readLookups

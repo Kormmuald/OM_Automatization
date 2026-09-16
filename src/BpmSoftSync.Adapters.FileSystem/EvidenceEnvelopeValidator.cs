@@ -90,8 +90,8 @@ public sealed class EvidenceEnvelopeValidator
         {
             "workspace" => orderKeyId == "workspaceItemUId" && queryContractId == "GetWorkspaceItems/v1" && ExactLimits(contract, 64, 10_000, 10_000, 2L * 1024 * 1024 * 1024),
             "schemas" => orderKeyId == "schemaUId/packageLayer" && queryContractId == "GetSchema/v1" && ExactLimits(contract, 1, 10_000, 10_000, 2L * 1024 * 1024 * 1024),
-            "lookup-registry" => orderKeyId == "Id" && queryContractId == "SelectQuery/lookup-registry/v1" && ExactLimits(contract, 500, 10_000, 5_000_000, 2L * 1024 * 1024 * 1024),
-            _ when IsLookupCollectionToken(collectionId) => orderKeyId == "Id" && queryContractId == "SelectQuery/lookup-values/v1" && ExactLimits(contract, 500, 10_000, 5_000_000, 2L * 1024 * 1024 * 1024),
+            "lookup-registry" => orderKeyId == "Id" && queryContractId == "SelectQuery/lookup-registry-legacy-single/v1" && ExactLimits(contract, 3000, 10_000, 5_000_000, 2L * 1024 * 1024 * 1024),
+            _ when IsLookupCollectionToken(collectionId) => orderKeyId == "Id" && queryContractId == "SelectQuery/lookup-values-legacy-single/v1" && ExactLimits(contract, 3000, 10_000, 5_000_000, 2L * 1024 * 1024 * 1024),
             _ => false
         };
     }

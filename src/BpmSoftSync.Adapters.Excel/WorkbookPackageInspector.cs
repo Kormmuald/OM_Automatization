@@ -184,7 +184,7 @@ public static class WorkbookPackageInspector
             {
                 var column = WorkbookPackageWriter.ColumnName(Array.IndexOf(headers, binding.Key) + 1);
                 var expectedSqref = $"{column}2:{column}{Math.Max(lastRow, 500)}";
-                var matches = validations.Where(item => (string?)item.Attribute("sqref") == expectedSqref && item.Element(Main + "formula1")?.Value == binding.Value).ToArray();
+                var matches = validations.Where(item => (string?)item.Attribute("sqref") == expectedSqref && item.Element(Main + "formula1")?.Value == "=" + binding.Value).ToArray();
                 if (matches.Length != 1 || matches[0].Attributes().Select(item => item.Name.LocalName).OrderBy(value => value).SequenceEqual(new[] { "allowBlank", "showErrorMessage", "sqref", "type" }.OrderBy(value => value), StringComparer.Ordinal) is false || (string?)matches[0].Attribute("type") != "list" || (string?)matches[0].Attribute("allowBlank") != "1" || (string?)matches[0].Attribute("showErrorMessage") != "1" || matches[0].Element(Main + "formula2") is not null)
                     errors.Add("DATA_VALIDATION_INVALID:" + name + ":" + binding.Key);
             }

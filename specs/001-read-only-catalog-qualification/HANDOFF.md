@@ -1,12 +1,12 @@
 # Актуальный handoff — Feature 001: read-only catalog qualification
 
-**Дата:** 2026-09-15
+**Дата:** 2026-09-16
 **Active feature:** `001-read-only-catalog-qualification` (подтверждён
 `.specify/feature.json`).
 
 ## Текущий статус
 
-Cycle 3 завершён controlled full live run. Feature 001 **не квалифицирована**:
+Строгая Feature 001 **не квалифицирована**: Cycle 3 завершён controlled full live run,
 run `75e23f1f-d177-439a-b53e-ce566e13845c` остановился fail-closed на
 `CATALOG_ORDER_OR_PAGING_UNQUALIFIED` (`RetryCount=0`). Зафиксирован только
 lookup pagination/offset blocker; это не доказательство причины в BPMSoft и не
@@ -16,6 +16,41 @@ Pass A не был успешно завершён, поэтому Pass B, recon
 qualified snapshot, output и canonical Model/Lookup Excel pair не выполнялись.
 Excel paths/hashes, pair/read-back/OOXML checks и human approval отсутствуют.
 `FULL_CATALOG_NOT_QUALIFIED` и `INDEX_SYNC_UNRESOLVED` остаются открытыми.
+
+Отдельный ручной режим `catalog export-best-effort` 2026-09-16 успешно создал
+пару Excel без ошибки Excel recovery. Это не strict qualification, не
+доказательство полноты и не разрешение Compare/Apply.
+
+## Временные допущения best-effort export
+
+- Используется один legacy-style `SelectQuery` с большим `rowCount`; paging,
+  `rowsOffset`, Pass A/B, reconciliation и доказательство полноты временно
+  выключены. Выгрузка может быть неполной.
+- Неизвестный BPMSoft column type либо значение, не соответствующее заявленному
+  типу, сериализуется как text/canonical JSON только в Lookup workbook. Это не
+  typed semantic mapping.
+- Ответ `SelectQuery` с `success != true` для отдельного lookup пропускает
+  только этот lookup, а не останавливает весь best-effort export. Поэтому
+  Lookup workbook может быть неполным.
+- Классическими считаются только `AccountType`, `ActivityCategory`,
+  `ActivityPriority`, `ActivityResult`, `ActivityStatus`, `AddressType`.
+  Это пересечение 54 имён legacy Google Sheets с 109 именами текущего
+  `LookupRegistry`; templates, profiles и прочие registry entries исключены
+  из export и будущего update scope.
+- Excel ограничивает строку ячейки 32 767 символами. Более длинные значения
+  заменяются префиксом и маркером `TRUNCATED_FOR_EXCEL` с исходной длиной и
+  SHA-256; исходное значение не восстанавливается из workbook.
+- В best-effort сохраняются OOXML validation, sheet/header checks и pair
+  binding. Полное canonical projection read-back equality не применяется,
+  потому что этот режим намеренно допускает преобразование long-cell values.
+
+Последняя успешная пара создана только в user-local path
+`%LOCALAPPDATA%/BpmSoftSync/best-effort-1455f0b565e745c1b25df435e5aea92a/`:
+`BPMSoft.ModelCatalog.xlsx` SHA-256
+`82e0f5569ca499f8f7e989d01d23b363d5b4230e0a452d250876864816db0b1a`,
+`BPMSoft.LookupCatalog.xlsx` SHA-256
+`2c0828c409552718f6b6dc0130164bda480514ff5210fe0a9ccb2a776cde0f27`.
+В Git не включать output, raw lookup values либо credentials.
 
 ## Safe evidence controlled run
 

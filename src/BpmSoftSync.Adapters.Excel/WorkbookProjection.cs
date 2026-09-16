@@ -29,8 +29,8 @@ public sealed record WorkbookPairProjection(Guid RunId, Guid PairId, string Pair
             lookup = lookupBusiness.Where(sheet => sheet.Name is not "ValidationLists" and not "PullConflicts").Select(CanonicalSheet)
         });
         var manifest = Manifest(snapshot, pairBaseline);
-        var model = new WorkbookProjection("Model", [Readme("Model"), manifest, .. modelBusiness]);
-        var lookup = new WorkbookProjection("Lookup", [Readme("Lookup"), manifest with { Rows = manifest.Rows.Select(row => row.ToArray()).ToArray() }, .. lookupBusiness]);
+        var model = new WorkbookProjection("Model", [Readme("Model", snapshot.ExportNotice), manifest, .. modelBusiness]);
+        var lookup = new WorkbookProjection("Lookup", [Readme("Lookup", snapshot.ExportNotice), manifest with { Rows = manifest.Rows.Select(row => row.ToArray()).ToArray() }, .. lookupBusiness]);
         EnsureOrder(model, WorkbookContract.ModelSheetOrder);
         EnsureOrder(lookup, WorkbookContract.LookupSheetOrder);
         return new WorkbookPairProjection(snapshot.RunId, snapshot.PairId, pairBaseline, model, lookup);
@@ -109,7 +109,7 @@ public sealed record WorkbookPairProjection(Guid RunId, Guid PairId, string Pair
             Row("ContractVersion", WorkbookContract.ContractVersion), Row("PairId", GuidText(snapshot.PairId)), Row("PullRunId", GuidText(snapshot.RunId)),
             Row("TargetAlias", snapshot.Scope.TargetAlias), Row("ScopeMode", "AllReadableCatalog"), Row("PullStartedUtc", snapshot.PullStartedUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture)), Row("PullCompletedUtc", snapshot.PullCompletedUtc.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture)),
             Row("PairBaselineHash", pairBaseline), Row("BaselineTargetFingerprint", snapshot.TargetFingerprint.Digest), Row("TemplateVersion", snapshot.Scope.WorkbookProjectionVersion),
-            Row("SnapshotSchema", snapshot.Schema), Row("SourceIdentity", WorkbookContract.ClosedSourceIdentity(snapshot.SourceIdentity)), Row("ScopeDigest", snapshot.Scope.Digest),
+            Row("SnapshotSchema", snapshot.Schema), Row("ExportNotice", snapshot.ExportNotice), Row("SourceIdentity", WorkbookContract.ClosedSourceIdentity(snapshot.SourceIdentity)), Row("ScopeDigest", snapshot.Scope.Digest),
             Row("PassADigest", snapshot.PassADigest), Row("PassBDigest", snapshot.PassBDigest), Row("ComponentDigest", components), Row("CountsDigest", counts)
         };
         rows.AddRange(snapshot.Counts.OrderBy(item => item.Key, StringComparer.Ordinal).Select(item => Row("Count." + item.Key, item.Value.ToString(CultureInfo.InvariantCulture))));
@@ -117,8 +117,9 @@ public sealed record WorkbookPairProjection(Guid RunId, Guid PairId, string Pair
         return Sheet("Manifest", rows);
     }
 
-    private static WorksheetProjection Readme(string kind) => Sheet("Readme", [
+    private static WorksheetProjection Readme(string kind, string exportNotice) => Sheet("Readme", [
         Row("Workbook", kind + " Catalog"), Row("ContractVersion", WorkbookContract.ContractVersion), Row("Projection", "QualifiedCatalogSnapshot/v1 -> WorkbookProjection/v1"),
+        Row("ExportNotice", exportNotice),
         Row("Identity", "Existing metadata uses BPMSoft UId; lookup records use server Id."), Row("ActualIndexed", "Separate source flag; never inferred from Indexes membership."),
         Row("Safety", "No external links, VBA, connections, cross-workbook formulas, Compare or Apply.")
     ]);
