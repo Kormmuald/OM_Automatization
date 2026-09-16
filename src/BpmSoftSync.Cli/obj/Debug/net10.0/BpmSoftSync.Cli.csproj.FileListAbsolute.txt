@@ -23,3 +23,5 @@ C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\obj\Debug\n
 C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\obj\Debug\net10.0\BpmSoftSync.Cli.pdb
 C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\obj\Debug\net10.0\BpmSoftSync.Cli.genruntimeconfig.cache
 C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\obj\Debug\net10.0\ref\BpmSoftSync.Cli.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Cli\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.pdb

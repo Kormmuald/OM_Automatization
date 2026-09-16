@@ -87,7 +87,7 @@ public sealed record WorkbookPairProjection(Guid RunId, Guid PairId, string Pair
             {
                 if (value.RecordId != row.RecordId) throw new InvalidDataException("LOOKUP_VALUE_ROW_RELATION_UNQUALIFIED");
                 values.Add(Row(collection.Schema.Identity.SchemaName, GuidText(collection.RegistryRecord.SysEntitySchemaUId), GuidText(row.RecordId), null,
-                    "Active", "Present", row.SourceFingerprint, null, value.ColumnName, value.State.ToString(), DisplayValue(value), ValueKind(value.ValueKind),
+                    "Active", "Present", row.SourceFingerprint, null, value.ColumnName, GuidText(value.ColumnUId), value.State.ToString(), DisplayValue(value), ValueKind(value.ValueKind),
                     GuidText(value.ReferenceRecordId), null, value.CanonicalValue));
             }
         }

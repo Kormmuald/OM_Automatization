@@ -1,5 +1,7 @@
 try
 {
+    await BpmSoftSync.Cli.Tests.CompareMvpCommandTests.ExactManualLiveContractIsRequiredBeforeRunnerAsync();
+    Console.WriteLine("PASS CompareMvpCommandTests");
     await BpmSoftSync.Cli.Tests.CatalogValidateOfflineTests.FixtureOnlyCommandProducesSafeResultAsync();
     await BpmSoftSync.Cli.Tests.CatalogValidateOfflineTests.MainDispatchesTheSharedFixtureWorkflowAsync();
     Console.WriteLine("PASS CatalogValidateOfflineTests.FixtureOnlyCommandProducesSafeResultAsync");

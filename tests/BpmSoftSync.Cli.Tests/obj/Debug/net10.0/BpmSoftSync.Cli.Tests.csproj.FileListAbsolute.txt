@@ -30,3 +30,5 @@ C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\obj
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\obj\Debug\net10.0\BpmSoftSync.Cli.Tests.pdb
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\obj\Debug\net10.0\BpmSoftSync.Cli.Tests.genruntimeconfig.cache
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\obj\Debug\net10.0\ref\BpmSoftSync.Cli.Tests.dll
+C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Cli.Tests\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.pdb

@@ -21,3 +21,5 @@ C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.File
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.FileSystem.Tests\obj\Debug\net10.0\BpmSoftSync.Adapters.FileSystem.Tests.pdb
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.FileSystem.Tests\obj\Debug\net10.0\BpmSoftSync.Adapters.FileSystem.Tests.genruntimeconfig.cache
 C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.FileSystem.Tests\obj\Debug\net10.0\ref\BpmSoftSync.Adapters.FileSystem.Tests.dll
+C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.FileSystem.Tests\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\tests\BpmSoftSync.Adapters.FileSystem.Tests\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.pdb

@@ -20,6 +20,7 @@ try
     await BpmSoftSync.Adapters.FileSystem.Tests.SchemaDiagnosticEvidenceTests.CompanionGuidStatusIsClosedAndRestrictedToSchemaPackageIdAsync(root);
     BpmSoftSync.Adapters.FileSystem.Tests.RunStoreTests.SameRunIdCannotBeClaimedOnAnotherDateByAnotherStore(root);
     BpmSoftSync.Adapters.FileSystem.Tests.SecretValueScannerTests.CanaryReportsOnlyCategoryLocationAndDigest();
+    BpmSoftSync.Adapters.FileSystem.Tests.CompareArtifactWriterTests.SyntheticArtifactSmokeKeepsValueOutOfReport();
     // BpmSoftSync.Adapters.FileSystem.Tests.AuditMetadataTests.AllowlistAcceptsOnlyDeclaredMetadata();
     // await BpmSoftSync.Adapters.FileSystem.Tests.OutputEvidenceBoundaryTests.RawLookupValueExistsOnlyInsidePublishedLookupWorkbookAsync(root);
     Console.WriteLine("PASS FileSystem S04/S05 tests"); return 0;

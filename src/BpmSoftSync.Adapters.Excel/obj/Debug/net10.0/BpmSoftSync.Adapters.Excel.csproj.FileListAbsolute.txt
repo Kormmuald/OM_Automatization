@@ -1,0 +1,16 @@
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.deps.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\bin\Debug\net10.0\BpmSoftSync.Adapters.Excel.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\bin\Debug\net10.0\BpmSoftSync.Domain.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\bin\Debug\net10.0\BpmSoftSync.Domain.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.csproj.AssemblyReference.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.GeneratedMSBuildEditorConfig.editorconfig
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.AssemblyInfoInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.AssemblyInfo.cs
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.csproj.CoreCompileInputs.cache
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.sourcelink.json
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftS.DD922663.Up2Date
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\refint\BpmSoftSync.Adapters.Excel.dll
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\BpmSoftSync.Adapters.Excel.pdb
+C:\CodingAgents\codex\projects\OM_Automatization\src\BpmSoftSync.Adapters.Excel\obj\Debug\net10.0\ref\BpmSoftSync.Adapters.Excel.dll

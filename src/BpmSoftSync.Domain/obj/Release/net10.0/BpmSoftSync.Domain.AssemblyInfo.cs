@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BpmSoftSync.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a26cebf5e15aca4369e489d1cc6794940b72cb71")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c66e035bf3f26d1fb7f3676620b3c70fa18f52ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("BpmSoftSync.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BpmSoftSync.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

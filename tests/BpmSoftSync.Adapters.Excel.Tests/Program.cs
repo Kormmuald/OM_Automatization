@@ -7,6 +7,8 @@ if (args is ["--emit", var output])
 
 try
 {
+    await BpmSoftSync.Adapters.Excel.Tests.CompareWorkbookReaderTests.SyntheticBestEffortPairBindsStrictLookupColumnIdentityAsync();
+    Console.WriteLine("PASS CompareWorkbookReaderTests");
     BpmSoftSync.Adapters.Excel.Tests.WorkbookContractTests.QualifiedSnapshotProjectsExactWorkbookContracts();
     await BpmSoftSync.Adapters.Excel.Tests.WorkbookValidationTests.GeneratedPairIsClosedDeterministicAndBoundOneToOneAsync();
     await BpmSoftSync.Adapters.Excel.Tests.WorkbookValidationTests.FormulaExternalAndVbaTamperingIsRejectedAsync();

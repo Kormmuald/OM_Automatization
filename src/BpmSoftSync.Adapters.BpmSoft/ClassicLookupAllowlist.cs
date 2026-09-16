@@ -1,21 +1,19 @@
 namespace BpmSoftSync.Adapters.BpmSoft;
 
 /// <summary>
-/// Classical business lookups inherited from the legacy Google Sheets configuration and
-/// confirmed by name in the current BPMSoft LookupRegistry.  Every other registry entry is
-/// deliberately outside export and future update scope.
+/// Nonstandard BPMSoft lookups that are deliberately outside catalog export scope.
+/// The exclusion derives from the BPMSoft 1.9 documentation for external-resource
+/// accounts, calendars, and message templates. Every other LookupRegistry entry is
+/// eligible for export and is still subject to the normal schema/value validation.
 /// </summary>
-internal static class ClassicLookupAllowlist
+internal static class LookupExportExclusions
 {
     private static readonly HashSet<string> Names = new(StringComparer.Ordinal)
     {
-        "AccountType",
-        "ActivityCategory",
-        "ActivityPriority",
-        "ActivityResult",
-        "ActivityStatus",
-        "AddressType"
+        "SocialAccount",
+        "Calendar",
+        "EmailTemplate"
     };
 
-    internal static bool Contains(string schemaName) => Names.Contains(schemaName);
+    internal static bool ShouldExport(string schemaName) => !Names.Contains(schemaName);
 }

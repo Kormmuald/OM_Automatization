@@ -27,6 +27,8 @@ try
     BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.IndexesUseOnlyColumnUIdAndRemainReadOnly();
     BpmSoftSync.Adapters.BpmSoft.Tests.UnknownShapeTests.WorkspaceFixtureHasCompleteTypedStatusCoverage();
     Console.WriteLine("PASS UnknownShapeTests");
+    BpmSoftSync.Adapters.BpmSoft.Tests.LookupExportExclusionsTests.OnlyDocumentedNonstandardLookupsAreExcluded();
+    Console.WriteLine("PASS LookupExportExclusionsTests");
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.FullTraversalUsesAcceptedTransportAndPreservesObjectModelAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.MalformedSchemaFailsClosedWithScopedBlockerAsync();
     await BpmSoftSync.Adapters.BpmSoft.Tests.WorkspaceInventoryAdapterTests.BoundedDiagnosticStopsAfterOneDeterministicSuccessfulSchemaAsync();

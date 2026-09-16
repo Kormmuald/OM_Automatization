@@ -32,7 +32,7 @@ public sealed class LiveBestEffortExportRunner(Func<InteractiveCredentials>? cre
         {
             var pair = await new WorkbookPairMaterializer().StageBestEffortPairAsync(snapshot, staging, cancellationToken);
             Directory.Move(staging, destination);
-            return new SafeResult(true, null, "BEST_EFFORT_EXPORT_CREATED", "unverified-single-read", $"Excel files: {destination}", $"Model SHA-256: {pair.ModelSha256}; Lookup SHA-256: {pair.LookupSha256}. Do not use this export for Compare or Apply.");
+            return new SafeResult(true, null, "BEST_EFFORT_EXPORT_CREATED", "unverified-single-read", $"Excel files: {destination}", $"Model SHA-256: {pair.ModelSha256}; Lookup SHA-256: {pair.LookupSha256}. Use only for limited best-effort Compare MVP; never treat it as a qualified baseline or use it for Apply.");
         }
         catch
         {

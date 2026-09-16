@@ -37,7 +37,7 @@ public static class WorkbookContract
         ["Readme"] = ["Topic", "Value"],
         ["Manifest"] = ["Key", "Value"],
         ["LookupRegistry"] = ["SchemaName", "SysEntitySchemaUId", "LookupRecordId", "BaseSchemaName", "BaseSchemaUId", "DesiredState", "ServerPresence", "ActualFingerprint"],
-        ["LookupValues"] = ["SchemaName", "SysEntitySchemaUId", "RecordId", "DraftRowToken", "DesiredState", "ServerPresence", "SourceFingerprint", "Comment", "ColumnName", "ValueState", "Value", "ValueKind", "ReferenceRecordId", "ReferenceDraftRowToken", "CanonicalValue"],
+        ["LookupValues"] = ["SchemaName", "SysEntitySchemaUId", "RecordId", "DraftRowToken", "DesiredState", "ServerPresence", "SourceFingerprint", "Comment", "ColumnName", "ColumnUId", "ValueState", "Value", "ValueKind", "ReferenceRecordId", "ReferenceDraftRowToken", "CanonicalValue"],
         ["ValidationLists"] = ValidationHeaders,
         ["PullConflicts"] = ConflictHeaders
     };
@@ -49,7 +49,7 @@ public static class WorkbookContract
         "Schemas" => Set(9),
         "Columns" when string.Equals(row[4], "Own", StringComparison.Ordinal) => Set(8, 10, 12),
         "LookupRegistry" => Set(5),
-        "LookupValues" => Set(4, 7, 9, 10, 12, 13),
+        "LookupValues" => Set(4, 7, 10, 11, 13, 14),
         _ => Set()
     };
 

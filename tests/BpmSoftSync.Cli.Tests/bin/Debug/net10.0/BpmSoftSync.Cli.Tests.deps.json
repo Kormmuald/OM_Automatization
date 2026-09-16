@@ -28,8 +28,20 @@
           }
         }
       },
+      "BpmSoftSync.Adapters.Excel/1.0.0": {
+        "dependencies": {
+          "BpmSoftSync.Domain": "1.0.0"
+        },
+        "runtime": {
+          "BpmSoftSync.Adapters.Excel.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "BpmSoftSync.Adapters.FileSystem/1.0.0": {
         "dependencies": {
+          "BpmSoftSync.Adapters.Excel": "1.0.0",
           "BpmSoftSync.Application": "1.0.0",
           "BpmSoftSync.Domain": "1.0.0"
         },
@@ -54,6 +66,7 @@
       "BpmSoftSync.Cli/1.0.0": {
         "dependencies": {
           "BpmSoftSync.Adapters.BpmSoft": "1.0.0",
+          "BpmSoftSync.Adapters.Excel": "1.0.0",
           "BpmSoftSync.Adapters.FileSystem": "1.0.0",
           "BpmSoftSync.Application": "1.0.0",
           "BpmSoftSync.Domain": "1.0.0"
@@ -94,6 +107,11 @@
       "sha512": ""
     },
     "BpmSoftSync.Adapters.BpmSoft/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BpmSoftSync.Adapters.Excel/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

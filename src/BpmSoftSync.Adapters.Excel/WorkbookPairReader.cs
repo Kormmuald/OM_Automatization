@@ -28,6 +28,7 @@ public static class WorkbookPairReader
     {
         using var archive = ZipFile.OpenRead(path);
         var workbook = Load(archive, "xl/workbook.xml");
+        var sharedStrings = ReadSharedStrings(archive);
         var relationships = Load(archive, "xl/_rels/workbook.xml.rels").Descendants(PackageRel + "Relationship").ToDictionary(item => (string)item.Attribute("Id")!, item => (string)item.Attribute("Target")!, StringComparer.Ordinal);
         var sheets = new List<WorksheetProjection>();
         foreach (var sheet in workbook.Descendants(Main + "sheet"))
@@ -36,7 +37,7 @@ public static class WorkbookPairReader
             var relationshipId = (string)sheet.Attribute(Rel + "id")!;
             if (!relationships.TryGetValue(relationshipId, out var target) || !target.StartsWith("worksheets/", StringComparison.Ordinal)) throw new InvalidDataException("WORKBOOK_SHEET_RELATION_INVALID");
             var doc = Load(archive, "xl/" + target);
-            var rows = doc.Descendants(Main + "sheetData").Elements(Main + "row").Select(ParseRow).ToArray();
+            var rows = doc.Descendants(Main + "sheetData").Elements(Main + "row").Select(row => ParseRow(row, sharedStrings)).ToArray();
             if (rows.Length == 0) throw new InvalidDataException("WORKBOOK_HEADER_MISSING:" + name);
             var validations = ParseValidations(name, rows[0], doc);
             sheets.Add(new WorksheetProjection(name, rows[0].Select(value => value ?? string.Empty).ToArray(), rows.Skip(1).ToArray(), doc.Descendants(Main + "sheetProtection").Any(), string.Equals((string?)sheet.Attribute("state"), "hidden", StringComparison.Ordinal), validations));
@@ -51,17 +52,51 @@ public static class WorkbookPairReader
         {
             if (!string.Equals((string?)validation.Attribute("type"), "list", StringComparison.Ordinal)) throw new InvalidDataException("WORKBOOK_VALIDATION_TYPE_INVALID:" + sheetName);
             var sqref = (string?)validation.Attribute("sqref") ?? throw new InvalidDataException("WORKBOOK_VALIDATION_RANGE_MISSING");
-            var columnText = new string(sqref.TakeWhile(char.IsLetter).ToArray());
-            var column = ColumnNumber(columnText);
             var formula = validation.Element(Main + "formula1")?.Value ?? throw new InvalidDataException("WORKBOOK_VALIDATION_FORMULA_MISSING");
             var name = formula.StartsWith('=') ? formula[1..] : formula;
-            if (column < 1 || column > headers.Count || !WorkbookContract.ValidationHeaders.Contains(name, StringComparer.Ordinal)) throw new InvalidDataException("WORKBOOK_VALIDATION_EXTERNAL_OR_INVALID");
-            result.Add(headers[column - 1]!, name);
+            if (!WorkbookContract.ValidationHeaders.Contains(name, StringComparer.Ordinal)) throw new InvalidDataException("WORKBOOK_VALIDATION_EXTERNAL_OR_INVALID");
+            foreach (var reference in sqref.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            {
+                var normalizedReference = reference.TrimStart('$');
+                var columnText = new string(normalizedReference.TakeWhile(char.IsLetter).ToArray());
+                var column = ColumnNumber(columnText);
+                if (column < 1 || column > headers.Count) throw new InvalidDataException("WORKBOOK_VALIDATION_EXTERNAL_OR_INVALID");
+                result.Add(headers[column - 1]!, name);
+            }
         }
         return result;
     }
 
-    private static string?[] ParseRow(XElement row) => row.Elements(Main + "c").Select(cell => cell.Element(Main + "is")?.Element(Main + "t")?.Value ?? string.Empty).ToArray();
+    private static IReadOnlyList<string> ReadSharedStrings(ZipArchive archive)
+    {
+        var entry = archive.GetEntry("xl/sharedStrings.xml");
+        if (entry is null) return [];
+        using var stream = entry.Open();
+        var document = XDocument.Load(stream);
+        return document.Descendants(Main + "si").Select(item => string.Concat(item.Descendants(Main + "t").Select(text => text.Value))).ToArray();
+    }
+
+    private static string?[] ParseRow(XElement row, IReadOnlyList<string> sharedStrings)
+    {
+        var cells = row.Elements(Main + "c").ToArray();
+        var width = cells.Select(cell => ColumnNumber(new string(((string?)cell.Attribute("r") ?? string.Empty).TakeWhile(char.IsLetter).ToArray()))).DefaultIfEmpty(0).Max();
+        var result = Enumerable.Repeat<string?>(string.Empty, width).ToArray();
+        foreach (var cell in cells)
+        {
+            var column = ColumnNumber(new string(((string?)cell.Attribute("r") ?? string.Empty).TakeWhile(char.IsLetter).ToArray()));
+            if (column < 1) throw new InvalidDataException("WORKBOOK_CELL_REFERENCE_INVALID");
+            var type = (string?)cell.Attribute("t");
+            var value = type switch
+            {
+                "inlineStr" => string.Concat(cell.Descendants(Main + "t").Select(text => text.Value)),
+                "s" when int.TryParse(cell.Element(Main + "v")?.Value, out var index) && index >= 0 && index < sharedStrings.Count => sharedStrings[index],
+                "s" => throw new InvalidDataException("WORKBOOK_SHARED_STRING_INVALID"),
+                _ => cell.Element(Main + "v")?.Value ?? string.Empty
+            };
+            result[column - 1] = value;
+        }
+        return result;
+    }
     private static Dictionary<string, string> Manifest(WorkbookProjection workbook) => workbook.Sheet("Manifest").Rows.ToDictionary(row => row[0] ?? string.Empty, row => row[1] ?? string.Empty, StringComparer.Ordinal);
     private static int ColumnNumber(string name) { var result = 0; foreach (var character in name) result = checked(result * 26 + character - 'A' + 1); return result; }
     private static XDocument Load(ZipArchive archive, string name) { using var stream = archive.GetEntry(name)?.Open() ?? throw new InvalidDataException("MISSING_PART:" + name); return XDocument.Load(stream); }

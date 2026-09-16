@@ -51,15 +51,15 @@ public static class WorkbookContractTests
         Assert(indexes.Rows.Where(row => row[2] == SyntheticSnapshot.CompositeIndexUId.ToString("D")).Select(row => row[8]).Distinct().Count() == 1, "One composite index received inconsistent actual fingerprints across members.");
 
         Assert(registry.Rows.Select(row => (row[1]!, row[2]!)).ToHashSet().SetEquals(snapshot.Lookups.Registry.Select(item => (item.SysEntitySchemaUId.ToString("D"), item.LookupRecordId.ToString("D")))), "Lookup registry identities are not projected 1:1.");
-        var valueIdentities = values.Rows.Select(row => (row[1]!, row[2]!, row[8]!)).ToHashSet();
-        var expectedValueIdentities = snapshot.Lookups.Collections.SelectMany(collection => collection.Rows.SelectMany(row => row.Values.Select(value => (collection.RegistryRecord.SysEntitySchemaUId.ToString("D"), row.RecordId.ToString("D"), value.ColumnName)))).ToHashSet();
+        var valueIdentities = values.Rows.Select(row => (row[1]!, row[2]!, row[9]!)).ToHashSet();
+        var expectedValueIdentities = snapshot.Lookups.Collections.SelectMany(collection => collection.Rows.SelectMany(row => row.Values.Select(value => (collection.RegistryRecord.SysEntitySchemaUId.ToString("D"), row.RecordId.ToString("D"), value.ColumnUId.ToString("D"))))).ToHashSet();
         Assert(valueIdentities.SetEquals(expectedValueIdentities), "Lookup value identities are not projected 1:1.");
         var normalized = values.Rows.Where(row => row[1] == SyntheticSnapshot.PrimarySchemaUId.ToString("D")).ToDictionary(row => row[8]!, StringComparer.Ordinal);
-        Assert(normalized["Name"][9] == "Value" && normalized["Name"][10] == SyntheticSnapshot.RawLookupValue && normalized["Name"][14] == SyntheticSnapshot.RawLookupValue, "Text lookup normalization changed.");
-        Assert(normalized["NullableText"][9] == "Null" && normalized["NullableText"][10] == string.Empty && normalized["NullableText"][14] == string.Empty, "Null was collapsed or omitted.");
-        Assert(normalized["EmptyText"][9] == "EmptyString" && normalized["EmptyText"][10] == string.Empty && normalized["EmptyText"][14] == string.Empty, "EmptyString was collapsed or omitted.");
-        Assert(Enum.GetValues<LookupValueKind>().Select(kind => kind == LookupValueKind.Reference ? "LookupReference" : kind.ToString()).ToHashSet(StringComparer.Ordinal).SetEquals(normalized.Values.Where(row => row[9] == "Value").Select(row => row[11]!).ToHashSet(StringComparer.Ordinal)), "Supported typed lookup kinds are not all materialized.");
-        Assert(normalized["ReferenceValue"][12] == SyntheticSnapshot.SecondaryRecordId.ToString("D"), "Lookup reference identity was not preserved.");
+        Assert(normalized["Name"][10] == "Value" && normalized["Name"][11] == SyntheticSnapshot.RawLookupValue && normalized["Name"][15] == SyntheticSnapshot.RawLookupValue, "Text lookup normalization changed.");
+        Assert(normalized["NullableText"][10] == "Null" && normalized["NullableText"][11] == string.Empty && normalized["NullableText"][15] == string.Empty, "Null was collapsed or omitted.");
+        Assert(normalized["EmptyText"][10] == "EmptyString" && normalized["EmptyText"][11] == string.Empty && normalized["EmptyText"][15] == string.Empty, "EmptyString was collapsed or omitted.");
+        Assert(Enum.GetValues<LookupValueKind>().Select(kind => kind == LookupValueKind.Reference ? "LookupReference" : kind.ToString()).ToHashSet(StringComparer.Ordinal).SetEquals(normalized.Values.Where(row => row[10] == "Value").Select(row => row[12]!).ToHashSet(StringComparer.Ordinal)), "Supported typed lookup kinds are not all materialized.");
+        Assert(normalized["ReferenceValue"][13] == SyntheticSnapshot.SecondaryRecordId.ToString("D"), "Lookup reference identity was not preserved.");
 
         var manifest = pair.Model.Sheet("Manifest").Rows.ToDictionary(row => row[0]!, row => row[1]!, StringComparer.Ordinal);
         Assert(DateTimeOffset.Parse(manifest["PullStartedUtc"]) == SyntheticSnapshot.PullStartedUtc && DateTimeOffset.Parse(manifest["PullCompletedUtc"]) == SyntheticSnapshot.PullCompletedUtc, "Canonical pull timestamps were not carried from the accepted snapshot.");

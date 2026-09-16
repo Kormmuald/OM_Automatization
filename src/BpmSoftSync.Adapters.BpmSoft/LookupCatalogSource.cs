@@ -41,10 +41,10 @@ public sealed class LookupCatalogSource(BpmSoftReadTransport transport) : ILooku
         if (!registryRead.IsQualified)
             return LookupCatalog.Blocked(registryRead.Rows, registryRead.Manifest, [], registryRead.Blocker!);
 
-        // The system Lookup registry also contains templates, profiles and other operational
-        // entities. Export only the approved classical business lookups; do not infer scope
-        // from a schema's shape or from a value's size.
-        var registry = registryRead.Rows.Where(record => ClassicLookupAllowlist.Contains(record.SchemaIdentity.SchemaName)).ToArray();
+        // Export every registered lookup except the explicit nonstandard BPMSoft exclusions.
+        // Scope is based solely on exact schema names; schema/value shape never infers an
+        // exclusion, and every selected lookup remains subject to normal validation.
+        var registry = registryRead.Rows.Where(record => LookupExportExclusions.ShouldExport(record.SchemaIdentity.SchemaName)).ToArray();
         var duplicateSchema = registry.GroupBy(item => item.SysEntitySchemaUId).FirstOrDefault(group => group.Count() != 1);
         if (duplicateSchema is not null)
             return LookupCatalog.Blocked(registry, registryRead.Manifest, [], ShapeBlocker($"lookup-registry/schema:{duplicateSchema.Key:D}", "LOOKUP_SCHEMA_BINDING_AMBIGUOUS"));
